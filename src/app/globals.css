@@ -1,6 +1,35 @@
 @import "tailwindcss";
-
+@theme {
+  --color-darkbackground: #163145;
+  --color-lightbackground: #D4E9F9;
+  --color-footer: #1C4E59;
+  --breakpoint-mobile: 850px;
+}
 :root {
+  --font-inter: 'Inter', sans-serif;  /* Optional, but variable handles it */
+}
+
+html, body {
+  font-family: var(--font-inter);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  background-color: var(--color-darkbackground);
+}
+
+@layer {
+  .menu {
+    @apply mr-4 left-full after:left-[to-90%] before:left-[to-90%] absolute w-8 h-1 bg-[#fff] before:w-8 before:h-1 before:translate-y-2 before:content-[''] before:translate-x-0 before:absolute before:bg-[#fff] after:w-8 after:h-1 after:-translate-y-2 after:content-[''] after:translate-x-0 after:absolute after:bg-[#fff] transition-all duration-500 before:duration-500 after:duration-500 before:transition-all after:transition-all;
+  }
+  .toggle-btn {
+    @apply [&>div::before]:translate-y-0 [&>div::before]:rotate-45 [&>div::after]:translate-y-0 [&>div::after]:-rotate-45 [&>div]:bg-transparent;
+  }
+  .stop-scrolling{
+    @apply overflow-hidden h-full
+  }
+}
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -23,4 +52,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
+
+/* app/globals.css */
+
