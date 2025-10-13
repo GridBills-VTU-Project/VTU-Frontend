@@ -15,9 +15,9 @@ import "./hero.css";
 
 const Hero = () => {
   return (
-    <div className="w-full mb-30 p-10 pb flex gap-10 bg-linear-to-b from-[#FFFFFF] via-[#8DEAFF] to-[#1489e3c4] h-[550px] not-lg:flex-col not-lg:h-[800px] not-sm:h-[800px] not-lg:gap-10 lg:justify-between mobile:ml-[150px] ">
-      <div className="not-mobile:max-w-[70%] max-w-[50%] xl:max-w-[30%] not-sm:max-w-full">
-        <h1 className="text-[2.75rem] font-black text-start text-[#163145] not-lg:text-4xl leading-15 not-sm:text-2xl">
+    <div className=" w-full xl:h-[100dvh] 2xl:h-[60dvh] lg:items-center p-10 pb flex gap-10 bg-linear-to-b from-[#FFFFFF] via-[#8DEAFF] to-[#1489e3c4] h-[80dvh] not-lg:flex-col not-mobile:h-[800px] not-lg:gap-10 lg:justify-between ">
+      <div className="not-mobile:max-w-[70%] max-w-[50%] xl:max-w-[50%] not-sm:max-w-full">
+        <h1 className="text-[2.75rem] xl:text-6xl font-black text-start text-[#163145] not-lg:text-4xl leading-15 not-sm:text-2xl">
           Bill Payments Made Seamless
         </h1>
         <p className="mt-2 font-bold text-xl text-[#727272]">
@@ -37,7 +37,7 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      <section className="relative flex justify-center items-center h-[450px]">
+      <section className="relative flex justify-center items-center h-[450px] not-xs:pb-5">
         <div className="relative w-[400px] h-full flex justify-center items-center">
           {/* Decorative Stars */}
           <div className="absolute star top-[2%] left-0" />

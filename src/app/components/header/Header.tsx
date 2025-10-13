@@ -44,8 +44,8 @@ const Header = () => {
           <Link href={"/"} aria-label="Home">
             <Image
               className="not-mobile:w-[36px] not-mobile:h-[36px] mobile:ml-15"
-              src="/vtu-logo.png"
-              alt="VTU Logo"
+              src="/logo.png"
+              alt="Grid Bills Logo"
               width={50}
               height={50}
             />

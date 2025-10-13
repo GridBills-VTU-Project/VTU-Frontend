@@ -4,9 +4,7 @@
   --color-lightbackground: #D4E9F9;
   --color-footer: #1C4E59;
   --breakpoint-mobile: 850px;
-}
-:root {
-  --font-inter: 'Inter', sans-serif;  /* Optional, but variable handles it */
+  --breakpoint-xs: 500px;
 }
 
 html, body {
