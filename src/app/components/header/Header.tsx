@@ -1,23 +1,19 @@
 "use client";
 
 import Image from "next/image";
-// import { Moon, Sun } from "lucide-react";
 import "./header.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-const links = [
-  { name: "Home", href: "/" },
-  { name: "become an agent", href: "/agent" },
-  { name: "contact us", href: "/contact" },
-];
+import { links } from "@/app/constants/headerConstants";
+
 const Header = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="text-[#fff] not-italic sticky bg-darkbackground z-50  h-[120px] flex">
-      <div className="flex items-center justify-between not-italic mx-auto w-[80%]">
+    <header className="text-[#fff] not-italic bg-darkbackground z-50  h-[120px] flex">
+      <div className="flex items-center justify-between not-italic mx-auto w-[90%]">
         <div className="flex items-center gap-10">
           <div
             className={
