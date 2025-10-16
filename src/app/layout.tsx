@@ -10,8 +10,10 @@ const inter = Inter({
   display: "swap",
 });
 export const metadata: Metadata = {
-  title: "My Next.js App",
+  title: "My VTU Website",
   description: "Buy airtime, data, pay bills and more",
+  icons:{
+    icon:"/logo.png"}
 };
 
 export default function RootLayout({
