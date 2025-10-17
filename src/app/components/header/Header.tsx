@@ -42,9 +42,10 @@ const Header = () => {
               className="not-mobile:w-[36px] not-mobile:h-[36px] mobile:ml-15"
               src="/logo.png"
               alt="Grid Bills Logo"
-              width={50}
-              height={50}
+              width={0}
+              height={0}
             />
+            Grid Bills
           </Link>
         </div>
         <nav className="not-mobile:hidden mr-2 capitalize transition-all duration-300 ease-in-out">
@@ -67,7 +68,7 @@ const Header = () => {
         <ul className="flex items-center font-semibold text-xl leading-[22px] ml-4 gap-7 not-sm:text-[10px] not-sm:gap-3">
           <li>
             <Link
-              href={"/login"}
+              href={"/pages/signin"}
               className="border px-4 py-1 rounded-[8px] hover:bg-[#fff] hover:text-[#000000] hover:border-[#000000]"
             >
               log in
@@ -75,7 +76,7 @@ const Header = () => {
           </li>
           <li>
             <Link
-              href={"/login"}
+              href={"/pages/signup"}
               className="bg-[#fff] border-1 px-4 py-1 rounded-[8px] text-[#000000] hover:text-[#fff] hover:border-[#fff] hover:bg-transparent"
             >
               sign up
