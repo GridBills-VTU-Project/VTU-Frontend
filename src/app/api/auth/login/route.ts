@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       
     }
     return res;
-  } catch (err: any) {
+  } catch (err) {
     console.error(err);
     
     if (isAxiosError(err)) {

@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     console.log(data.data, data.status);
 
     return NextResponse.json({ msg: "Success, Please login" }, { status: 200 });
-  } catch (err: any) {
+  } catch (err) {
     if (isAxiosError(err)) {
       return NextResponse.json(
         { error: err.response?.data?.ret_msg },
@@ -64,7 +64,7 @@ export async function PUT(req: Request) {
       { msg: "Success, OTP sent." },
       { status: 200 }
     );
-  } catch (err: any) {
+  } catch (err) {
     if (isAxiosError(err)) {
       return NextResponse.json(
         { error: err.response?.data?.ret_msg },

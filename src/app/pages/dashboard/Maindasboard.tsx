@@ -1,8 +1,7 @@
 import { quickActions, transactions } from "@/app/constants/sidebarConstants";
 import { Wallet, TrendingUp } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Maindasboard = () => {
 

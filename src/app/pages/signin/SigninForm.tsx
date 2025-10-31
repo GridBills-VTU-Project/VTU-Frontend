@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import UseAxios from "@/app/customHooks/UseAxios";
 import { isAxiosError } from "axios";
 import { Eye, EyeClosed } from "lucide-react";

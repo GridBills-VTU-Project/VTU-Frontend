@@ -45,8 +45,7 @@ export async function POST(req: Request) {
     
 
     return NextResponse.json({msg:"Please verify your account using the OTP sent to your email."}, { status: 200 });
-  } catch (err:any) {
-    console.log(err.response.data);
+  } catch (err) {
     
     if (isAxiosError(err)) {
       return NextResponse.json(

@@ -9,7 +9,7 @@ const Footer = () => {
     <div className="bg-footer text-white p-4 w-full">
       <div className="w-[80%] mx-auto p-5 max-mobile:w-full">
         
-          <Image src={logo} width={50} height={50} alt="Grid Bills logo" className=""/>
+          <Image src={logo} width={50} height={50} alt="Grid Bills logo" className="w-auto h-auto"/>
           <p className="text-sm mb-4">GRIDBILLS</p>
         <div className="justify-between flex flex-wrap gap-4">
           <div>

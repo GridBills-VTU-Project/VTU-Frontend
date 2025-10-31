@@ -1,16 +1,21 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import "./header.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { links } from "@/app/constants/headerConstants";
 
 const Header = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const isAuthenticated:string|null = localStorage.getItem("vtuAuthenticated");;
+  const [isAuthenticated, setIsAuthenticated] = useState<string|null>(null);
+  useEffect(() =>{
+    let isAuthenticated:string|null = null;
+    isAuthenticated = localStorage.getItem("vtuAuthenticated");
+setIsAuthenticated(isAuthenticated);
+  },[])
 
   return (
     <header className="text-[#fff] not-italic bg-darkbackground z-50  h-[120px] flex">
@@ -44,7 +49,7 @@ const Header = () => {
             className="flex flex-col justify-start w-full"
           >
             <Image
-              className=""
+              className="w-auto h-auto"
               src="/logo.png"
               alt="Grid Bills Logo"
               width={60}
