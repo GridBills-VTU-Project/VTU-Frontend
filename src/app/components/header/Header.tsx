@@ -10,6 +10,7 @@ import { links } from "@/app/constants/headerConstants";
 const Header = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const isAuthenticated:string|null = localStorage.getItem("vtuAuthenticated");;
 
   return (
     <header className="text-[#fff] not-italic bg-darkbackground z-50  h-[120px] flex">
@@ -37,13 +38,18 @@ const Header = () => {
               }}
             ></div>
           </div>
-          <Link href={"/"} aria-label="Home">
+          <Link
+            href={"/"}
+            aria-label="Home"
+            className="flex flex-col justify-start w-full"
+          >
             <Image
-              className="not-mobile:w-[36px] not-mobile:h-[36px] mobile:ml-15"
+              className=""
               src="/logo.png"
               alt="Grid Bills Logo"
-              width={0}
-              height={0}
+              width={60}
+              height={60}
+              priority={true}
             />
             Grid Bills
           </Link>
@@ -66,22 +72,37 @@ const Header = () => {
           </ul>
         </nav>
         <ul className="flex items-center font-semibold text-xl leading-[22px] ml-4 gap-7 not-sm:text-[10px] not-sm:gap-3">
-          <li>
-            <Link
-              href={"/pages/signin"}
-              className="border px-4 py-1 rounded-[8px] hover:bg-[#fff] hover:text-[#000000] hover:border-[#000000]"
-            >
-              log in
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={"/pages/signup"}
-              className="bg-[#fff] border-1 px-4 py-1 rounded-[8px] text-[#000000] hover:text-[#fff] hover:border-[#fff] hover:bg-transparent"
-            >
-              sign up
-            </Link>
-          </li>
+          {isAuthenticated == "true" ? (
+            <>
+              <li>
+                <Link
+                  href={"/pages/dashboard?tab=dashboard"}
+                  className="bg-[#fff] border-1 px-4 py-1 rounded-[8px] text-[#000000] hover:text-[#fff] hover:border-[#fff] hover:bg-transparent"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link
+                  href={"/pages/signin"}
+                  className="border px-4 py-1 rounded-[8px] hover:bg-[#fff] hover:text-[#000000] hover:border-[#000000]"
+                >
+                  log in
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/pages/signup"}
+                  className="bg-[#fff] border-1 px-4 py-1 rounded-[8px] text-[#000000] hover:text-[#fff] hover:border-[#fff] hover:bg-transparent"
+                >
+                  sign up
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <nav

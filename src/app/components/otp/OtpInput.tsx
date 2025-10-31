@@ -3,8 +3,15 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import lock from "@/../public/lock.png";
 import { toast } from "react-toastify";
+import UseAxios from "@/app/customHooks/UseAxios";
+import { useRouter } from "next/navigation";
+import { isAxiosError } from "axios";
+import { formatTime } from "@/app/util/functions";
 
 export default function OtpInput() {
+  const api = UseAxios();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
   const [email, setEmail] = useState("");
   const [timer, setTimer] = useState(0);
@@ -35,11 +42,31 @@ export default function OtpInput() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const finalOtp = otp.join("");
     console.log("OTP submitted:", finalOtp);
-    toast.success("success");
-    // TODO: call your API here
+    if (finalOtp.length < 4) {
+      toast.error("Incomplete otp.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await api.post(
+        "auth/otp",
+        JSON.stringify({ email, otp: finalOtp })
+      );
+      toast.success(res.data.msg);
+      router.push("/pages/signin");
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -48,6 +75,7 @@ export default function OtpInput() {
       setEmail(storedEmail);
     } else {
       // optional: redirect back if there's no stored email
+      toast.error("No stored email");
       window.location.href = "/pages/signup";
     }
   }, []);
@@ -57,8 +85,10 @@ export default function OtpInput() {
 
     let expiryTime: number;
     if (storedExpiry) {
+      console.log("kk");
       expiryTime = parseInt(storedExpiry);
     } else {
+      console.log("lll");
       expiryTime = Date.now() + OTP_EXPIRY_SECONDS * 1000;
       localStorage.setItem("vtuotpExpiry", expiryTime.toString());
     }
@@ -68,25 +98,42 @@ export default function OtpInput() {
         0,
         Math.floor((expiryTime - Date.now()) / 1000)
       );
-      setTimer(secondsLeft);
+      setTimer(secondsLeft)
+      console.log(secondsLeft);
       if (secondsLeft === 0) {
         setCanResend(true);
         clearInterval(interval);
+      }else{
+        setCanResend(false);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [canResend]);
-  const handleResend = () => {
-    // e.g., call your backend API to resend OTP
-    console.log("Resending OTP to", email);
-    toast.success("OTP Resent");
+  }, [canResend, timer]);
+console.log(canResend);
 
-    const newExpiry = Date.now() + OTP_EXPIRY_SECONDS * 1000;
-    localStorage.setItem("vtuotpExpiry", newExpiry.toString());
-    setCanResend(false);
-    setTimer(OTP_EXPIRY_SECONDS);
+  const handleResend = async () => {
+    try {
+      setLoading(true);
+      
+      // console.log("clicked",canResend);
+      const res = await api.put("auth/otp", JSON.stringify({ email }));
+      const newExpiry = Date.now() + OTP_EXPIRY_SECONDS * 1000;
+      localStorage.setItem("vtuotpExpiry", newExpiry.toString());
+      setCanResend(false);
+      setTimer(OTP_EXPIRY_SECONDS);
+      toast.success(res.data.msg);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="flex flex-col items-center gap-6 w-[60%] mx-auto max-mobile:w-[80%] max-sm:w-full">
       <div className="bg-[#646FC6] p-3 rounded-full">
@@ -123,16 +170,17 @@ export default function OtpInput() {
       <p>
         Didn&apos;t receive the otp?
         <button
-          disabled={canResend}
+          disabled={canResend?false:true}
           onClick={handleResend}
           className="underline text-blue-600 hover:cursor-pointer hover:text-blue-600/80"
         >
           Resend
         </button>{" "}
-        {timer}
+        {formatTime(timer)}
       </p>
 
       <button
+        disabled={loading}
         onClick={handleSubmit}
         className="bg-[#646FC6] w-full text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#646FC6]/80 transition hover:cursor-pointer"
       >

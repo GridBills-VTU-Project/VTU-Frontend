@@ -14,7 +14,7 @@ const page = () => {
           height={700}
         />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 w-full">
         <h2 className="text-center max-xs:text-2xl text-4xl font-black not-xl:text-2xl leading-6 mt-10">
           Sign up
         </h2>
