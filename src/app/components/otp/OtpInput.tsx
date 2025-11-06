@@ -57,7 +57,13 @@ export default function OtpInput() {
         JSON.stringify({ email, otp: finalOtp })
       );
       toast.success(res.data.msg);
-      router.push("/pages/signin");
+      localStorage.clear();
+      const session = parseInt(
+        process.env.NEXT_PUBLIC_SESSION_EXPIRY_SECONDS || "7200"
+      );
+      const sessionExpiry = Date.now() + session * 1000;
+      localStorage.setItem("vtuAuthenticated", sessionExpiry.toString());
+      router.push("/signin");
     } catch (error) {
       if (isAxiosError(error)) {
         console.log(error);
@@ -76,7 +82,7 @@ export default function OtpInput() {
     } else {
       // optional: redirect back if there's no stored email
       toast.error("No stored email");
-      window.location.href = "/pages/signup";
+      window.location.href = "/signup";
     }
   }, []);
 
@@ -85,10 +91,8 @@ export default function OtpInput() {
 
     let expiryTime: number;
     if (storedExpiry) {
-      console.log("kk");
       expiryTime = parseInt(storedExpiry);
     } else {
-      console.log("lll");
       expiryTime = Date.now() + OTP_EXPIRY_SECONDS * 1000;
       localStorage.setItem("vtuotpExpiry", expiryTime.toString());
     }
@@ -98,24 +102,24 @@ export default function OtpInput() {
         0,
         Math.floor((expiryTime - Date.now()) / 1000)
       );
-      setTimer(secondsLeft)
+      setTimer(secondsLeft);
       console.log(secondsLeft);
       if (secondsLeft === 0) {
         setCanResend(true);
         clearInterval(interval);
-      }else{
+      } else {
         setCanResend(false);
       }
     }, 1000);
 
     return () => clearInterval(interval);
   }, [canResend, timer]);
-console.log(canResend);
+  console.log(canResend);
 
   const handleResend = async () => {
     try {
       setLoading(true);
-      
+
       // console.log("clicked",canResend);
       const res = await api.put("auth/otp", JSON.stringify({ email }));
       const newExpiry = Date.now() + OTP_EXPIRY_SECONDS * 1000;
@@ -170,7 +174,7 @@ console.log(canResend);
       <p>
         Didn&apos;t receive the otp?
         <button
-          disabled={canResend?false:true}
+          disabled={canResend ? false : true}
           onClick={handleResend}
           className="underline text-blue-600 hover:cursor-pointer hover:text-blue-600/80"
         >
@@ -182,8 +186,12 @@ console.log(canResend);
       <button
         disabled={loading}
         onClick={handleSubmit}
-        className="bg-[#646FC6] w-full text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#646FC6]/80 transition hover:cursor-pointer"
+        className="flex justify-center items-center gap-2 bg-[#646FC6] w-full text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#646FC6]/80 transition hover:cursor-pointer"
       >
+        {" "}
+        <div className={"flex justify-center " + (!loading && " hidden")}>
+          <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
         Submit
       </button>
       <p></p>

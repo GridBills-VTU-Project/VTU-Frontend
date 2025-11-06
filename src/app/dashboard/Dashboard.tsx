@@ -1,9 +1,13 @@
 "use client";
-import { Gift, Handbag, LayoutDashboard, Wallet } from "lucide-react";
+import { Gift, Handbag, Headset, LayoutDashboard, User, Wallet } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Maindasboard from "./Maindasboard";
 import { useRouter, useSearchParams } from "next/navigation";
 import MainWallet from "./MainWallet";
+import Services from "./Services/Services";
+import Reward from "./Reward";
+import Support from "./Support";
+import Profile from "./Profile";
 export const dashboardSidebarLinks = [
   {
     name: "dashboard",
@@ -29,22 +33,43 @@ export const dashboardSidebarLinks = [
     href: "/reward",
     color: "bg-[#1631454D]",
   },
+  {
+    name: "support",
+    img: <Headset />,
+    href: "/support",
+    color: "bg-[#1631454D]",
+  },
+  {
+    name: "profile",
+    img: <User />,
+    href: "/support",
+    color: "bg-[#1631454D]",
+  },
   // { name: "Exam Scratch card", img: card, href: "/buy-airtime",color:"bg-[#1631454D]" }
 ];
-const Page = () => {
+const Dashboard = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<string|null>(null);
+  const [section, setSection] = useState<string|null>(null);
     
   const setActiveTab = (newTab: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("tab", newTab);
-    params.delete("section");
     router.push(`?${params.toString()}`, { scroll: false });
   };
+
+  const setSectionTab = (newSection: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("section", newSection);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
   useEffect(()=>{
     const tab = searchParams.get("tab") ?? "dashboard";
+    const section = searchParams.get("section") ?? "airtime";
     setTab(tab);
+    setSection(section);
   },[searchParams])
 
   return (
@@ -55,7 +80,7 @@ const Page = () => {
             "flex items-center flex-col h-fit duration-500 not-mobile:hidden"
           }
         >
-          <div className="text-white font-medium text-xs leading-[22px] mt-10 flex flex-col gap-15">
+          <div className="text-white font-medium text-xs leading-[22px] mt-10 flex flex-col gap-10">
             {dashboardSidebarLinks.map((link) => (
               <button
                 onClick={()=>setActiveTab(link.name)}
@@ -72,7 +97,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="p-10 w-full max-w-[90%] mx-auto">
+      <div className="p-10 w-full mx-auto">
         {
           (tab === "dashboard") && <Maindasboard />
         }
@@ -80,9 +105,22 @@ const Page = () => {
           (tab === "wallet") && <MainWallet />
         }
         
+        {
+          (tab === "services") && <Services section={section} setSection={setSectionTab}/>
+        }
+        {
+          (tab === "reward") && <Reward/>
+        }
+        {
+          (tab === "support") && <Support/>
+        }
+        {
+          (tab === "profile") && <Profile/>
+        }
+        
       </div>
     </section>
   );
 };
 
-export default Page;
+export default Dashboard;

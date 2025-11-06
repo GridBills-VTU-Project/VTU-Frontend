@@ -9,11 +9,11 @@ import { toast } from "react-toastify";
 const SigninForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const redirect = searchParams.get("redirect");
   const safeRedirect = redirect?.startsWith("/")
     ? redirect
-    : "/pages/dashboard?tab=dashboard";
+    : "/dashboard?tab=dashboard";
   const api = UseAxios();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -28,7 +28,11 @@ const SigninForm = () => {
     try {
       console.log(form);
       const res = await api.post("auth/login", JSON.stringify(form));
-      localStorage.setItem("vtuAuthenticated", "true");
+      const session = parseInt(
+        process.env.NEXT_PUBLIC_SESSION_EXPIRY_SECONDS || "7200"
+      );
+      const sessionExpiry = Date.now() + session * 1000;
+      localStorage.setItem("vtuAuthenticated", sessionExpiry.toString());
       toast.success(res.data.msg || "Success.");
       router.push(safeRedirect);
     } catch (error) {
@@ -61,7 +65,7 @@ const SigninForm = () => {
         placeholder="Please enter email or phone number"
       />
       <p className="mt-10">Password</p>
-           <div className="border-3 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040]  rounded-lg flex justify-between gap-5">
+      <div className="border-3 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040]  rounded-lg flex justify-between gap-5">
         <input
           required={true}
           name="password"
@@ -94,11 +98,23 @@ const SigninForm = () => {
           Remember Password
         </p>
       </div> */}
-
+      <p className="text-center mt-5">
+        Forgot password?
+        <button
+          className="underline text-blue-600 hover:cursor-pointer hover:text-blue-600/80"
+        >
+          Reset
+        </button>{" "}
+      </p>
       <button
         disabled={loading}
-        className="bg-[#646FC6] hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
+        className="flex justify-center items-center gap-2 bg-[#646FC6] hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
       >
+        <div className={"flex justify-center " + (!loading && " hidden")}>
+          <div
+            className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"
+          ></div>
+        </div>
         Login
       </button>
     </form>

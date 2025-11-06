@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react'
-import Page from './Dashboard'
+import Dashboard from './Dashboard'
 
 const page = () => {
   return (
-    <Suspense><Page/></Suspense>
+    <Suspense><Dashboard/></Suspense>
   )
 }
 

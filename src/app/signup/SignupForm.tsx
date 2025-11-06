@@ -32,7 +32,7 @@ setLoading(true)
       const res = await api.post("auth/register", JSON.stringify(form));
       toast.success(res.data.msg);
       localStorage.setItem("vtuPendingEmail", form.email);
-      router.push("/pages/otp");
+      router.push("/otp");
     } catch (error) {
       if (isAxiosError(error)) {
         console.log(error);
@@ -146,7 +146,12 @@ setLoading(true)
         </p>
       </div> */}
 
-      <button disabled={loading} className="bg-[#646FC6] hover:bg-[#646FC6]/90 focus:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer ">
+      <button disabled={loading} className="flex justify-center items-center gap-2 bg-[#646FC6] hover:bg-[#646FC6]/90 focus:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer ">
+        <div className={"flex justify-center " + (!loading && " hidden")}>
+          <div
+            className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"
+          ></div>
+        </div>
         Register
       </button>
     </form>

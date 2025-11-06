@@ -13,11 +13,11 @@ export const sidebarLinks = [
   { name: "Exam Scratch card", img: card, href: "/buy-airtime",color:"bg-[#1631454D]" }
 ]
 export const quickActions = [
-  { name: "Buy Airtime", img: ph, href: "/buy-airtime"},
-  { name: "Buy Internet Data", img: wifi, href: "/buy-wifi"},
-  { name: "Pay Electricity Bill", img: electric, href: "/buy-airtime"},
-  { name: "Exam Scratch card", img: card, href: "/buy-airtime"},
-  { name: "Pay TV Subscription", img: tv, href: "/buy-airtime"}
+  { query: "airtime",name: "Buy Airtime", img: ph, href: "/buy-airtime"},
+  { query: "data",name: "Buy Internet Data", img: wifi, href: "/buy-wifi"},
+  { query: "bill",name: "Pay Electricity Bill", img: electric, href: "/buy-airtime"},
+  { query: "card",name: "Exam Scratch card", img: card, href: "/buy-airtime"},
+  { query: "subscription",name: "Pay TV Subscription", img: tv, href: "/buy-airtime"}
 ]
 export const transactions = [
   { name: "airtime", sp:"mtn", time:"Today, 10:50am", amount:"500", img: ph },

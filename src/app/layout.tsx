@@ -4,10 +4,12 @@ import "./globals.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
-const inter = Inter({ 
-  preload:true,
+import ReactQueryProvider from "./providers/ReactQueryProvider";
+import { Suspense } from "react";
+const inter = Inter({
+  preload: true,
   subsets: ["latin"],
-  weight: ["100" , "200" , "300" , "400" , "500" , "600" , "700" , "800" , "900" ],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
   display: "swap",
 });
@@ -30,9 +32,13 @@ export default function RootLayout({
         {" "}
         {/* antialiased for smoother rendering */}
         <ToastContainer position="top-right" hideProgressBar theme="colored" />
-        <Header />
-        {children}
-        <Footer />
+        <ReactQueryProvider>
+          <Suspense>
+            <Header />
+          </Suspense>
+          {children}
+          <Footer />
+        </ReactQueryProvider>
       </body>
     </html>
   );

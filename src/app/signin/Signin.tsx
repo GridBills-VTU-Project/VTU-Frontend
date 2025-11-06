@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 import si from "@/../public/signup.png";
 import SigninForm from "./SigninForm";
 const Signin = () => {
@@ -21,10 +21,12 @@ const Signin = () => {
         <p className="leading-6 mx-auto text-sm text-[#727272] py-5 max-sm:text-xs text-center">
           Please fill in your details.
         </p>
-        <SigninForm />
+        <Suspense>
+          <SigninForm />
+        </Suspense>
       </div>
     </section>
   );
-}
+};
 
-export default Signin
+export default Signin;
