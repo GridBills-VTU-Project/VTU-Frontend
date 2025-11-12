@@ -25,20 +25,40 @@ export async function POST(req: Request) {
     const data = await api.post("Auth/login", new_body);
     console.log(data.data, data.status);
 
-    const res = NextResponse.json({ msg: "Success." }, { status: 200 });
+    const res = NextResponse.json(
+      {
+        msg: "Success.",
+        user: {
+          email: data.data.user.email,
+          phoneNumber: data.data.user.phoneNumber,
+          fullName: data.data.user.fullName,
+          role: data.data.user.role,
+        },
+      },
+      { status: 200 }
+    );
     if (data.data.user.token) {
       res.cookies.set("token", data.data.user.token, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
         path: "/",
+        expires: new Date(Date.now() + 7200 * 1000),
+        maxAge: 60 * 60 * 2, // 2 hours
       });
-      
+    }
+    if (data.data.user.role) {
+      res.cookies.set("role", data.data.user.role, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        path: "/",
+        expires: new Date(Date.now() + 7200 * 1000),
+        maxAge: 60 * 60 * 2, // 2 hours
+      });
     }
     return res;
   } catch (err) {
-    console.error(err);
-    
     if (isAxiosError(err)) {
       return NextResponse.json(
         { error: err.response?.data?.ret_msg },

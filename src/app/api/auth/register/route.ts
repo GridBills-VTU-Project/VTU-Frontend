@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     const new_body = {
-      fullName: body.first_name.trim() +" "+ body.last_name.trim(),
+      fullName: body.first_name.trim() +"_"+ body.last_name.trim(),
       email: body.email.trim(),
       password: body.password.trim(),
       phoneNumber:body.phone.trim(),

@@ -2,14 +2,32 @@
 import { selectOption } from "@/app/util/functions";
 import { Mail, Phone, UserPen } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuthUser } from "../customHooks/UseAuthUser";
 const Profile = () => {
-  const [supportForm, setSupportForm] = useState({
-    title: "",
-    message: "",
+  const { data: user, isLoading, isError, error } = useAuthUser();
+  const [profileForm, setPasswordForm] = useState({
+    first_name: "",
+    last_name: "",
+    phone: "",
+    email: "",
+  });
+  const [resetForm, setResetForm] = useState({
+    old_password: "",
+    new_password: "",
+    email: "",
   });
   const [isDisabled, setIsDisabled] = useState(true);
   const [buttonText, setButtonText] = useState("Update Profile");
+  useEffect(() => {
+    if (user && user != undefined)
+      setPasswordForm({
+        first_name: user?.fullName.split("_")[0],
+        last_name: user?.fullName.split("_")[1],
+        phone: user?.phoneNumber,
+        email: user?.email,
+      });
+  }, [user]);
   return (
     <div className="w-[80%] mx-auto">
       {" "}
@@ -21,33 +39,45 @@ const Profile = () => {
       </p>
       <div className="flex flex-col gap-10">
         {/* profile section */}
-        <div className="flex gap-5 max-xs:flex-col  py-7 px-5 bg-[#AAAAAA0D] rounded-lg border-2 border-[#AAAAAACC]">
-          <div className="rounded-full bg-[#4E61E51A] overflow-hidden max-w-[50px] max-h-[50px] max-xs:mx-auto">
-            <Image
-              src={"/profilepic.png"}
-              alt="profile picture"
-              width={80}
-              height={90}
-              className="object-cover "
-            />
-          </div>
-          <div className="flex flex-col gap-1 text-[#727272]">
-            <h1 className="capitalize max-xs:text-lg text-xl font-bold leading-6 text-darkbackground">
-              John doe
-            </h1>
-            <p className=" leading-6 font-bold text-sm max-sm:text-xs">
-              VTU Agent
-            </p>
-            <div className="flex gap-1 md:items-end max-md:flex-col">
-              <p className="flex gap-1 leading-6 font-medium text-sm max-sm:text-xs truncate">
-                <Mail size={18} /> John.snow@example.com
+        <div className={isLoading ? " shimmer" : " "}>
+          <div
+            className={
+              "flex gap-5 max-xs:flex-col  py-7 px-5 bg-[#AAAAAA0D] rounded-lg border-2 border-[#AAAAAACC] " +
+              (isLoading && " hidden")
+            }
+          >
+            <div
+              className={
+                "rounded-full bg-[#4E61E51A] overflow-hidden max-w-[50px] max-h-[50px] max-xs:mx-auto "
+              }
+            >
+              <Image
+                src={"/profilepic.png"}
+                alt="profile picture"
+                width={80}
+                height={90}
+                className="object-cover "
+              />
+            </div>
+            <div className="flex flex-col gap-1 text-[#727272]">
+              <h1 className="capitalize max-xs:text-lg text-xl font-bold leading-6 text-darkbackground">
+                {user?.fullName.split("_")[0]} {user?.fullName.split("_")[1]}
+              </h1>
+              <p className=" leading-6 font-bold text-sm max-sm:text-xs">
+                VTU {user?.role}
               </p>
-              <p className=" flex gap-1 leading-6 font-medium text-sm max-sm:text-xs truncate">
-                <Phone size={18} /> +234 801 234 5678
-              </p>
+              <div className="flex gap-1 md:items-end max-md:flex-col">
+                <p className="flex gap-1 leading-6 font-medium text-sm max-sm:text-xs truncate">
+                  <Mail size={18} /> {user?.email}
+                </p>
+                <p className=" flex gap-1 leading-6 font-medium text-sm max-sm:text-xs truncate">
+                  <Phone size={18} /> {user?.phoneNumber}
+                </p>
+              </div>
             </div>
           </div>
         </div>
+
         {/* details */}
         <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
           <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
@@ -60,15 +90,16 @@ const Profile = () => {
                   First Name
                 </p>
                 <input
+                  disabled={isDisabled}
                   name="first_name"
-                  value={supportForm.title}
-                  onChange={(e) => selectOption(e, setSupportForm)}
+                  value={profileForm.first_name}
+                  onChange={(e) => selectOption(e, setPasswordForm)}
                   type="text"
                   className={
                     " outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
                     (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
                   }
-                  placeholder="Title"
+                  placeholder="Enter first name"
                 />
               </div>
               <div className="flex flex-col max-lg:mb-2 mt-2">
@@ -76,15 +107,16 @@ const Profile = () => {
                   Email Address
                 </p>
                 <input
+                  disabled={isDisabled}
                   name="email"
-                  value={supportForm.title}
-                  onChange={(e) => selectOption(e, setSupportForm)}
+                  value={profileForm.email}
+                  onChange={(e) => selectOption(e, setPasswordForm)}
                   type="email"
                   className={
                     "outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
                     (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
                   }
-                  placeholder="Title"
+                  placeholder="Enter email"
                 />
               </div>
             </div>
@@ -94,15 +126,16 @@ const Profile = () => {
                   Last Name
                 </p>
                 <input
+                  disabled={isDisabled}
                   name="last_name"
-                  value={supportForm.title}
-                  onChange={(e) => selectOption(e, setSupportForm)}
+                  value={profileForm.last_name}
+                  onChange={(e) => selectOption(e, setPasswordForm)}
                   type="text"
                   className={
                     "outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
                     (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
                   }
-                  placeholder="Title"
+                  placeholder="Enter last name"
                 />
               </div>
               <div className="flex flex-col mt-2">
@@ -110,28 +143,29 @@ const Profile = () => {
                   Phone Number
                 </p>
                 <input
+                  disabled={isDisabled}
                   name="phone"
-                  value={supportForm.title}
-                  onChange={(e) => selectOption(e, setSupportForm)}
+                  value={profileForm.phone}
+                  onChange={(e) => selectOption(e, setPasswordForm)}
                   type="tel"
                   className={
                     "outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
                     (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
                   }
-                  placeholder="Title"
+                  placeholder="Enter phone"
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col col-span-2">
+          {/* <div className="flex flex-col col-span-2">
             <p className="mb-2 text-darkbackground font-medium text-lg">
               Business Address
             </p>
             <input
               name="address"
-              value={supportForm.title}
-              onChange={(e) => selectOption(e, setSupportForm)}
+              value={profileForm.title}
+              onChange={(e) => selectOption(e, setPasswordForm)}
               type="text"
               className={
                 " outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
@@ -139,14 +173,17 @@ const Profile = () => {
               }
               placeholder="Title"
             />
-          </div>
+          </div> */}
           <button
-            disabled={isDisabled}
-            type="submit"
+            onClick={() => {
+              setIsDisabled(false);
+              setButtonText("Submit");
+            }}
+            type="button"
             className="flex justify-center items-center gap-2 bg-[#646FC6] w-fit text-[#ffff] mt-7 py-2 px-4 rounded-xl hover:cursor-pointer hover:bg-[#646fc6]/90 "
           >
             <div
-              className={"flex absolute justify-center" + (!true && " hidden")}
+              className={"flex absolute justify-center" + (!false && " hidden")}
             >
               <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
@@ -156,58 +193,54 @@ const Profile = () => {
         {/* reset password */}
         <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
           <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
-            Personal Information
+            Reset Password
           </h2>
-              <div className="flex flex-col max-lg:mb-2 ">
-                <p className="mb-2 text-darkbackground font-medium text-lg">
-                  First Name
-                </p>
-                <input
-                  name="first_name"
-                  value={supportForm.title}
-                  onChange={(e) => selectOption(e, setSupportForm)}
-                  type="text"
-                  className={
-                    " outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
-                    (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
-                  }
-                  placeholder="Title"
-                />
-              </div>
-              <div className="flex flex-col max-lg:mb-2 mt-2">
-                <p className="mb-2 text-darkbackground font-medium text-lg">
-                  Email Address
-                </p>
-                <input
-                  name="email"
-                  value={supportForm.title}
-                  onChange={(e) => selectOption(e, setSupportForm)}
-                  type="email"
-                  className={
-                    "outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
-                    (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
-                  }
-                  placeholder="Title"
-                />
+          <div className="flex flex-col max-lg:mb-2 ">
+            <p className="mb-2 text-darkbackground font-medium text-lg">
+              Email
+            </p>
+            <input
+              name="email"
+              value={resetForm.email}
+              onChange={(e) => selectOption(e, setResetForm)}
+              type="text"
+              className={
+                " outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl bg-[#FFFFFF3B]/23"
+              }
+              placeholder="Title"
+            />
           </div>
-              <div className="flex flex-col max-lg:mb-2 mt-2">
-                <p className="mb-2 text-darkbackground font-medium text-lg">
-                  Email Address
-                </p>
-                <input
-                  name="email"
-                  value={supportForm.title}
-                  onChange={(e) => selectOption(e, setSupportForm)}
-                  type="email"
-                  className={
-                    "outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
-                    (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
-                  }
-                  placeholder="Title"
-                />
+          <div className="flex flex-col max-lg:mb-2 mt-2">
+            <p className="mb-2 text-darkbackground font-medium text-lg">
+              New Password
+            </p>
+            <input
+              name="new_password"
+              value={resetForm.new_password}
+              onChange={(e) => selectOption(e, setResetForm)}
+              type="password"
+              className={
+                "outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl bg-[#FFFFFF3B]/23"
+              }
+              placeholder="Enter new password"
+            />
+          </div>
+          <div className="flex flex-col max-lg:mb-2 mt-2">
+            <p className="mb-2 text-darkbackground font-medium text-lg">
+              Old Password
+            </p>
+            <input
+              name="old_password"
+              value={resetForm.old_password}
+              onChange={(e) => selectOption(e, setResetForm)}
+              type="password"
+              className={
+                "outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl bg-[#FFFFFF3B]/23"
+              }
+              placeholder="Enter old password"
+            />
           </div>
           <button
-            disabled={isDisabled}
             type="submit"
             className="flex justify-center items-center gap-2 bg-[#FF3B30] w-fit text-[#ffff] mt-7 py-2 px-4 rounded-xl hover:cursor-pointer hover:bg-[#FF3B30]/90 "
           >
@@ -224,7 +257,7 @@ const Profile = () => {
           <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
             Personal Information
           </h2>
-              
+
           <button
             disabled={isDisabled}
             type="submit"

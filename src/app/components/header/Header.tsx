@@ -29,7 +29,7 @@ const Header = () => {
     } else {
       setIsAuthenticated(false);
     }
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     setMenuOpen(false)

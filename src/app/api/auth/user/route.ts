@@ -1,23 +1,15 @@
-import { NextResponse } from "next/server";
 import api from "@/app/lib/axiosInstance";
 import { isAxiosError } from "axios";
+import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const res = await api.get("Wallet/dashboard");
-    console.log(res.data);
+    const data = await api.get("auth/user-details");
+    console.log(data.data, data.status);
+    return NextResponse.json({ ...data.data }, { status: 200 });
 
-    if (res.data) {
-      let data = res.data;
-      return NextResponse.json({ data }, { status: 200 });
-    } else {
-      return NextResponse.json({ error: "Failed" }, { status: 400 });
-    }
   } catch (err) {
-    console.error(err);
-
     if (isAxiosError(err)) {
-      console.error(err.response);
       if (err.response?.status == 401) {
         return NextResponse.json(
           { error: "Session expired, Please login" },
@@ -25,7 +17,7 @@ export async function GET(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data?.ret_msg },
+        { error: err.response?.data?.ret_msg || err.response?.statusText },
         { status: 400 }
       );
     }

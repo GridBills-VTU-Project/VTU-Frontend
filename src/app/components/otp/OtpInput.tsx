@@ -4,19 +4,19 @@ import { useState, useRef, useEffect } from "react";
 import lock from "@/../public/lock.png";
 import { toast } from "react-toastify";
 import UseAxios from "@/app/customHooks/UseAxios";
-import { useRouter } from "next/navigation";
 import { isAxiosError } from "axios";
 import { formatTime } from "@/app/util/functions";
+import { useOtpMutation } from "@/app/customHooks/useMutation";
 
 export default function OtpInput() {
   const api = UseAxios();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
   const [email, setEmail] = useState("");
   const [timer, setTimer] = useState(0);
   const [canResend, setCanResend] = useState(false);
   const OTP_EXPIRY_SECONDS = 60;
+  const { mutate, isPending } = useOtpMutation();
 
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -49,29 +49,14 @@ export default function OtpInput() {
       toast.error("Incomplete otp.");
       return;
     }
-
     try {
-      setLoading(true);
-      const res = await api.post(
-        "auth/otp",
-        JSON.stringify({ email, otp: finalOtp })
-      );
-      toast.success(res.data.msg);
-      localStorage.clear();
-      const session = parseInt(
-        process.env.NEXT_PUBLIC_SESSION_EXPIRY_SECONDS || "7200"
-      );
-      const sessionExpiry = Date.now() + session * 1000;
-      localStorage.setItem("vtuAuthenticated", sessionExpiry.toString());
-      router.push("/signin");
+      mutate({ email: email, otp: finalOtp });
     } catch (error) {
       if (isAxiosError(error)) {
         console.log(error);
         return;
       }
       toast.error("Something went wrong.");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -114,7 +99,6 @@ export default function OtpInput() {
 
     return () => clearInterval(interval);
   }, [canResend, timer]);
-  console.log(canResend);
 
   const handleResend = async () => {
     try {
@@ -184,12 +168,16 @@ export default function OtpInput() {
       </p>
 
       <button
-        disabled={loading}
+        disabled={loading || isPending}
         onClick={handleSubmit}
         className="flex justify-center items-center gap-2 bg-[#646FC6] w-full text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#646FC6]/80 transition hover:cursor-pointer"
       >
         {" "}
-        <div className={"flex justify-center " + (!loading && " hidden")}>
+        <div
+          className={
+            "flex justify-center " + ((!loading || !isPending) && " hidden")
+          }
+        >
           <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
         Submit

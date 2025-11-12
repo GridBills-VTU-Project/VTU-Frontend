@@ -1,5 +1,5 @@
 "use client";
-import { Gift, Handbag, Headset, LayoutDashboard, User, Wallet } from "lucide-react";
+import { Gift, Handbag, Headset, LayoutDashboard, LogOut, User, Wallet } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Maindasboard from "./Maindasboard";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -8,6 +8,7 @@ import Services from "./Services/Services";
 import Reward from "./Reward";
 import Support from "./Support";
 import Profile from "./Profile";
+import { useLogOutMutation } from "../customHooks/useMutation";
 export const dashboardSidebarLinks = [
   {
     name: "dashboard",
@@ -52,6 +53,7 @@ const Dashboard = () => {
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<string|null>(null);
   const [section, setSection] = useState<string|null>(null);
+  const {mutateAsync} = useLogOutMutation();
     
   const setActiveTab = (newTab: string) => {
     const params = new URLSearchParams(searchParams);
@@ -94,6 +96,15 @@ const Dashboard = () => {
                 {link.name}
               </button>
             ))}
+            <button
+            onClick={async()=>await mutateAsync()}
+                className={
+                  "text-center flex items-center capitalize gap-5 border-y-2 py-2 px-5 border-[#029993CC] " 
+                }
+              >
+                <div><LogOut /></div>
+                Logout
+              </button>
           </div>
         </div>
       </div>

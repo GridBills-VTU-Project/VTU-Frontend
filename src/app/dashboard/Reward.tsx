@@ -36,7 +36,7 @@ const Reward = () => {
         <div className="flex flex-col gap-5 ">
           <p className="font-medium text-sm">Your Points</p>
           <h2 className="flex justify-between font-bold text-4xl leading-6 capitalize">
-            1,500
+            {data?.data.rewardPoints|| "0"}
           </h2>
           <p className='capitalize bg-[#B3F6AD66] px-5 py-2 w-fit rounded-4xl font-semibold text-xs'>silver member</p>
         </div>

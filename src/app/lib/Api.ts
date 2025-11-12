@@ -1,6 +1,6 @@
 // import { cookies } from "next/headers";
-
 import { AxiosInstance } from "axios";
+import { User } from "../util/types";
 
 // export async function getUserFromCookie() {
 //   const cookieStore = await cookies();
@@ -40,17 +40,20 @@ import { AxiosInstance } from "axios";
 //   try {
 //     const res = await api.get("dashboard");
 //     console.log("dd",res);
-    
+
 //     return res.data; // Axios auto-parses JSON
-    
+
 //   } catch (error) {
 //     console.log(error);
-    
+
 //   }
 // }
 
-
-export async function getDashboard(api:AxiosInstance) {
-    const res = await api.get("dashboard");
-    return res.data; // Axios auto-parses JSON
+export async function getDashboard(api: AxiosInstance) {
+  const res = await api.get("dashboard");
+  return res.data; // Axios auto-parses JSON
+}
+export const getCurrentUser = async (api: AxiosInstance): Promise<User> => {
+  const res = await api.get("/auth/user");
+  return res.data; // { id, name, email, role, ... }
 };
