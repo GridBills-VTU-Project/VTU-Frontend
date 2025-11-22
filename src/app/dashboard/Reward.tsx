@@ -1,22 +1,15 @@
 'use client'
 import { transactions } from '@/app/constants/sidebarConstants';
 import UseAxios from '@/app/customHooks/UseAxios';
-import { getDashboard } from '@/app/lib/Api';
-import { useQuery } from '@tanstack/react-query';
 import { Wallet} from 'lucide-react';
 import Image from 'next/image';
 import React from 'react'
+import { useDashboard } from '../customHooks/UseQueries';
 
 const Reward = () => {
     const api = UseAxios();
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["dashboard"],
-    queryFn: () => getDashboard(api),
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5, // 5 minutes: consider data fresh
-    // refetchInterval: 10000, // optional: auto-refetch every 10s
-  });
+  const { data, isLoading, isError } = useDashboard();
   return (
     <div>
       <div className="w-full">

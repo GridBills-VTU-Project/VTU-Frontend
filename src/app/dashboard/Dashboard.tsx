@@ -1,136 +1,34 @@
 "use client";
-import { Gift, Handbag, Headset, LayoutDashboard, LogOut, User, Wallet } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Maindasboard from "./Maindasboard";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import MainWallet from "./MainWallet";
 import Services from "./Services/Services";
 import Reward from "./Reward";
 import Support from "./Support";
 import Profile from "./Profile";
-import { useLogOutMutation } from "../customHooks/useMutation";
-export const dashboardSidebarLinks = [
-  {
-    name: "dashboard",
-    img: <LayoutDashboard />,
-    href: "/dashboard",
-    color: "bg-[#1601FF4D]",
-  },
-  {
-    name: "wallet",
-    img: <Wallet />,
-    href: "/wallet",
-    color: "bg-[#2EAF074D]",
-  },
-  {
-    name: "services",
-    img: <Handbag />,
-    href: "/services",
-    color: "bg-[#F761164D]",
-  },
-  {
-    name: "reward",
-    img: <Gift />,
-    href: "/reward",
-    color: "bg-[#1631454D]",
-  },
-  {
-    name: "support",
-    img: <Headset />,
-    href: "/support",
-    color: "bg-[#1631454D]",
-  },
-  {
-    name: "profile",
-    img: <User />,
-    href: "/support",
-    color: "bg-[#1631454D]",
-  },
-  // { name: "Exam Scratch card", img: card, href: "/buy-airtime",color:"bg-[#1631454D]" }
-];
-const Dashboard = () => {
-  const router = useRouter();
+import Commission from "./Commission";
+import { NormalLoadingScreen } from "../loading";
+const Dashboard = ({}) => {
   const searchParams = useSearchParams();
-  const [tab, setTab] = useState<string|null>(null);
-  const [section, setSection] = useState<string|null>(null);
-  const {mutateAsync} = useLogOutMutation();
-    
-  const setActiveTab = (newTab: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("tab", newTab);
-    router.push(`?${params.toString()}`, { scroll: false });
-  };
-
-  const setSectionTab = (newSection: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("section", newSection);
-    router.push(`?${params.toString()}`, { scroll: false });
-  };
-
-  useEffect(()=>{
-    const tab = searchParams.get("tab") ?? "dashboard";
-    const section = searchParams.get("section") ?? "airtime";
+  const [tab, setTab] = useState<string | null>(null);
+  useEffect(() => {
+    const tab = searchParams.get("tab");
     setTab(tab);
-    setSection(section);
-  },[searchParams])
+  }, [searchParams]);
 
   return (
-    <section className="flex max-mobile:block bg-[#F2F2F7] w-full min-h-[85dvh] ">
-      <div className="flex justify-center w-full max-w-[150px] min-h-full bg-darkbackground">
-        <div
-          className={
-            "flex items-center flex-col h-fit duration-500 not-mobile:hidden"
-          }
-        >
-          <div className="text-white font-medium text-xs leading-[22px] mt-10 flex flex-col gap-10">
-            {dashboardSidebarLinks.map((link) => (
-              <button
-                onClick={()=>setActiveTab(link.name)}
-                key={link.name}
-                className={
-                  "text-center flex items-center capitalize gap-5 border-y-2 py-2 px-5 border-[#029993CC] " +
-                  (link.name === tab && " bg-[#26798C]")
-                }
-              >
-                <div>{link.img}</div>
-                {link.name}
-              </button>
-            ))}
-            <button
-            onClick={async()=>await mutateAsync()}
-                className={
-                  "text-center flex items-center capitalize gap-5 border-y-2 py-2 px-5 border-[#029993CC] " 
-                }
-              >
-                <div><LogOut /></div>
-                Logout
-              </button>
-          </div>
-        </div>
-      </div>
-      <div className="p-10 w-full mx-auto">
-        {
-          (tab === "dashboard") && <Maindasboard />
-        }
-        {
-          (tab === "wallet") && <MainWallet />
-        }
-        
-        {
-          (tab === "services") && <Services section={section} setSection={setSectionTab}/>
-        }
-        {
-          (tab === "reward") && <Reward/>
-        }
-        {
-          (tab === "support") && <Support/>
-        }
-        {
-          (tab === "profile") && <Profile/>
-        }
-        
-      </div>
-    </section>
+    <div className="p-10 w-full mx-auto">
+      {(tab === "dashboard" || !tab) && <Maindasboard />}
+      {tab === "wallet" && <MainWallet />}
+      {tab === "commission" && <Commission />}
+      {/* <Suspense fallback={<NormalLoadingScreen/>}> */}
+        {(tab === "services" || tab === "sale") && <Services />}
+      {/* </Suspense> */}
+      {tab === "reward" && <Reward />}
+      {tab === "support" && <Support />}
+      {tab === "profile" && <Profile />}
+    </div>
   );
 };
 

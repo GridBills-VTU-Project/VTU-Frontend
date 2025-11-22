@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { Suspense } from "react";
 import si from "@/../public/signup.png";
-import SigninForm from "./SigninForm";
+import ForgotPasswordForm from "./ForgotPasswordForm";
 import { NormalLoadingScreen } from "../loading";
 const Signin = () => {
   return (
@@ -17,13 +17,13 @@ const Signin = () => {
       </div>
       <div className="flex-1 w-full">
         <h2 className="text-center max-xs:text-xl text-4xl font-black not-xl:text-2xl leading-6 mt-10">
-          Sign in to Account
+          Forgot Password
         </h2>
         <p className="leading-6 mx-auto text-sm text-[#727272] py-5 max-sm:text-xs text-center">
-          Please fill in your details.
+          Please fill in your detail.
         </p>
         <Suspense fallback={<NormalLoadingScreen/>}>
-          <SigninForm />
+          <ForgotPasswordForm />
         </Suspense>
       </div>
     </section>

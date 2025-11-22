@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { Suspense } from "react";
 import si from "@/../public/signup.png";
 import SignupForm from "./SignupForm";
+import { NormalLoadingScreen } from "../loading";
 const page = () => {
   return (
     <section className="bg-[#ffffff] flex ">
@@ -21,7 +22,7 @@ const page = () => {
         <p className="leading-6 mx-auto text-sm text-[#727272] py-5 max-sm:text-xs text-center">
           Please fill in your details.
         </p>
-        <Suspense>
+        <Suspense fallback={<NormalLoadingScreen/>}>
           <SignupForm />
         </Suspense>
       </div>

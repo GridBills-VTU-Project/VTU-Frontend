@@ -3,7 +3,7 @@ import { selectOption } from "@/app/util/functions";
 import { Mail, Phone, UserPen } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useAuthUser } from "../customHooks/UseAuthUser";
+import { useAuthUser } from "../customHooks/UseQueries";
 const Profile = () => {
   const { data: user, isLoading, isError, error } = useAuthUser();
   const [profileForm, setPasswordForm] = useState({

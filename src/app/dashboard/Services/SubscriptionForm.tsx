@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 const networks = ["MTN", "Airtel", "Glo", "9mobile"];
 const SubscriptionForm = () => {
-  //   const router = useRouter();
   const api = UseAxios();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({

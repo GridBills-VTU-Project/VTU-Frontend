@@ -1,19 +1,34 @@
+'use client'
 import { quickActions } from "@/app/constants/sidebarConstants";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AirtimeForm from "./AirtimeForm";
 import DataForm from "./DataForm";
 import ElectricBillForm from "./ElectricBillForm";
 import ExamCardForm from "./ExamCardForm";
 import SubscriptionForm from "./SubscriptionForm";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const Services = ({
-  section,
-  setSection,
-}: {
-  section: string | null;
-  setSection: (text: string) => void;
-}) => {
+const Services = () => {
+  const router = useRouter();  
+  const [section, setSection] = useState<string>("airtime");
+    const searchParams = useSearchParams();
+
+  const setSectionTab = (newSection: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("section", newSection);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+    useEffect(()=>{
+      const section = searchParams.get("section")
+      if(!section){
+        setSectionTab("airtime")
+        setSection("airtime");
+      }else{
+        setSection(section)
+      }
+    },[searchParams])
+
   return (
     <div>
       <div className="w-full">
@@ -27,7 +42,7 @@ const Services = ({
       <div className="flex gap-4 mt-10 flex-wrap max-xs:justify-center justify-between">
         {quickActions.map((action, index) => (
           <button
-            onClick={() => setSection(action.query)}
+            onClick={() => setSectionTab(action.query)}
             key={index}
             className={
               " w-full max-w-[200px] h-[120px] rounded-xl flex flex-col items-center justify-center gap-4 border-2 border-[#0000001A]" +
