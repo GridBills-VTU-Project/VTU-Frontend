@@ -160,7 +160,7 @@ export default function OtpInput() {
         <button
           disabled={canResend ? false : true}
           onClick={handleResend}
-          className="underline text-blue-600 hover:cursor-pointer hover:text-blue-600/80"
+          className={"underline text-blue-600 hover:cursor-pointer hover:text-blue-600/80" + (canResend && " text-blue-300")}
         >
           Resend
         </button>{" "}

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { toast } from "react-toastify";
 
 export const isValidPassword = (password: string): boolean => {
   const passwordRegex = /^(?=.*[0-9])(?=.*[.!@#$%^&*])(?=.*[A-Z]).{7,}$/;
@@ -18,3 +19,7 @@ export function formatTime(seconds: number) {
     const { name, value } = e.target;
     setForm((prev:any) => ({ ...prev, [name]: value }));
   };
+  export const handleCopy = async (text:string)=>{
+    await navigator.clipboard.writeText(text)
+    toast.info("copied");
+  }

@@ -13,6 +13,7 @@ const page = () => {
           alt="a picture of a man starring down at his phone smiling"
           width={1500}
           height={700}
+          priority={true}
         />
       </div>
       <div className="flex-1 w-full">

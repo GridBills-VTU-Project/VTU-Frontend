@@ -1,6 +1,6 @@
 // import { cookies } from "next/headers";
 import { AxiosInstance } from "axios";
-import { User } from "../util/types";
+import { DataArray, examPackage, TvPackage, User } from "../util/types";
 
 // export async function getUserFromCookie() {
 //   const cookieStore = await cookies();
@@ -54,6 +54,18 @@ export async function getDashboard(api: AxiosInstance) {
   return res.data; // Axios auto-parses JSON
 }
 export const getCurrentUser = async (api: AxiosInstance): Promise<User> => {
-  const res = await api.get("/auth/user");
+  const res = await api.get("auth/user");
   return res.data; // { id, name, email, role, ... }
+};
+export const getDataPlans = async (api: AxiosInstance,network:string): Promise<DataArray[]> => {
+  const res = await api.get("services/"+network);
+  return res.data;
+};
+export const getExamPurchase = async (api: AxiosInstance): Promise<examPackage[]> => {
+  const res = await api.get("services");
+  return res.data;
+};
+export const getTvPurchase = async (api: AxiosInstance,tv:string): Promise<TvPackage[]> => {
+  const res = await api.get("services/tv/"+tv.toLocaleLowerCase());
+  return res.data;
 };

@@ -98,10 +98,11 @@ export const useLogOutMutation = () => {
       return res.data;
     },
     onSuccess: async (data) => {
+      // router.push("/signin");
       toast.success(data.msg);
       localStorage.clear();
       queryClient.clear(); // Optional: clears *all* queries
-      router.push("/signin");
+      return;
     },
     onError: (error) => {
       if (isAxiosError(error)) {
@@ -119,7 +120,7 @@ export const useWalletMutation = () => {
   return useMutation({
     mutationFn: async (form: { amount: string; type: "fund" | "borrow" }) => {
       let res: AxiosResponse<any, any>;
-      res = await api.post("dashboard/wallet", JSON.stringify(form));
+      res = form.type === "fund"? await api.post("dashboard/wallet", JSON.stringify(form)) : await api.patch("dashboard/wallet", JSON.stringify(form)) ;
       return res.data;
     },
     onSuccess: async (data) => {

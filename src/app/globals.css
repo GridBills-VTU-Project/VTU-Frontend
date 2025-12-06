@@ -40,6 +40,9 @@ cursor: pointer;
     background-position: 1000px 0;
   }
 }
+body:has(.requires-no-scroll) {
+  overflow: hidden;
+}
 
 .shimmer {
   background: linear-gradient(

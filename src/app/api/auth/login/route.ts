@@ -59,6 +59,8 @@ export async function POST(req: Request) {
     }
     return res;
   } catch (err) {
+    console.log(err);
+    
     if (isAxiosError(err)) {
       return NextResponse.json(
         { error: err.response?.data?.ret_msg },

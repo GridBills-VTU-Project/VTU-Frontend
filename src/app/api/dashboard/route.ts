@@ -5,7 +5,6 @@ import { isAxiosError } from "axios";
 export async function GET(req: Request) {
   try {
     const res = await api.get("Wallet/dashboard");
-    console.log(res.data);
 
     if (res.data) {
       let data = res.data;
@@ -14,7 +13,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Failed" }, { status: 400 });
     }
   } catch (err) {
-    console.error(err);
+    // console.error(err);
 
     if (isAxiosError(err)) {
       console.error(err.response);

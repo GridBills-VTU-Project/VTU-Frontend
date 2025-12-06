@@ -1,31 +1,32 @@
 "use client";
-import Image from "next/image";
+import { DataArray } from "@/app/util/types";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
-export default function Select({
+export default function SelectPlan({
   options,
   placeholder = "Select an option",
   selected,
   setSelected,
   name,
-  withImage,
+  loading
 }: {
-  withImage?:boolean;
   name: string;
-  options: string[];
+  options: any;
   placeholder?: string;
   selected: any;
   setSelected: Dispatch<SetStateAction<any>>;
+  loading:boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [opt, setopt] = useState(options);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
   const ref = useRef<HTMLDivElement>(null);
+  
 
-  const handleSelect = (option: string) => {
-    // console.log(option);
-    // console.log(name);
-    setopt(options);
+  const handleSelect = (option: any) => {
+    console.log(option);
+    setopt(option);
+    console.log(name);
 
     setSelected((prev: any) => ({ ...prev, [name]: option }));
     setOpen(false);
@@ -78,12 +79,12 @@ export default function Select({
         break;
     }
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
-    setopt(
-      options.filter((option) => option.toLocaleLowerCase().includes(query))
-    );
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const query = e.target.value.toLowerCase();
+  //   setopt(
+  //     options.filter((option) => option.toLocaleLowerCase().includes(query))
+  //   );
+  // };
 
   return (
     <div ref={ref} className="relative w-full text-[16px] sm:text-sm ">
@@ -94,12 +95,12 @@ export default function Select({
         onKeyDown={handleKeyDown}
         className={
           " px-3 w-full flex justify-between items-center hover:cursor-pointer line-clamp-1 truncate p-5 rounded-lg bg-[#EEEEEE] " +
-          (selected[name]
+          (selected
             ? ""
             : "text-gray-400 font-extralight font-(family-name:--font-figtree)")
         }
       >
-        {selected[name] || placeholder}
+        {opt.name || placeholder}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`w-5 h-5 text-gray-500 transition-transform ${
@@ -121,52 +122,47 @@ export default function Select({
       {/* Dropdown options */}
       {open && (
         <div className="absolute mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10 transition-all duration-200 ease-in-out overflow-y-auto max-h-39 text-sm max-xs:max-h-60">
-          {/* <div className="flex p-2 outline-1 m-2 rounded-lg mb-5">
-            <Image
-            priority={true}
-              src="/search-normal.svg"
-              alt="search icon"
-              width={20}
-              height={20}
-            />
-            <input
-              type="search"
-              className="w-full p-1 text-[16px] sm:text-sm outline-0"
-              onChange={handleChange}
-              placeholder="Search"
-            />
-          </div> */}
-          {opt.map((option, index) => (
+          {!loading? options.map((option:any, index:number) => (
             <button
               type="button"
-              key={option}
+              key={index}
               onClick={() => handleSelect(option)}
               className={`flex gap-2 w-full text-left px-4 py-3 border-b-1 
                 ${
                   index === highlightedIndex
                     ? "bg-[#163145]/70 text-white"
-                    : (
-                        typeof selected === "string"
-                          ? selected === option
-                          : selected[name] === option
-                      )
+                    : selected.name == option.name
                     ? "bg-[#163145] text-white"
                     : "text-[#000]"
                 } 
                 hover:bg-[#163145]/70 hover:text-white`}
             >
-              {withImage && <Image
+              {/* <Image
                 className="w-5 h-auto"
                 priority={true}
                 src={`/${option.toLowerCase()}.svg`}
                 alt={`${option} icon`}
                 width={0}
                 height={0}
-                // hidden={withImage}
-              />}
-              {option}
+              /> */}
+              <div key={index} className="flex justify-between w-full">
+
+              <p>
+                
+                { options && option.name}
+                </p>
+              <p>
+                { options && "N"+option.sellingPrice}
+                </p>
+              </div>
             </button>
-          ))}
+          )) : <div
+                className={
+                  "flex justify-center"
+                }
+              >
+                <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              </div>}
         </div>
       )}
     </div>

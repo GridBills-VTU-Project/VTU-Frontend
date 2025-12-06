@@ -8,6 +8,7 @@ import { selectOption } from "../util/functions";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useWalletMutation } from "../customHooks/useMutation";
+import { numRegex } from "../constants/constant";
 
 const MainWallet = () => {
   const [fund, setFund] = useState(true);
@@ -21,8 +22,8 @@ const MainWallet = () => {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (!parseFloat(form.amount))
-        return toast.error("Amount must be a number");
+      if (!numRegex.test(form.amount) || parseInt(form.amount) < 1000)
+        return toast.info("Amount must be a number and greater than 1000");
       await mutateAsync({
         amount: form.amount,
         type: fund ? "fund" : "borrow",

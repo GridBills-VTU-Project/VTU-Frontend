@@ -49,7 +49,7 @@ const Reward = () => {
           data?.data.recentTransactions.length > 0 ? (
             <ul
               className={
-                "h-full flex flex-col gap-10  " + (isLoading && " hidden")
+                "h-full w-full flex flex-col gap-10  " + (isLoading && " hidden")
               }
             >
               {transactions.map((trans, index) => (
@@ -57,7 +57,7 @@ const Reward = () => {
                   key={index}
                   className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end"
                 >
-                  <div className="flex w-40 gap-5">
+                  <div className="flex w-full gap-5">
                     <Image
                       className="bg-[#D9D9D9] rounded-full p-2 w-10 h-10"
                       src={trans.img}

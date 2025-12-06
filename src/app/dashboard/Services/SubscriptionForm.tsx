@@ -1,25 +1,49 @@
 import Select from "@/app/components/ui/Select";
+import SelectPlan from "@/app/components/ui/SelectPlan";
+import { numRegex, tvSubs } from "@/app/constants/constant";
 import UseAxios from "@/app/customHooks/UseAxios";
+import { useGetTvPackages } from "@/app/customHooks/UseQueries";
+import { selectOption } from "@/app/util/functions";
 import { isAxiosError } from "axios";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "react-toastify";
-const networks = ["MTN", "Airtel", "Glo", "9mobile"];
 const SubscriptionForm = () => {
   const api = UseAxios();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    meterType: "",
-    meterNum: "",
-    servicID: "",
-    amount: "",
+    cableType: "DSTV",
+    package: "",
+    serialNo: "",
+    isChecked:false
   });
+  const { data, error, isError, isLoading, isFetching, isPending } =
+    useGetTvPackages(form.cableType);
+  const tvPackages = useMemo(() => {
+    if (!data) return [];
+
+    return data
+      .map((item) => ({
+        sellingPrice: item.amount,
+        name: item.plan,
+        planCode: item.planCode,
+        plan: item.plan,
+      }));
+  }, [data]);
+
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       console.log(form);
-      const res = await api.post("service/airtime", JSON.stringify(form));
+      if (form.cableType === "") {
+        return toast.info("please select a cable");
+      } else if (Object.keys(form.package).length < 1) {
+        return toast.info("please select a package.");
+      } else if (!numRegex.test(form.serialNo)) {
+        return toast.info("Enter a valid Smart card number");
+      }
+      const res = await api.post("services/tv/"+form.cableType, JSON.stringify(form));
       toast.success(res.data.msg || "Success.");
     } catch (error) {
       if (isAxiosError(error)) {
@@ -31,10 +55,6 @@ const SubscriptionForm = () => {
       setLoading(false);
     }
   };
-  const selectOption = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
   return (
     <form onSubmit={submit} className="flex flex-col rounded-lg w-full">
       <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10">
@@ -45,62 +65,65 @@ const SubscriptionForm = () => {
           <div className="flex flex-col gap-3">
             <p className="mt-10">Choose Cable</p>
             <Select
-              options={networks}
+              options={tvSubs}
               selected={form}
               setSelected={setForm}
               placeholder="Choose Cable"
-              name="meterType"
+              name="cableType"
+              withImage={true}
             />
           </div>
           <div className="flex flex-col gap-3">
             <p className="mt-10">Choose Package</p>
-            <input
-              value={form.meterNum}
-              name="meterNum"
-              required={true}
-              onChange={selectOption}
-              type="text"
-              className="p-5 rounded-lg bg-[#EEEEEE]"
-              placeholder="Choose Package"
+            <SelectPlan
+              loading={isLoading || isFetching || isPending || isError}
+              options={tvPackages || []}
+              selected={form}
+              setSelected={setForm}
+              placeholder="Select package"
+              name="package"
             />
           </div>
         </div>
       </div>
       <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10">
-        <h3 className="capitalize font-bold text-3xl  text-[#163145] ">
-          Tv Subscription
+        <h3 className="capitalize font-bold text-3xl text-[#163145] ">
+          Enter Details
         </h3>
+        <p>Provide your smartcard or IUC number</p>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-3">
-            <p className="mt-10">Choose Cable</p>
-            <Select
-              options={networks}
-              selected={form}
-              setSelected={setForm}
-              placeholder="Choose Cable"
-              name="meterType"
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <p className="mt-10">Choose Package</p>
+            <p className="mt-10">Smartcard/IUC Number</p>
+
             <input
-              value={form.meterNum}
-              name="meterNum"
+              value={form.serialNo}
+              name="serialNo"
               required={true}
-              onChange={selectOption}
+              onChange={(e) => selectOption(e, setForm)}
               type="text"
               className="p-5 rounded-lg bg-[#EEEEEE]"
-              placeholder="Choose Package"
+              placeholder="e.g 1234567"
             />
           </div>
+          <div className="flex items-center w-fit gap-3">
+          <input
+            name="ischecked"
+            onChange={(e) => {
+              setForm((prev) => ({ ...prev, isChecked: e.target.checked }));
+            }}
+            type="checkbox"
+            className="accent-darkbackground"
+          />
+          <p className="">Use Points</p>
+        </div>
         </div>
       </div>
-          <button
-            disabled={loading}
-            className="bg-[#646FC6] hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
-          >
-            Proceed to Payment
-          </button>
+      <button
+        disabled={loading}
+        className="bg-[#646FC6] hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
+      >
+        Proceed to Payment
+      </button>
     </form>
   );
 };

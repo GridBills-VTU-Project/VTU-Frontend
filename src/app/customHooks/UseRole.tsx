@@ -4,7 +4,7 @@ export default function UseRole( roles:string[] ):boolean {
   const { data: user } = useAuthUser();
 
   if (!user) return false;
-  if (!roles.includes("agent")) return false;
+  if (!roles.includes(user.role)) return false;
 
   return true;
 }
