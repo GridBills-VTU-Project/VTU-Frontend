@@ -3,10 +3,7 @@ import api from "@/app/lib/axiosInstance";
 import { isAxiosError } from "axios";
 import { numRegex } from "@/app/constants/constant";
 
-export async function GET(
-  req: Request,
-  context: { params: Promise<{ cable: string }> }
-) {
+export async function GET(  req: Request,context: { params: Promise<{ cable: string }> }) {
   try {
     const { cable } = await context.params;
     console.log(cable);
@@ -41,8 +38,9 @@ export async function GET(
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: Request,context: { params: Promise<{ cable: string }> }) {
   try {
+    const { cable } = await context.params;
     const body = await req.json();
     if (!body.cableType?.trim()) {
       return NextResponse.json(
@@ -75,10 +73,11 @@ export async function POST(req: Request) {
     }
     const new_body = {
       service: body.cableType,
-      Vcode: body.package?.planCode,
-      AccountNo: body.phone,
+      vcode: body.package?.planCode,
+      accountNo: body.serialNo,
       usePoints:body.isChecked,
-      amount:body.package.amount
+      amount:body.package.sellingPrice,
+      ref:cable
     };
     console.log(new_body);
     const data = await api.post("TvSubscription/purchase", new_body);

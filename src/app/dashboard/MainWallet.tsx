@@ -1,9 +1,9 @@
 'use client';
 import { transactions } from "@/app/constants/sidebarConstants";
-import { Plus, TrendingDown, Wallet } from "lucide-react";
+import { Plus, RefreshCcw, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useDashboard } from "../customHooks/UseQueries";
+import { useDashboard, usewallet } from "../customHooks/UseQueries";
 import { selectOption } from "../util/functions";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -12,7 +12,7 @@ import { numRegex } from "../constants/constant";
 
 const MainWallet = () => {
   const [fund, setFund] = useState(true);
-  const { data, isLoading, isError } = useDashboard();
+  const { data, isLoading, isError ,refetch} = usewallet();
   const [form, setForm] = useState({
     amount: "",
   });
@@ -39,8 +39,11 @@ const MainWallet = () => {
   return (
     <div>
       <div className="w-full">
-        <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl">
-          Wallet
+        <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl w-full">
+          Wallet Overview
+          <button className="ml-3" onClick={()=>refetch()}>
+            <RefreshCcw />
+          </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold ">
           Manage your wallet balance and transactions
@@ -63,7 +66,7 @@ const MainWallet = () => {
           </span>
           <div className="mx-auto">
             <h2 className="flex justify-between font-bold text-3xl leading-6 capitalize text-center">
-              ₦{!isError ? data?.data.walletBalance : 2}
+              ₦{!isError ? data?.walletBalance : 0}
             </h2>
             <p className="font-medium text-sm mt-3 text-center">
               Available Balance
@@ -174,40 +177,39 @@ const MainWallet = () => {
             (isLoading && " shimmer")
           }
         >
-          {data?.data.recentTransactions &&
-          data?.data.recentTransactions.length > 0 ? (
+          {data?.recentTransactions &&
+          data?.recentTransactions.length > 0 ? (
             <ul
               className={
                 "h-full flex flex-col gap-10 w-full  " +
                 (isLoading && " hidden")
               }
             >
-              {transactions.map((trans, index) => (
+              {data.recentTransactions.map((trans:any, index:number) => (
                 <li
                   key={index}
-                  className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end"
+                  className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end items-center"
                 >
-                  <div className="flex w-40 gap-5">
-                    <Image
-                      className="bg-[#D9D9D9] rounded-full p-2 w-10 h-10"
-                      src={trans.img}
-                      width={0}
-                      height={0}
-                      alt={`${trans.name} icon`}
-                    />
+                  <div className="flex gap-5 items-center">
+                    {trans.type == "Credit" ?
+                    <div className="p-3 bg-[#10AA3E1A] rounded-full">
+                      <TrendingUp color="#10AA3E"/>
+                    </div>
+                    :
+                    <div className="p-3 bg-[#FF00001A] rounded-full">
+                      <TrendingDown color="#FF0000"/>
+                    </div>
+                    }
                     <div className="">
                       <h4 className="capitalize font-medium text-sm">
-                        {trans.name}
+                        {trans.purpose}
                       </h4>
-                      <p className="text-[#757575] text-sm uppercase text-start">
-                        {trans.sp}
-                      </p>
                     </div>
                   </div>
                   <div>
                     <div>
                       <h5 className="font-medium text-sm">₦{trans.amount}</h5>
-                      <p className="text-[#757575] text-sm">{trans.time}</p>
+                      <p className="text-[#757575] text-sm">{new Date(trans.createdAt).toDateString()}</p>
                     </div>
                   </div>
                 </li>

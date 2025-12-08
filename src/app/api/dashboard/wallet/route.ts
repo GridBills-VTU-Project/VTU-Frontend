@@ -4,7 +4,7 @@ import { AxiosResponse, isAxiosError } from "axios";
 
 export async function GET(req: Request) {
   try {
-    const res = await api.get("Wallet/dashboard");
+    const res = await api.get("Wallet/wallet-dashboard");
 
     if (res.data) {
       let data = res.data;

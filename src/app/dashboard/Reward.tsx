@@ -1,20 +1,21 @@
 'use client'
 import { transactions } from '@/app/constants/sidebarConstants';
-import UseAxios from '@/app/customHooks/UseAxios';
-import { Wallet} from 'lucide-react';
+import { RefreshCcw, Wallet} from 'lucide-react';
 import Image from 'next/image';
 import React from 'react'
-import { useDashboard } from '../customHooks/UseQueries';
+import { useReward } from '../customHooks/UseQueries';
 
 const Reward = () => {
-    const api = UseAxios();
 
-  const { data, isLoading, isError } = useDashboard();
+  const { data, isLoading, isError,refetch } = useReward();
   return (
     <div>
       <div className="w-full">
-        <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl">
-          Rewards & Points
+        <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl w-full">
+          Reward Overview
+          <button className="ml-3" onClick={()=>refetch()}>
+            <RefreshCcw />
+          </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold ">
           Earn points with every transaction
@@ -29,7 +30,7 @@ const Reward = () => {
         <div className="flex flex-col gap-5 ">
           <p className="font-medium text-sm">Your Points</p>
           <h2 className="flex justify-between font-bold text-4xl leading-6 capitalize">
-            {data?.data.rewardPoints|| "0"}
+            {data?.rewardPoints|| "0"}
           </h2>
           <p className='capitalize bg-[#B3F6AD66] px-5 py-2 w-fit rounded-4xl font-semibold text-xs'>silver member</p>
         </div>
@@ -45,8 +46,8 @@ const Reward = () => {
             (isLoading && " shimmer")
           }
         >
-          {data?.data.recentTransactions &&
-          data?.data.recentTransactions.length > 0 ? (
+          {data?.rewardTransaction &&
+          data?.rewardTransaction.length > 0 ? (
             <ul
               className={
                 "h-full w-full flex flex-col gap-10  " + (isLoading && " hidden")
