@@ -45,7 +45,7 @@ const Support = () => {
         </div>
         <button
           type="submit"
-          className="flex justify-center items-center gap-2 bg-[#646FC6] w-[30%] text-[#ffff] mt-15 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer hover:bg-[#646fc6]/90 "
+          className="flex justify-center items-center gap-2 bg-[#646FC6] sm:w-[40%] w-[90%] text-[#ffff] mt-15 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer hover:bg-[#646fc6]/90 "
         >
           <div className={"flex justify-center" + (!true && " hidden")}>
             <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>

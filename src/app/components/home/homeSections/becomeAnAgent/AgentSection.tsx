@@ -3,6 +3,7 @@ import React from "react";
 import p3 from "../../../../../../public/secondPerson.png";
 import { AgentCard } from "../partners_and_services/Card";
 import { agentCards } from "@/app/constants/cardConstants";
+import Link from "next/link";
 
 const AgentSection = () => {
   return (
@@ -36,25 +37,25 @@ const AgentSection = () => {
                 alt="User smiling at phone"
                 width={1250}
                 height={1000}
-loading="lazy"
+                loading="lazy"
                 className="object-cover absolute h-90 w-full top-10"
               />
             </div>
           </div>
         </div>
-                <div className="flex gap-10 flex-wrap justify-center">
-                  {agentCards.map((item,index) => (
-                    <AgentCard key={index} {...item} />
-                  ))}
-                </div>
-                      <div className="mt-20 w-full justify-center flex gap-4 max-sm:text-sm">
-        <button className=" bg-[#646FC6] py-5 w-50 hover:cursor-pointer hover:bg-[#646FC6]/90 rounded-xl text-[#ffffff] font-medium">
-          Start Now
-        </button>
-        <button className=" border border-[#163145] text-[#163145] py-5 w-50 hover:cursor-pointer hover:bg-[#646FC6]/40 hover:text-[#ffff] rounded-xl font-medium">
-          Discover More
-        </button>
-      </div>
+        <div className="flex gap-10 flex-wrap justify-center">
+          {agentCards.map((item, index) => (
+            <AgentCard key={index} {...item} />
+          ))}
+        </div>
+        <div className="mt-20 w-full justify-center flex gap-4 max-sm:text-sm">
+          <Link href={"/dashboard?tab=dashboard"} className="text-center bg-[#646FC6] py-5 w-50 hover:cursor-pointer hover:bg-[#646FC6]/90 rounded-xl text-[#ffffff] font-medium">
+            Start Now
+          </Link>
+          <Link href={"/agent"} className="text-center border border-[#163145] text-[#163145] py-5 w-50 hover:cursor-pointer hover:bg-[#646FC6]/40 hover:text-[#ffff] rounded-xl font-medium">
+            Discover More
+          </Link>
+        </div>
       </div>
     </section>
   );

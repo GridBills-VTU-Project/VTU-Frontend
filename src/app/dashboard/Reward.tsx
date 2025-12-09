@@ -1,6 +1,6 @@
 'use client'
 import { transactions } from '@/app/constants/sidebarConstants';
-import { RefreshCcw, Wallet} from 'lucide-react';
+import { RefreshCcw, TrendingDown, TrendingUp, Wallet} from 'lucide-react';
 import Image from 'next/image';
 import React from 'react'
 import { useReward } from '../customHooks/UseQueries';
@@ -53,32 +53,31 @@ const Reward = () => {
                 "h-full w-full flex flex-col gap-10  " + (isLoading && " hidden")
               }
             >
-              {transactions.map((trans, index) => (
+              {data.rewardTransaction.map((trans:any, index:number) => (
                 <li
                   key={index}
-                  className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end"
+                  className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end items-center"
                 >
-                  <div className="flex w-full gap-5">
-                    <Image
-                      className="bg-[#D9D9D9] rounded-full p-2 w-10 h-10"
-                      src={trans.img}
-                      width={0}
-                      height={0}
-                      alt={`${trans.name} icon`}
-                    />
-                    <div className="">
-                      <h4 className="capitalize font-medium text-sm">
-                        {trans.name}
+                  <div className="flex gap-5 items-center max-w-[60%]">
+                    {trans.type == "Credited" ?
+                    <div className="p-3 bg-[#10AA3E1A] rounded-full">
+                      <TrendingUp color="#10AA3E"/>
+                    </div>
+                    :
+                    <div className="p-3 bg-[#FF00001A] rounded-full">
+                      <TrendingDown color="#FF0000"/>
+                    </div>
+                    }
+                    <div className="flex-2 truncate">
+                      <h4 className="capitalize font-medium text-sm truncate ">
+                        {trans.purpose}
                       </h4>
-                      <p className="text-[#757575] text-sm uppercase text-start">
-                        {trans.sp}
-                      </p>
                     </div>
                   </div>
                   <div>
                     <div>
                       <h5 className="font-medium text-sm">₦{trans.amount}</h5>
-                      <p className="text-[#757575] text-sm">{trans.time}</p>
+                      <p className="text-[#757575] text-sm">{new Date(trans.createdAt).toDateString()}</p>
                     </div>
                   </div>
                 </li>

@@ -8,6 +8,7 @@ export interface ServiceCard {
   title: string;
   services: string[];
   buttonText: string;
+  href:string;
 }
 
 export const serviceCards: ServiceCard[] = [
@@ -15,26 +16,31 @@ export const serviceCards: ServiceCard[] = [
     title: "Airtime Top up",
     services: ["MTN VTU", "GLO VTU", "AIRTEL VTU", "9MOBILE VTU"],
     buttonText: "See more",
+    href:"/dashboard?tab=services&section=airtime"
   },
   {
     title: "Data Top up",
     services: ["MTN DATA", "GLO DATA", "AIRTEL DATA", "9MOBILE DATA"],
     buttonText: "See more",
+    href:"/dashboard?tab=services&section=data"
   },
   {
     title: "Cable Subscription",
     services: ["GOTV", "DSTV", "Startimes"],
     buttonText: "See more",
+    href:"/dashboard?tab=services&section=subscription"
   },
   {
     title: "Electricity Bill",
     services: ["PHED, AEDC", "IKEDC, EKEDC", "KEDCO, IBEDC", "JED plc, KAEDCO"],
     buttonText: "See more",
+    href:"/dashboard?tab=services&section=bill"
   },
   {
     title: "Exams Pins",
     services: ["WAEC", "NECO", "JAMB", "Pins Instantly"],
     buttonText: "See more",
+    href:"/dashboard?tab=services&section=card"
   },
 ];
 export interface AgentCardType {

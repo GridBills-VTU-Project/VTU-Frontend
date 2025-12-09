@@ -31,7 +31,7 @@ const Profile = () => {
   }, [user]);
   return (
     <>
-      <div className={"w-[80%] mx-auto " + (canDelete && "  blur-md")}>
+      <div className={"sm:w-[80%] mx-auto " + (canDelete && "  blur-md")}>
         {" "}
         <h1 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
           Profile Settings

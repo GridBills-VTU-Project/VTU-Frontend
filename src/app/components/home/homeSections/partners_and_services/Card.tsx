@@ -1,5 +1,6 @@
 import { AgentCardType, ServiceCard } from "@/app/constants/cardConstants";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Card = (props: ServiceCard) => {
   return (
@@ -10,9 +11,9 @@ export const Card = (props: ServiceCard) => {
           <li key={index}>{_}</li>
         ))}
       </ul>
-      <button className="bg-darkbackground text-[#ffffff] py-2 text-lg font-medium rounded-xl px-3 absolute left-[24.5%] hover:cursor-pointer hover:bg-darkbackground/80 -bottom-5">
+      <Link href={props.href} className="bg-darkbackground text-[#ffffff] py-2 text-lg font-medium rounded-xl px-3 absolute left-[24.5%] hover:cursor-pointer hover:bg-darkbackground/80 -bottom-5">
         See more
-      </button>
+      </Link>
     </div>
   );
 };

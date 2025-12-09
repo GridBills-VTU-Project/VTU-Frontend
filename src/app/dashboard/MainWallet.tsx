@@ -190,7 +190,7 @@ const MainWallet = () => {
                   key={index}
                   className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end items-center"
                 >
-                  <div className="flex gap-5 items-center">
+                  <div className="flex gap-5 items-center max-w-[60%]">
                     {trans.type == "Credit" ?
                     <div className="p-3 bg-[#10AA3E1A] rounded-full">
                       <TrendingUp color="#10AA3E"/>
@@ -200,8 +200,8 @@ const MainWallet = () => {
                       <TrendingDown color="#FF0000"/>
                     </div>
                     }
-                    <div className="">
-                      <h4 className="capitalize font-medium text-sm">
+                    <div className="flex-2 truncate">
+                      <h4 className="capitalize font-medium text-sm truncate ">
                         {trans.purpose}
                       </h4>
                     </div>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import logos1 from "../../../../../../public/all_partners.png";
 import { Card } from "./Card";
 import { serviceCards } from "@/app/constants/cardConstants";
+import Link from "next/link";
 
 const Partners = () => {
   return (
@@ -48,9 +49,9 @@ const Partners = () => {
         </div>
       </div>
       <div className="mt-30 mx-auto w-full text-center">
-        <button className=" bg-[#646FC6] py-5 px-18 hover:cursor-pointer hover:bg-[#646FC6]/90 rounded-xl text-[#ffffff] font-medium">
+        <Link href={"/dashboard?tab=serivces"} className=" bg-[#646FC6] py-5 px-18 hover:cursor-pointer hover:bg-[#646FC6]/90 rounded-xl text-[#ffffff] font-medium">
           Discover More
-        </button>
+        </Link>
       </div>
     </section>
   );
