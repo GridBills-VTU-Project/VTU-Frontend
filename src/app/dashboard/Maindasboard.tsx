@@ -128,7 +128,7 @@ const Maindasboard = () => {
             </h2>
             <div className="mt-3">
               <p className="font-bold text-2xl ">
-                ₦{data?.data?.monthlySpend || 0}
+                ₦{data?.data?.borrowedBalance || 0}
               </p>
             </div>
           </div>

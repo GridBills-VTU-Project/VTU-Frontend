@@ -8,6 +8,7 @@ import ElectricBillForm from "./ElectricBillForm";
 import ExamCardForm from "./ExamCardForm";
 import SubscriptionForm from "./SubscriptionForm";
 import { useRouter, useSearchParams } from "next/navigation";
+import CardPinForm from "./CardPinForm";
 
 const Services = () => {
   const router = useRouter();  
@@ -33,10 +34,10 @@ const Services = () => {
     <div>
       <div className="w-full">
         <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl">
-          Dashboard Overview
+          Services
         </h1>
         <p className="text-[#7D7979] text-lg font-bold mt-4">
-          Welcome back! Here is what is happening in your Account
+          Purchase airtime, data, and pay bills
         </p>
       </div>
       <div className="flex gap-4 mt-10 flex-wrap max-xs:justify-center justify-between">
@@ -68,6 +69,7 @@ const Services = () => {
         {section === "bill" && <ElectricBillForm />}
         {section === "card" && <ExamCardForm />}
         {section === "subscription" && <SubscriptionForm />}
+        {section === "pin" && <CardPinForm />}
       </div>
     </div>
   );

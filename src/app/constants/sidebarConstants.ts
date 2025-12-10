@@ -17,7 +17,8 @@ export const quickActions = [
   { query: "data",name: "Buy Internet Data", img: wifi, href: "/buy-wifi"},
   { query: "bill",name: "Pay Electricity Bill", img: electric, href: "/buy-airtime"},
   { query: "card",name: "Exam Scratch card", img: card, href: "/buy-airtime"},
-  { query: "subscription",name: "Pay TV Subscription", img: tv, href: "/buy-airtime"}
+  { query: "subscription",name: "Pay TV Subscription", img: tv, href: "/buy-airtime"},
+  { query: "pin",name: "Buy Card Pin", img: tv, href: "/buy-airtime"}
 ]
 export const transactions = [
   { name: "airtime", sp:"mtn", time:"Today, 10:50am", amount:"500", img: ph },

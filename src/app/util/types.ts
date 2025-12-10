@@ -30,28 +30,39 @@ export interface ElectricityPurchaseForm {
   meterNum: string;
   servicID: string;
   amount: string;
-  isChecked:boolean;
+  isChecked: boolean;
 }
 
 export interface recentTransactions {
-    amount:    number;
-    purpose:   string;
-    type:      string;
-    createdAt: Date;
+  amount: number;
+  purpose: string;
+  type: string;
+  createdAt: Date;
 }
-export interface baseInterface{
-      plan:         string;
-    planCode:     string;
+export interface baseInterface {
+  plan: string;
+  planCode: string;
 }
-export interface examPackage extends baseInterface{
-    id:           string;
-    network:      string;
-    priceApi:     number;
-    sellingPrice: number;
-    isActive:     boolean;
+export interface examPackage extends baseInterface {
+  id: string;
+  network: string;
+  priceApi: number;
+  sellingPrice: number;
+  isActive: boolean;
 }
 
-export interface TvPackage extends baseInterface
-{
-  amount:string;
+export interface TvPackage extends baseInterface {
+  amount: string;
+}
+
+export interface CardPin {
+  network: string;
+  pin: string;
+  serial: string;
+  dial: string;
+  customercare: string;
+  cardname: string;
+  amount: string;
+  date: string;
+  logo: string;
 }
