@@ -37,6 +37,7 @@ export async function POST(req: Request) {
       email: body.email.trim(),
       password: body.password.trim(),
       phoneNumber:body.phone.trim(),
+      referralCode:body?.referral_code?.trim()
     };
     console.log(new_body);
     

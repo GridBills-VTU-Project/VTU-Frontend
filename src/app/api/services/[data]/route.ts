@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import api from "@/app/lib/axiosInstance";
-import { isAxiosError } from "axios";
+import { AxiosResponse, isAxiosError } from "axios";
 import { numRegex } from "@/app/constants/constant";
+import { cookies } from "next/headers";
 export async function GET(
   req: Request,
   context: { params: Promise<{ data: string }> }
@@ -16,7 +17,7 @@ export async function GET(
       let data = res.data;
       return NextResponse.json([...data], { status: 200 });
     } else {
-      return NextResponse.json({ error: "Failed" }, { status: 400 });
+      return NextResponse.json({ error: "Failed,Please try again later." }, { status: 400 });
     }
   } catch (err) {
     console.error(err);
@@ -40,8 +41,11 @@ export async function GET(
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: Request,
+  context: { params: Promise<{ data: string }> }
+) {
   try {
+    const { data } = await context.params;
     const body = await req.json();
     if (!body.network?.trim()) {
       return NextResponse.json(
@@ -69,15 +73,27 @@ export async function POST(req: Request) {
 
     const new_body = {
       dataPlanName: body.data?.name,
-      network: body.data?.network,
+      network: "0"+data,
       phoneNumber: body.phone,
     };
     console.log(new_body);
-    // let data: AxiosResponse<any, any>;
-    const data = await api.post("Data/buyData", new_body);
-    console.log(data.data, data.status);
+    let res: AxiosResponse<any, any>;
+    const cookieStore = await cookies();
+    const role = cookieStore.get("role")?.value;
+    if (!role) {
+      return NextResponse.json(
+        { error: "Session expired, Please login" },
+        { status: 401 }
+      );
+    }
+    if (role == "Agent") {
+      res = await api.post("Agent/sell-data", new_body);
+    } else {
+      res = await api.post("Data/buyData", new_body);
+    }
+    console.log(res.data, res.status);
 
-    return NextResponse.json({ ...data.data.data }, { status: 200 });
+    return NextResponse.json({ ...res.data.data }, { status: 200 });
   } catch (err) {
     // console.log("ooo",err);
 
@@ -90,7 +106,7 @@ export async function POST(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed" },
+        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
         { status: 400 }
       );
     }
@@ -139,12 +155,24 @@ export async function PATCH(req: Request) {
       amount: body?.amount,
       reference: "airtime",
     };
-    const data = await api.post("Data/buyAirtime", new_body);
+    const cookieStore = await cookies();
+    const role = cookieStore.get("role")?.value;
+    if (!role) {
+      return NextResponse.json(
+        { error: "Session expired, Please login" },
+        { status: 401 }
+      );
+    }
+    let data: AxiosResponse<any, any>;
+    if (role == "Agent") {
+      data = await api.post("Agent/sell-airtime", new_body);
+    } else {
+      data = await api.post("Data/buyAirtime", new_body);
+    }
     console.log(data.data, data.status);
 
     return NextResponse.json({ ...data.data.data }, { status: 200 });
   } catch (err) {
-
     if (isAxiosError(err)) {
       console.error(err.response);
       if (err.response?.status == 401) {
@@ -154,7 +182,7 @@ export async function PATCH(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed" },
+        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
         { status: 400 }
       );
     }

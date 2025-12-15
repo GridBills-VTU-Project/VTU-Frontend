@@ -57,6 +57,10 @@ export async function getWallet(api: AxiosInstance) {
   const res = await api.get("dashboard/wallet");
   return res.data; // Axios auto-parses JSON
 }
+export async function getCommission(api: AxiosInstance) {
+  const res = await api.get("agent/commission");
+  return res.data; // Axios auto-parses JSON
+}
 export async function getReward(api: AxiosInstance) {
   const res = await api.get("dashboard/reward");
   return res.data; // Axios auto-parses JSON

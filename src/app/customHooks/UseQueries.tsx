@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import UseAxios from "./UseAxios";
-import { getCurrentUser, getDashboard, getDataPlans, getExamPurchase, getReward, getTvPurchase, getWallet } from "../lib/Api";
+import { getCommission, getCurrentUser, getDashboard, getDataPlans, getExamPurchase, getReward, getTvPurchase, getWallet } from "../lib/Api";
 import { DataArray, examPackage, TvPackage } from "../util/types";
 
 export const useDashboard = () => {
@@ -29,6 +29,16 @@ export const usewallet = () => {
   return useQuery({
     queryKey: ["wallet"],
     queryFn: () => getWallet(api),
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5, // 5 minutes: consider data fresh
+    // refetchInterval: 10000, // optional: auto-refetch every 10s
+  });
+};
+export const useCommission = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["commission"],
+    queryFn: () => getCommission(api),
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 5, // 5 minutes: consider data fresh
     // refetchInterval: 10000, // optional: auto-refetch every 10s

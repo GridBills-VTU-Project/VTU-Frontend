@@ -5,7 +5,7 @@ export const networks = [
 ]
 export const serviceTypes = [
     "ikeja-electric", "eko-electric", "portharcourt-electric", "jos-electric", "kano-electric", "ibadan-electric"," enugu-electric", "abuja-electric",
-"benin-electric"
+"benin-electric",'yola-electric','aba-electric','kaduna-electric'
 ]
 
 export const meterTypes = [

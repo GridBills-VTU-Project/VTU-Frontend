@@ -6,6 +6,7 @@ import {
   numRegex,
 } from "@/app/constants/constant";
 import UseAxios from "@/app/customHooks/UseAxios";
+import UseRole from "@/app/customHooks/UseRole";
 import { handleCopy } from "@/app/util/functions";
 import { CardPin } from "@/app/util/types";
 import { isAxiosError } from "axios";
@@ -24,6 +25,7 @@ const CardPinForm = () => {
     quantity: "",
     isChecked: false,
   });
+  const isAgent = UseRole(["agent"]);
   const [batchNo, setBatchNo] = useState<string | null>(null);
   const [cardPinsRes, setCardPinsRes] = useState<CardPin[] | null>(null);
   const [batchSearch, setBatchSearch] = useState("");
@@ -268,7 +270,7 @@ const CardPinForm = () => {
               </div>
             </div> */}
 
-            <div className="flex items-center w-fit gap-3">
+            {isAgent && <div className="flex items-center w-fit gap-3">
               <input
                 name="ischecked"
                 onChange={(e) => {
@@ -278,7 +280,7 @@ const CardPinForm = () => {
                 className="accent-darkbackground"
               />
               <p className="">Use Points</p>
-            </div>
+            </div>}
           </div>
         </form>
         <button
@@ -303,7 +305,14 @@ const CardPinForm = () => {
             <button
             className={"bg-[#646FC6] p-2 rounded-lg max-h-fit " + (cardPinsRes==null && " bg-[#646fc6]/30 hover:!cursor-not-allowed")}
               disabled={cardPinsRes == null}
-              onClick={() => handleDownload(CardPinTransactions)}
+              onClick={() => {
+                if (cardPinsRes != null){
+                  handleDownload(cardPinsRes)
+                }else{
+                  ()=>{}
+                }
+              
+              }}
             >
               <Download color="white"/>
             </button>

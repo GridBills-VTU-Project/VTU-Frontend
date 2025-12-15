@@ -16,6 +16,7 @@ const SignupForm = () => {
     email: "",
     phone: "",
     password: "",
+    referral_code:"",
     isChecked: false,
   });
 
@@ -113,10 +114,18 @@ const SignupForm = () => {
           </button>
         )}
       </div>
-      <p className="font-light italic text-red-500 text-xs leading-[18px] tracking-[0.5px] mb-5">
+      <p className="font-light italic text-red-500 text-xs leading-[18px] tracking-[0.5px] h-2">
         {error}
       </p>
-
+      <p className="mt-10">Referral code</p>
+      <input
+        name="referral_code"
+        value={form.referral_code}
+        onChange={(e) => selectOption(e, setForm)}
+        type="text"
+        className="border-3 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg"
+        placeholder="Enter referral code"
+      />
       <button
         disabled={isPending}
         className="flex justify-center items-center gap-2 bg-[#646FC6] hover:bg-[#646FC6]/90 focus:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import api from "@/app/lib/axiosInstance";
 import { AxiosResponse, isAxiosError } from "axios";
+import { cookies } from "next/headers";
 
 export async function GET(req: Request) {
   try {
@@ -10,7 +11,7 @@ export async function GET(req: Request) {
       let data = res.data;
       return NextResponse.json({ ...data }, { status: 200 });
     } else {
-      return NextResponse.json({ error: "Failed" }, { status: 400 });
+      return NextResponse.json({ error: "Failed,Please try again later." }, { status: 400 });
     }
   } catch (err) {
     console.error(err);
@@ -56,8 +57,21 @@ export async function POST(req: Request) {
     };
     console.log(new_body);
     let data: AxiosResponse<any, any>;
-    data = await api.post("Wallet/fund", new_body);
-    console.log(data.data, data.status);
+    const cookieStore = await cookies();
+    const role = cookieStore.get("role")?.value;
+    if (!role) {
+      return NextResponse.json(
+        { error: "Session expired, Please login" },
+        { status: 401 }
+      );
+    }
+    if (role == "Agent") {
+      data = await api.post("Agent/wallet/topup", new_body);
+      return NextResponse.json({ ...data.data }, { status: 200 });
+    } else {
+      data = await api.post("Wallet/fund", new_body);
+    }
+    console.log(data, data.status);
 
     return NextResponse.json({ ...data.data.data }, { status: 200 });
   } catch (err) {
@@ -70,7 +84,7 @@ export async function POST(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed" },
+        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
         { status: 400 }
       );
     }
@@ -117,7 +131,7 @@ export async function PATCH(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed" },
+        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
         { status: 400 }
       );
     }

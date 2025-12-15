@@ -3,6 +3,7 @@ import Select from "@/app/components/ui/Select";
 import SelectPlan from "@/app/components/ui/SelectPlan";
 import UseAxios from "@/app/customHooks/UseAxios";
 import { useGetDataPlans } from "@/app/customHooks/UseQueries";
+import UseRole from "@/app/customHooks/UseRole";
 import { DataArray } from "@/app/util/types";
 import { isAxiosError } from "axios";
 import React, { useEffect, useState } from "react";
@@ -10,7 +11,7 @@ import { toast } from "react-toastify";
 const networks = ["MTN", "Airtel", "Glo", "9mobile"];
 
 const DataForm = () => {
-  const [netrworkId, setNetworkId] = useState("1");
+  const [networkId, setNetworkId] = useState("1");
   const {
     data: dataplan,
     error,
@@ -18,7 +19,7 @@ const DataForm = () => {
     isLoading,
     isFetching,
     isPending
-  } = useGetDataPlans(netrworkId);
+  } = useGetDataPlans(networkId);
 
   const api = UseAxios();
   const [loading, setLoading] = useState(false);
@@ -27,6 +28,7 @@ const DataForm = () => {
     phone: "",
     data: {} as DataArray,
   });
+  const isAgent = UseRole(["agent"])
 
   useEffect(() => {
     switch (form.network) {
@@ -58,7 +60,7 @@ const DataForm = () => {
       {
         return toast.info("please select a data plan.")
       }
-      const res = await api.post("services/data", JSON.stringify(form));
+      const res = await api.post("services/"+networkId, JSON.stringify(form));
       toast.success(res.data.msg || "Success.");
     } catch (error) {
       if (isAxiosError(error)) {
@@ -82,7 +84,7 @@ const DataForm = () => {
       className="flex flex-col bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10 w-full"
     >
       <h3 className="capitalize font-bold text-3xl  text-[#163145] ">
-        Buy Data
+        {isAgent ?"Sell Data":"Buy Data"}
       </h3>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">

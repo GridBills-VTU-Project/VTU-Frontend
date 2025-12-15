@@ -14,20 +14,20 @@ const SubscriptionForm = () => {
     cableType: "DSTV",
     package: "",
     serialNo: "",
-    isChecked:false
+    phone: "",
+    isChecked: false,
   });
   const { data, error, isError, isLoading, isFetching, isPending } =
     useGetTvPackages(form.cableType);
   const tvPackages = useMemo(() => {
     if (!data) return [];
 
-    return data
-      .map((item) => ({
-        sellingPrice: item.amount,
-        name: item.plan,
-        planCode: item.planCode,
-        plan: item.plan,
-      }));
+    return data.map((item) => ({
+      sellingPrice: item.amount,
+      name: item.plan,
+      planCode: item.planCode,
+      plan: item.plan,
+    }));
   }, [data]);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,9 +42,21 @@ const SubscriptionForm = () => {
         return toast.info("please select a package.");
       } else if (!numRegex.test(form.serialNo)) {
         return toast.info("Enter a valid Smart card number");
+      } else if (!numRegex.test(form.phone)) {
+        return toast.info("Enter a valid Phone number");
       }
-      const res = await api.post("services/tv/"+form.cableType, JSON.stringify(form));
+      const res = await api.post(
+        "services/tv/" + form.cableType,
+        JSON.stringify(form)
+      );
       toast.success(res.data.msg || "Success.");
+      setForm({
+        cableType: "DSTV",
+        package: "",
+        serialNo: "",
+        phone: "",
+        isChecked: false,
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error);
@@ -105,23 +117,41 @@ const SubscriptionForm = () => {
               placeholder="e.g 1234567"
             />
           </div>
+          <div className="flex flex-col gap-3">
+            <p className="mt-10">Phone Number</p>
+
+            <input
+              value={form.phone}
+              name="phone"
+              required={true}
+              onChange={(e) => selectOption(e, setForm)}
+              type="text"
+              className="p-5 rounded-lg bg-[#EEEEEE]"
+              placeholder="080...."
+            />
+          </div>
           <div className="flex items-center w-fit gap-3">
-          <input
-            name="ischecked"
-            onChange={(e) => {
-              setForm((prev) => ({ ...prev, isChecked: e.target.checked }));
-            }}
-            type="checkbox"
-            className="accent-darkbackground"
-          />
-          <p className="">Use Points</p>
-        </div>
+            <input
+              name="ischecked"
+              onChange={(e) => {
+                setForm((prev) => ({ ...prev, isChecked: e.target.checked }));
+              }}
+              type="checkbox"
+              className="accent-darkbackground"
+            />
+            <p className="">Use Points</p>
+          </div>
         </div>
       </div>
       <button
         disabled={loading}
-        className="bg-[#646FC6] hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
+        className="bg-[#646FC6] flex justify-center gap-1 hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
       >
+        <div
+          className={"flex justify-center max-w-fit " + (!loading && " hidden")}
+        >
+          <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
         Proceed to Payment
       </button>
     </form>

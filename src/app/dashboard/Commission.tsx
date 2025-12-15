@@ -1,18 +1,17 @@
 "use client";
 import React, { useEffect } from "react";
 import UseRole from "../customHooks/UseRole";
-import { useDashboard } from "../customHooks/UseQueries";
-import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import { useCommission } from "../customHooks/UseQueries";
+import { RefreshCcw, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const Commission = () => {
   const canView = UseRole(["agent"]);
   const router = useRouter();
-  const { data, isLoading, isError } = useDashboard();
+  const { data, isLoading, isError ,refetch,isPending,isFetching} = useCommission();
   useEffect(() => {
     if (!canView) router.back();
   }, []);
-  console.log(data?.data.walletBalance);
   const mockData = [
     {
       id: 7,
@@ -138,7 +137,10 @@ const Commission = () => {
         <div>
           <div className="w-full">
             <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl">
-              Dashboard Overview
+              Commission Overview
+              <button className="ml-3" onClick={()=>refetch()}>
+            <RefreshCcw />
+          </button>
             </h1>
             <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold mt-4">
               Welcome back! Here is what is happening in your Account
@@ -148,13 +150,13 @@ const Commission = () => {
             <div
               className={
                 " gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between" +
-                (isLoading ? " shimmer" : " ")
+                (isLoading || isPending || isFetching ? " shimmer" : " ")
               }
             >
               <div
                 className={
                   "h-[60%] flex flex-col justify-between" +
-                  (isLoading ? " hidden" : " ")
+                  (isLoading || isPending || isFetching ? " hidden" : " ")
                 }
               >
                 <h2 className="flex justify-between text-lg font-medium leading-6 capitalize">
@@ -167,7 +169,7 @@ const Commission = () => {
                 </h2>
                 <div>
                   <p className="font-bold text-2xl">
-                    ₦{!isError && data?.data.walletBalance}
+                    ₦{!isError && data?.availableBalance}
                   </p>
                 </div>
               </div>
@@ -175,13 +177,13 @@ const Commission = () => {
             <div
               className={
                 "gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between" +
-                (isLoading ? " shimmer" : " ")
+                (isLoading || isPending || isFetching ? " shimmer" : " ")
               }
             >
               <div
                 className={
                   "h-[60%] flex flex-col justify-between" +
-                  (isLoading ? " hidden" : " ")
+                  (isLoading || isPending || isFetching ? " hidden" : " ")
                 }
               >
                 <h2 className="flex justify-between text-lg font-medium leading-6 capitalize">
@@ -193,7 +195,7 @@ const Commission = () => {
                 </h2>
                 <div className="mt-3">
                   <p className="font-bold text-2xl ">
-                    ₦{!isError && data?.data?.monthlySpend}
+                    ₦{!isError && data?.availableBalance}
                   </p>
                 </div>
               </div>
@@ -201,13 +203,13 @@ const Commission = () => {
             <div
               className={
                 "gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between" +
-                (isLoading ? " shimmer" : " ")
+                (isLoading || isPending || isFetching ? " shimmer" : " ")
               }
             >
               <div
                 className={
                   "h-[60%] flex flex-col justify-between" +
-                  (isLoading ? " hidden" : " ")
+                  (isLoading || isPending || isFetching ? " hidden" : " ")
                 }
               >
                 <h2 className="flex justify-between text-lg font-medium leading-6 capitalize">
@@ -227,19 +229,19 @@ const Commission = () => {
           </div>
           <div
             className={
-              " mt-6 rounded-xl w-full" + (isLoading? " h-[230px] shimmer" : " ")
+              " mt-6 rounded-xl w-full" + (isLoading || isPending || isFetching? " h-[230px] shimmer" : " ")
             }
           >
             <div
               className={
                 "flex flex-col justify-end gap-5 bg-linear-to-r from-[#646FC6] to-[#646FC6] h-full p-5  w-full rounded-xl text-[#FFFFFF] " +
-                (isLoading && " hidden")
+                (isLoading || isPending || isFetching && " hidden")
               }
             >
               <p className=" w-fit">Withdraw Commission</p>
               <div className="">
                 <h2 className="flex justify-between font-bold text-3xl leading-6 capitalize truncate">
-                  ₦{isError? 0: data?.data.walletBalance}
+                  ₦{isError? 0: data?.availableBalance}
                 </h2>
                 <p className="font-medium text-sm mt-3">Available Balance</p>
               </div>

@@ -14,6 +14,7 @@ export interface registerForm {
   email: string;
   phone: string;
   password: string;
+  referral_code: string;
   isChecked: boolean;
 }
 
@@ -30,6 +31,7 @@ export interface ElectricityPurchaseForm {
   meterNum: string;
   servicID: string;
   amount: string;
+  phone:string;
   isChecked: boolean;
 }
 
@@ -65,4 +67,11 @@ export interface CardPin {
   amount: string;
   date: string;
   logo: string;
+}
+
+export interface ValidateMeterRes {
+  code: number
+  customer_Name: any
+  address: string
+  meterNumber: string
 }

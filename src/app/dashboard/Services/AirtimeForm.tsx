@@ -2,6 +2,7 @@ import Select from "@/app/components/ui/Select";
 import { networks, numRegex } from "@/app/constants/constant";
 import UseAxios from "@/app/customHooks/UseAxios";
 import { useAuthUser } from "@/app/customHooks/UseQueries";
+import UseRole from "@/app/customHooks/UseRole";
 import { isAxiosError } from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ const AirtimeForm = () => {
     phone: user?.phoneNumber || "",
     amount: "",
   });
+  const isAgent = UseRole(["agent"])
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -51,7 +53,7 @@ const AirtimeForm = () => {
       className="flex flex-col w-full bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10"
     >
       <h3 className="capitalize font-bold text-3xl  text-[#163145] ">
-        Buy Airtime
+       {user?.role == 'agent'? "Sell Airtime":"Buy Airtime"}
       </h3>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">

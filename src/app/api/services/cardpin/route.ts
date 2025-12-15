@@ -1,12 +1,18 @@
-import { amounts, networks, numRegex, serviceTypes } from "@/app/constants/constant";
+import {
+  amounts,
+  networks,
+  numRegex,
+  serviceTypes,
+} from "@/app/constants/constant";
 import api from "@/app/lib/axiosInstance";
 import { AxiosResponse, isAxiosError } from "axios";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    
+
     if (!body.network?.trim() || !networks.includes(body.network)) {
       return NextResponse.json(
         {
@@ -14,10 +20,7 @@ export async function POST(req: Request) {
         },
         { status: 400 }
       );
-    } else if (
-      !body.quantity ||
-      !numRegex.test(body.quantity)
-    ) {
+    } else if (!body.quantity || !numRegex.test(body.quantity)) {
       return NextResponse.json(
         {
           error: "Quantity Invalid",
@@ -46,7 +49,7 @@ export async function POST(req: Request) {
         },
         { status: 400 }
       );
-    } else if ( typeof body.isChecked != "boolean") {
+    } else if (typeof body.isChecked != "boolean") {
       return NextResponse.json(
         {
           error: "please select whether or not to use points",
@@ -57,19 +60,37 @@ export async function POST(req: Request) {
 
     const new_body = {
       amount: body.amount.trim(),
-      network:body.network,
-      pinDenomination: parseInt(body.amount)/100,
+      network: body.network,
+      pinDenomination: parseInt(body.amount) / 100,
       pinQuantity: body.quantity,
-      usePoints:body.isChecked
+      usePoints: body.isChecked,
     };
     console.log(new_body);
     let res: AxiosResponse<any, any>;
-
-    res = await api.post("Data/purchasePin", new_body);
+    const cookieStore = await cookies();
+    const role = cookieStore.get("role")?.value;
+    if (!role) {
+      return NextResponse.json(
+        { error: "Session expired, Please login" },
+        { status: 401 }
+      );
+    }
+    if (role == "Agent") {
+      res = await api.post("Agent/sell-airtime-pin", new_body);
+    } else {
+      res = await api.post("Data/purchasePin", new_body);
+    }
 
     console.log(res.data, res.status);
 
-    return NextResponse.json({msg:res.data.message, response:res.data.pinList,batchNo:res.data.batchNo }, { status: 200 });
+    return NextResponse.json(
+      {
+        msg: res.data.message,
+        response: res.data.pinList,
+        batchNo: res.data.batchNo,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     if (isAxiosError(err)) {
       console.error(err.response);
@@ -80,7 +101,7 @@ export async function POST(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed" },
+        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
         { status: 400 }
       );
     }
