@@ -28,7 +28,7 @@ const Dashboard = ({}) => {
       {(tab?.toLocaleLowerCase() === "services" || tab?.toLocaleLowerCase() === "sale") && <Services />}
       {/* </Suspense> */}
       {tab?.toLocaleLowerCase() === "reward" && <Reward />}
-      {tab?.toLocaleLowerCase() === "Agent" && <Become_an_agent />}
+      {tab?.toLocaleLowerCase() === "agent" && <Become_an_agent />}
       {tab?.toLocaleLowerCase() === "support" && <Support />}
       {tab?.toLocaleLowerCase() === "profile" && <Profile />}
       {tab?.toLocaleLowerCase() === "admindashboard" && <Admindasboard />}

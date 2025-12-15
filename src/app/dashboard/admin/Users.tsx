@@ -12,19 +12,22 @@ const Users = () => {
     <div>
       <div className="w-full">
         <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl w-full">
-          Reward Overview
+          User Management
           <button className="ml-3" onClick={()=>refetch()}>
             <RefreshCcw />
           </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold ">
-          Earn points with every transaction
+          View and manage all platform users
         </p>
       </div>
       <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl p-4 pb-10 h-[800px]">
         <h3 className="capitalize font-bold text-3xl  text-[#163145] ">
-          Points History
+         All Users
         </h3>
+        <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold ">
+          Search, filter and manage user accounts
+        </p>
         <div
           className={
             "h-[90%] overflow-auto flex justify-center items-center " +
