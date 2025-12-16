@@ -13,7 +13,7 @@ import UseRole from "@/app/customHooks/UseRole";
 
 const DashboardHeader = () => {
   const pathname = usePathname();
-  const canView = UseRole(["agent"]);
+  const canView = UseRole(["Agent"]);
   const [menuOpen, setMenuOpen] = useState(false);
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<string | null>(null);

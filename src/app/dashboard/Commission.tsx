@@ -6,7 +6,7 @@ import { RefreshCcw, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const Commission = () => {
-  const canView = UseRole(["agent"]);
+  const canView = UseRole(["Agent"]);
   const router = useRouter();
   const { data, isLoading, isError ,refetch,isPending,isFetching} = useCommission();
   useEffect(() => {

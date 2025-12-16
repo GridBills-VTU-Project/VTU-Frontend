@@ -9,7 +9,7 @@ import { useDashboard } from "../customHooks/UseQueries";
 import { recentTransactions } from "../util/types";
 
 const Maindasboard = () => {
-  const canView = UseRole(["agent"]);
+  const canView = UseRole(["Agent"]);
   const { data, isLoading, isError,refetch ,isFetching,isPending,} = useDashboard();
   return (
     <div className="w-full">

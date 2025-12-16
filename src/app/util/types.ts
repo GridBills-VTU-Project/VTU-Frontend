@@ -75,3 +75,11 @@ export interface ValidateMeterRes {
   address: string
   meterNumber: string
 }
+
+export interface UserDetails{
+  full_name:string;
+  status:string;
+  wallet_balance:string;
+  total_transactions:string;
+  actions:string;
+}

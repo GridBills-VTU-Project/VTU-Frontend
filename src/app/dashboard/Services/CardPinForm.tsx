@@ -25,7 +25,7 @@ const CardPinForm = () => {
     quantity: "",
     isChecked: false,
   });
-  const isAgent = UseRole(["agent"]);
+  const isAgent = UseRole(["Agent"]);
   const [batchNo, setBatchNo] = useState<string | null>(null);
   const [cardPinsRes, setCardPinsRes] = useState<CardPin[] | null>(null);
   const [batchSearch, setBatchSearch] = useState("");

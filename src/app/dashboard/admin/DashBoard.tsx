@@ -1,23 +1,13 @@
 "use client";
-import { quickActions } from "@/app/constants/sidebarConstants";
 import {
-  Wallet,
-  TrendingUp,
-  Plus,
-  TrendingDown,
   RefreshCcw,
   UsersRound,
   Users,
 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import UseRole from "../../customHooks/UseRole";
 import { useDashboard } from "../../customHooks/UseQueries";
-import { recentTransactions } from "../../util/types";
 
 const Admindasboard = () => {
-  const canView = UseRole(["agent"]);
   const { data, isLoading, isError, refetch, isFetching, isPending } =
     useDashboard();
   return (

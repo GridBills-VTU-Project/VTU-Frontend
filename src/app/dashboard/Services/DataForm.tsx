@@ -28,7 +28,7 @@ const DataForm = () => {
     phone: "",
     data: {} as DataArray,
   });
-  const isAgent = UseRole(["agent"])
+  const isAgent = UseRole(["Agent"])
 
   useEffect(() => {
     switch (form.network) {

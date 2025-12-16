@@ -2,7 +2,6 @@ import Select from "@/app/components/ui/Select";
 import { networks, numRegex } from "@/app/constants/constant";
 import UseAxios from "@/app/customHooks/UseAxios";
 import { useAuthUser } from "@/app/customHooks/UseQueries";
-import UseRole from "@/app/customHooks/UseRole";
 import { isAxiosError } from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -16,7 +15,6 @@ const AirtimeForm = () => {
     phone: user?.phoneNumber || "",
     amount: "",
   });
-  const isAgent = UseRole(["agent"])
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);

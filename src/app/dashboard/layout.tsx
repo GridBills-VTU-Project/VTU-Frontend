@@ -158,8 +158,8 @@ export const adminSidebarLinks = [
 ];
 
 const layout = ({ children }: { children: React.ReactNode }) => {
-  const canView = UseRole(["agent"]);
-  const isAdmin = UseRole(["admin"])
+  const canView = UseRole(["Agent"]);
+  const isAdmin = UseRole(["Admin"])
   const router = useRouter();
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<string | null>(null);
