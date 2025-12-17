@@ -145,7 +145,7 @@ const SubscriptionForm = () => {
       </div>
       <button
         disabled={loading}
-        className="bg-[#646FC6] flex justify-center gap-1 hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
+        className="bg-[#646FC6] flex justify-center gap-2 hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
       >
         <div
           className={"flex justify-center max-w-fit " + (!loading && " hidden")}

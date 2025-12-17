@@ -114,7 +114,7 @@ export const agentDashboardSidebarLinks = [
 export const adminSidebarLinks = [
   {
     name: "dashboard",
-    tab: "admindashboard",
+    tab: "dashboard",
     img: <LayoutDashboard />,
     href: "/dashboard",
     color: "bg-[#1601FF4D]",

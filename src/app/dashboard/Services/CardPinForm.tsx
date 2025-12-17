@@ -62,6 +62,13 @@ const CardPinForm = () => {
       const res = await api.post("services/cardpin", JSON.stringify(form));
       toast.success(res.data.msg || "Success.");
       setBatchNo(res.data?.batchNo);
+      setForm({
+        total: 0,
+        network: "MTN",
+        amount: "",
+        quantity: "",
+        isChecked: false,
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error);
@@ -99,10 +106,16 @@ const CardPinForm = () => {
     doc.setFontSize(16);
     doc.text("Card Pin Report", 14, 15);
 
-    const tableData = report.map((item) => [item.pin, item.serial, item.date,item.dial,item.amount]);
+    const tableData = report.map((item) => [
+      item.pin,
+      item.serial,
+      item.date,
+      item.dial,
+      item.amount,
+    ]);
 
     autoTable(doc, {
-      head: [["Pin", "Serial Number", "Date","Code","Amount"]],
+      head: [["Pin", "Serial Number", "Date", "Code", "Amount"]],
       body: tableData,
       startY: 25,
     });
@@ -194,7 +207,11 @@ const CardPinForm = () => {
             </div>
           </div>
         </div>
-        <form id="purchaseForm" onSubmit={submit} className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10">
+        <form
+          id="purchaseForm"
+          onSubmit={submit}
+          className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10"
+        >
           <h3 className="capitalize font-bold text-3xl text-[#163145] ">
             Purchase Details
           </h3>
@@ -270,28 +287,38 @@ const CardPinForm = () => {
               </div>
             </div> */}
 
-            {isAgent && <div className="flex items-center w-fit gap-3">
-              <input
-                name="ischecked"
-                onChange={(e) => {
-                  setForm((prev) => ({ ...prev, isChecked: e.target.checked }));
-                }}
-                type="checkbox"
-                className="accent-darkbackground"
-              />
-              <p className="">Use Points</p>
-            </div>}
+            {isAgent && (
+              <div className="flex items-center w-fit gap-3">
+                <input
+                  name="ischecked"
+                  onChange={(e) => {
+                    setForm((prev) => ({
+                      ...prev,
+                      isChecked: e.target.checked,
+                    }));
+                  }}
+                  type="checkbox"
+                  className="accent-darkbackground"
+                />
+                <p className="">Use Points</p>
+              </div>
+            )}
           </div>
         </form>
         <button
-        type="submit"
-        form="purchaseForm"
+          type="submit"
+          form="purchaseForm"
           disabled={loading}
-          className="bg-[#646FC6] flex justify-center gap-1 hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
-        ><div className={"flex justify-center max-w-fit " + (!loading && " hidden")}>
+          className="bg-[#646FC6] flex justify-center gap-2 hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
+        >
+          <div
+            className={
+              "flex justify-center max-w-fit " + (!loading && " hidden")
+            }
+          >
             <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
-          Proceed to Payment
+          Pay
         </button>
       </div>
       <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl p-4 pb-10 h-[800px] w-full">
@@ -303,18 +330,21 @@ const CardPinForm = () => {
               </h3>
             </div>
             <button
-            className={"bg-[#646FC6] p-2 rounded-lg max-h-fit " + (cardPinsRes==null && " bg-[#646fc6]/30 hover:!cursor-not-allowed")}
+              className={
+                "bg-[#646FC6] p-2 rounded-lg max-h-fit " +
+                (cardPinsRes == null &&
+                  " bg-[#646fc6]/30 hover:!cursor-not-allowed")
+              }
               disabled={cardPinsRes == null}
               onClick={() => {
-                if (cardPinsRes != null){
-                  handleDownload(cardPinsRes)
-                }else{
-                  ()=>{}
+                if (cardPinsRes != null) {
+                  handleDownload(cardPinsRes);
+                } else {
+                  () => {};
                 }
-              
               }}
             >
-              <Download color="white"/>
+              <Download color="white" />
             </button>
           </div>
           <div className="flex items-center w-full">
@@ -326,11 +356,15 @@ const CardPinForm = () => {
               placeholder="Enter batch number"
             />
             <button
-            className={"bg-[#646FC6] p-2 rounded-r-lg " + (batchSearch=="" && " bg-[#646fc6]/30 hover:!cursor-not-allowed")}
+              className={
+                "bg-[#646FC6] p-2 rounded-r-lg " +
+                (batchSearch == "" &&
+                  " bg-[#646fc6]/30 hover:!cursor-not-allowed")
+              }
               disabled={batchSearch == ""}
               onClick={() => handleSearch(batchSearch)}
             >
-              <Search color="white"/>
+              <Search color="white" />
             </button>
           </div>
         </div>
@@ -362,7 +396,9 @@ const CardPinForm = () => {
                   <div>
                     <div>
                       <h5 className="font-medium text-sm">{trans.network}</h5>
-                      <p className="text-[#757575] text-sm line-clamp-1">{trans.date}</p>
+                      <p className="text-[#757575] text-sm line-clamp-1">
+                        {trans.date}
+                      </p>
                     </div>
                   </div>
                 </li>

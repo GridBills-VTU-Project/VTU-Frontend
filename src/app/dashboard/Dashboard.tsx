@@ -7,12 +7,16 @@ import Services from "./Services/Services";
 import Reward from "./Reward";
 import Support from "./Support";
 import Profile from "./Profile";
-import Commission from "./Commission";
+import Commission from "./agent/Commission";
 import Become_an_agent from "./Become_an_agent";
-import Admindasboard from "./admin/DashBoard";
+import Admindasboard from "./admin/AdminDashBoard";
 import Users from "./admin/Users";
+import { useAuthUser } from "../customHooks/UseQueries";
+import AgentDashboard from "./agent/AgentDashboard";
+import Agents from "./admin/Agents";
 const Dashboard = ({}) => {
   const searchParams = useSearchParams();
+    const { data: user, isLoading, isError, error } = useAuthUser();
   const [tab, setTab] = useState<string | null>(null);
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -22,17 +26,17 @@ const Dashboard = ({}) => {
   return (
     <div className="p-10 w-full mx-auto">
       {(tab?.toLocaleLowerCase() === "dashboard" || !tab) && <Maindasboard />}
-      {tab?.toLocaleLowerCase() === "wallet" && <MainWallet />}
-      {tab?.toLocaleLowerCase() === "commission" && <Commission />}
-      {/* <Suspense fallback={<NormalLoadingScreen/>}> */}
-      {(tab?.toLocaleLowerCase() === "services" || tab?.toLocaleLowerCase() === "sale") && <Services />}
-      {/* </Suspense> */}
-      {tab?.toLocaleLowerCase() === "reward" && <Reward />}
-      {tab?.toLocaleLowerCase() === "agent" && <Become_an_agent />}
-      {tab?.toLocaleLowerCase() === "support" && <Support />}
+      {/* {((tab?.toLocaleLowerCase() === "agentdashboard" || !tab) && user?.role == "Agent") && <AgentDashboard />} */}
+      {tab?.toLocaleLowerCase() === "wallet"&& <MainWallet />}
+      {tab?.toLocaleLowerCase() === "commission" && user?.role == "Agent" && <Commission />}
+      {(tab?.toLocaleLowerCase() === "services" || tab?.toLocaleLowerCase() === "sale" && user?.role != "Admin") && <Services />}
+      {tab?.toLocaleLowerCase() === "reward" && user?.role == "User"&& <Reward />}
+      {tab?.toLocaleLowerCase() === "agent" && user?.role == "User"&& <Become_an_agent />}
+      {tab?.toLocaleLowerCase() === "support" && user?.role != "Admin"&& <Support />}
       {tab?.toLocaleLowerCase() === "profile" && <Profile />}
-      {tab?.toLocaleLowerCase() === "admindashboard" && <Admindasboard />}
-      {tab?.toLocaleLowerCase() === "adminusers" && <Users />}
+      {/* {tab?.toLocaleLowerCase() === "admindashboard" && user?.role == "Admin" && <Admindasboard />} */}
+      {tab?.toLocaleLowerCase() === "adminusers"&& user?.role == "Admin" && <Users />}
+      {tab?.toLocaleLowerCase() === "adminagents"&& user?.role == "Admin" && <Agents />}
     </div>
   );
 };

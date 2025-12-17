@@ -1,136 +1,19 @@
 "use client";
 import React, { useEffect } from "react";
-import UseRole from "../customHooks/UseRole";
-import { useCommission } from "../customHooks/UseQueries";
+import UseRole from "../../customHooks/UseRole";
+import { useCommission } from "../../customHooks/UseQueries";
 import { RefreshCcw, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const Commission = () => {
   const canView = UseRole(["Agent"]);
   const router = useRouter();
-  const { data, isLoading, isError ,refetch,isPending,isFetching} = useCommission();
+  const { data, isLoading, isError, refetch, isPending, isFetching } =
+    useCommission();
   useEffect(() => {
     if (!canView) router.back();
   }, []);
-  const mockData = [
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-    {
-      id: 7,
-      type: "airtime",
-      user_Id: "10000251",
-      assigned_Date: "2025-08-13T15:06:33.593",
-      custum_3: "₦8,500",
-      custum_4: "paid",
-      token_Type: "S",
-    },
-  ];
+
   return (
     <div>
       {canView && (
@@ -138,9 +21,9 @@ const Commission = () => {
           <div className="w-full">
             <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl">
               Commission Overview
-              <button className="ml-3" onClick={()=>refetch()}>
-            <RefreshCcw />
-          </button>
+              <button className="ml-3" onClick={() => refetch()}>
+                <RefreshCcw />
+              </button>
             </h1>
             <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold mt-4">
               Welcome back! Here is what is happening in your Account
@@ -149,7 +32,7 @@ const Commission = () => {
           <div className="flex w-full gap-4 mt-6 flex-wrap max-lg:justify-center justify-between">
             <div
               className={
-                " gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between" +
+                " gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between " +
                 (isLoading || isPending || isFetching ? " shimmer" : " ")
               }
             >
@@ -164,7 +47,6 @@ const Commission = () => {
                   <span className="bg-[#646FC6] p-1 rounded-lg">
                     {" "}
                     <TrendingUp />
-                    
                   </span>
                 </h2>
                 <div>
@@ -176,7 +58,7 @@ const Commission = () => {
             </div>
             <div
               className={
-                "gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between" +
+                "gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between " +
                 (isLoading || isPending || isFetching ? " shimmer" : " ")
               }
             >
@@ -202,7 +84,7 @@ const Commission = () => {
             </div>
             <div
               className={
-                "gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between" +
+                "gap-9 bg-linear-to-b from-[#1122AE]/60 to-[#D345A4]/60 h-[200px] p-5 w-full max-w-[375px] rounded-xl text-[#FFFFFF] flex flex-col justify-between " +
                 (isLoading || isPending || isFetching ? " shimmer" : " ")
               }
             >
@@ -213,7 +95,7 @@ const Commission = () => {
                 }
               >
                 <h2 className="flex justify-between text-lg font-medium leading-6 capitalize">
-                  Commission Rate
+                  Commission Earned
                   <span className="bg-[#646FC6] p-1 rounded-lg">
                     {" "}
                     <TrendingUp />
@@ -221,27 +103,31 @@ const Commission = () => {
                 </h2>
                 <div>
                   <p className="font-bold text-2xl ">
-                    {!isError && data?.data?.rewardPoints}%
+                    ₦{!isError && data?.monthlyCommission}
                   </p>
+                  <p className="font-bold text-xs">This month</p>
                 </div>
               </div>
             </div>
           </div>
           <div
             className={
-              " mt-6 rounded-xl w-full" + (isLoading || isPending || isFetching? " h-[230px] shimmer" : " ")
+              " mt-6 rounded-xl w-full " +
+              (isLoading || isPending || isFetching
+                ? " h-[230px] shimmer"
+                : " ")
             }
           >
             <div
               className={
                 "flex flex-col justify-end gap-5 bg-linear-to-r from-[#646FC6] to-[#646FC6] h-full p-5  w-full rounded-xl text-[#FFFFFF] " +
-                (isLoading || isPending || isFetching && " hidden")
+                ((isLoading || isPending || isFetching) && " hidden")
               }
             >
               <p className=" w-fit">Withdraw Commission</p>
               <div className="">
                 <h2 className="flex justify-between font-bold text-3xl leading-6 capitalize truncate">
-                  ₦{isError? 0: data?.availableBalance}
+                  ₦{isError ? 0 : data?.availableBalance}
                 </h2>
                 <p className="font-medium text-sm mt-3">Available Balance</p>
               </div>
@@ -297,10 +183,10 @@ const Commission = () => {
           </div> */}
           <div className=" bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10 w-full overflow-auto max-h-[500px] min-h-[500px] h-[500px]">
             <h3 className="capitalize font-bold text-3xl text-[#163145] mb-10 w-full">
-             Commission History
+              Commission History
             </h3>
-            <table className=" min-w-[600px] w-full table-fixed border-collapse max-h-[200px] min-h-[200px] h-[200px]">
-              <thead className=" text-center">  
+            <table className=" min-w-[600px] w-full table-fixed border-collapse max-h-[100px] min-h-[100px] h-[100px]">
+              <thead className=" text-center">
                 <tr className="border-b border-zinc-200 text-center">
                   <th scope="col" className="px-4 py-3 text-sm font-medium">
                     Commission ID
@@ -311,32 +197,31 @@ const Commission = () => {
                   <th scope="col" className="px-4 py-3 text-sm font-medium">
                     Amount
                   </th>
-                  <th scope="col" className="px-4 py-3 text-sm font-medium">
+                  {/* <th scope="col" className="px-4 py-3 text-sm font-medium">
                     Status
-                  </th>
+                  </th> */}
                   <th scope="col" className="px-4 py-3 text-sm font-medium">
                     Date
                   </th>
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-zinc-200 text-center max-h-[200px] min-h-[200px] h-[200px]">
-                {mockData && mockData.length > 0 ? (
-                  mockData?.map((r, idx) => (
-                    <tr key={idx} className="divide-x divide-zinc-200">
+              <tbody className="divide-y divide-zinc-200 text-center max-h-[20px] min-h-[20px] h-[20px]">
+                {data?.commissionTransaction &&
+                data?.commissionTransaction.length > 0 ? (
+                  data.commissionTransaction.map((r: any, index: number) => (
+                    <tr key={index} className="divide-x divide-zinc-200">
                       <td className="px-4 py-4 text-sm font-medium">
-                        {r.user_Id}
+                        {1 + index}
                       </td>
                       <td className="px-4 py-4 text-sm">{r.type}</td>
-                      <td className="px-4 py-4 text-sm">
-                        {r.custum_3}
-                      </td>
-                      <td className="text-center">
+                      <td className="px-4 py-4 text-sm">₦{r.amount}</td>
+                      {/* <td className="text-center">
                         <p className=" text-sm bg-[#52D2EF] rounded-full max-w-fit mx-auto px-5 py-2">
 
-                        {r.custum_4}
+                        {"paid"}
                         </p>
-                      </td>
+                      </td> */}
                       <td className="px-4 py-4 text-sm font-semibold mx-auto">
                         {/* <button
                           className="mx-auto hover:cursor-pointer bg-[#FFCC33] text-[#090540] hover:text-[#FFCC33] rounded-md p-2 w-24 hover:bg-[#090540]"
@@ -346,9 +231,7 @@ const Commission = () => {
                         >
                           Retry Debit
                         </button> */}
-                        <p>
-                            {new Date(r.assigned_Date).toDateString()}
-                        </p>
+                        <p>{new Date(r.createdAt).toDateString()}</p>
                       </td>
                     </tr>
                   ))

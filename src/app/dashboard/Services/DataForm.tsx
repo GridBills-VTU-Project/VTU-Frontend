@@ -18,31 +18,35 @@ const DataForm = () => {
     isError,
     isLoading,
     isFetching,
-    isPending
+    isPending,
   } = useGetDataPlans(networkId);
 
   const api = UseAxios();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState<{network: string; phone: string; data: DataArray}>({
+  const [form, setForm] = useState<{
+    network: string;
+    phone: string;
+    data: DataArray;
+  }>({
     network: "MTN",
     phone: "",
     data: {} as DataArray,
   });
-  const isAgent = UseRole(["Agent"])
+  const isAgent = UseRole(["Agent"]);
 
   useEffect(() => {
     switch (form.network) {
       case "MTN":
-        setNetworkId("1")
+        setNetworkId("1");
         break;
       case "Airtel":
-        setNetworkId("4")
+        setNetworkId("4");
         break;
       case "Glo":
-        setNetworkId("2")
+        setNetworkId("2");
         break;
       case "9mobile":
-        setNetworkId("3")
+        setNetworkId("3");
         break;
       default:
         break;
@@ -54,14 +58,17 @@ const DataForm = () => {
     setLoading(true);
 
     try {
-
       console.log(form);
-      if(Object.keys(form.data).length < 1)
-      {
-        return toast.info("please select a data plan.")
+      if (Object.keys(form.data).length < 1) {
+        return toast.info("please select a data plan.");
       }
-      const res = await api.post("services/"+networkId, JSON.stringify(form));
+      const res = await api.post("services/" + networkId, JSON.stringify(form));
       toast.success(res.data.msg || "Success.");
+      setForm({
+        network: "MTN",
+        phone: "",
+        data: {} as DataArray,
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error);
@@ -84,7 +91,7 @@ const DataForm = () => {
       className="flex flex-col bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10 w-full"
     >
       <h3 className="capitalize font-bold text-3xl  text-[#163145] ">
-        {isAgent ?"Sell Data":"Buy Data"}
+        {isAgent ? "Sell Data" : "Buy Data"}
       </h3>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">
@@ -118,14 +125,21 @@ const DataForm = () => {
             setSelected={setForm}
             placeholder="Choose Data Plan"
             name="data"
-            loading={isLoading || isFetching||isPending || isError}
+            loading={isLoading || isFetching || isPending || isError}
           />
         </div>
         <button
           disabled={loading}
-          className="bg-[#646FC6] hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
+          className="bg-[#646FC6] flex justify-center gap-2 hover:bg-[#646FC6]/90 w-full text-[#ffff] mt-5 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer "
         >
-          Proceed to Payment
+          <div
+            className={
+              "flex justify-center max-w-fit " + (!loading && " hidden")
+            }
+          >
+            <div className="w-5 h-5 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          Pay
         </button>
       </div>
     </form>

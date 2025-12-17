@@ -64,6 +64,7 @@ export async function POST(req: Request) {
       pinDenomination: parseInt(body.amount) / 100,
       pinQuantity: body.quantity,
       usePoints: body.isChecked,
+      reference:"Card pin"
     };
     console.log(new_body);
     let res: AxiosResponse<any, any>;
@@ -75,7 +76,7 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-    if (role == "Agent") {
+    if (role == "Agen") {
       res = await api.post("Agent/sell-airtime-pin", new_body);
     } else {
       res = await api.post("Data/purchasePin", new_body);
@@ -93,7 +94,7 @@ export async function POST(req: Request) {
     );
   } catch (err) {
     if (isAxiosError(err)) {
-      console.error(err.response);
+      console.error(err);
       if (err.response?.status == 401) {
         return NextResponse.json(
           { error: "Session expired, Please login" },

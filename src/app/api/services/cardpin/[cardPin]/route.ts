@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import api from "@/app/lib/axiosInstance";
 import { isAxiosError } from "axios";
-import { numRegex } from "@/app/constants/constant";
 export async function GET(
   req: Request,
   context: { params: Promise<{ cardPin: string }> }

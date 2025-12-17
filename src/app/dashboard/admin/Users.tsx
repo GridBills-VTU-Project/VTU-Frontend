@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import React from "react";
 import { useReward } from "../../customHooks/UseQueries";
+import { mockData } from "@/app/constants/constant";
 
 const Users = () => {
   const { data, isLoading, isError, refetch } = useReward();
@@ -26,8 +27,8 @@ const Users = () => {
           View and manage all platform users
         </p>
       </div>
-      <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl p-4 pb-10 h-[800px]">
-        <h3 className="capitalize font-bold text-3xl  text-[#163145] ">
+      <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl p-4 pb-10 h-[700px]">
+        <h3 className="capitalize font-bold text-3xl  text-darkbackground ">
           All Users
         </h3>
         <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold ">
@@ -53,57 +54,81 @@ const Users = () => {
             <Search color="white" />
           </button>
         </div>
-        <div
-          className={
-            "h-[90%] overflow-auto flex justify-center items-center " +
-            (isLoading && " shimmer")
-          }
-        >
-          {data?.rewardTransaction && data?.rewardTransaction.length > 0 ? (
-            <ul
-              className={
-                "h-full w-full flex flex-col gap-10  " +
-                (isLoading && " hidden")
-              }
-            >
-              {data.rewardTransaction.map((trans: any, index: number) => (
-                <li
-                  key={index}
-                  className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end items-center"
+        <div className=" bg-[#FFFFFF] mt-10 border-2 border-[#AAAAAA] rounded-xl w-full overflow-auto max-h-[500px] min-h-[500px] h-[500px]">
+          {/* <h3 className="capitalize font-bold text-3xl text-[#163145] mb-10 w-full">
+             Commission History
+            </h3> */}
+          <table className=" min-w-[700px] w-full table-fixed border-collapse max-h-[200px] min-h-[200px] h-[200px]">
+            <thead className=" text-start">
+              <tr className="border-b border-zinc-200 text-center">
+                <th
+                  scope="col"
+                  className="px-4 py-3 text-2xl font-medium text-start"
                 >
-                  <div className="flex gap-5 items-center max-w-[60%]">
-                    {trans.type == "Credited" ? (
-                      <div className="p-3 bg-[#10AA3E1A] rounded-full">
-                        <TrendingUp color="#10AA3E" />
-                      </div>
-                    ) : (
-                      <div className="p-3 bg-[#FF00001A] rounded-full">
-                        <TrendingDown color="#FF0000" />
-                      </div>
-                    )}
-                    <div className="flex-2 truncate">
-                      <h4 className="capitalize font-medium text-sm truncate ">
-                        {trans.purpose}
-                      </h4>
-                    </div>
-                  </div>
-                  <div>
-                    <div>
-                      <h5 className="font-medium text-sm">₦{trans.amount}</h5>
-                      <p className="text-[#757575] text-sm">
-                        {new Date(trans.createdAt).toDateString()}
+                  User
+                </th>
+                <th scope="col" className="px-4 py-3 text-2xl font-medium">
+                  Status
+                </th>
+                <th scope="col" className="px-4 py-3 text-2xl font-medium">
+                  Wallet Balance
+                </th>
+                <th scope="col" className="px-4 py-3 text-2xl font-medium">
+                  Total Transactions
+                </th>
+                <th scope="col" className="px-4 py-3 text-2xl font-medium">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-zinc-200 text-center max-h-[200px] min-h-[200px] h-[200px]">
+              {mockData && mockData.length > 0 ? (
+                mockData?.map((r, idx) => (
+                  <tr key={idx} className=" divide-zinc-200">
+                    <td className="px-4 py-4 text-lg font-medium text-start capitalize text-[#163145] truncate">
+                      {r.user_Id}
+                      <p className="text-sm text-[#7D7979] lowercase">
+                        davidmuoegbunam@gmail.com
                       </p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className={" " + (isLoading && " hidden")}>
-              {" "}
-              No Recent transactions
-            </p>
-          )}
+                    </td>
+                    <td className="px-4 py-4 text-lg">
+                      <p
+                        className={
+                          " text-lg rounded-full max-w-40 text-center mx-auto py-2 text-white" +
+                          (r.custum_4 === "Active"
+                            ? " bg-[#1526DD]"
+                            : " bg-[#FF3B30]")
+                        }
+                      >
+                        {r.custum_4}
+                      </p>
+                    </td>
+                    <td className="px-4 py-4 text-lg">{r.custum_3}</td>
+                    <td className="text-center">{r.custum_3}</td>
+                    <td className="">
+                      <button
+                        className={
+                          "px-4 py-4 font-semibold text-lg rounded-lg w-40 text-center mx-auto text-white " +
+                          (r.custum_4 != "Active"
+                            ? " bg-[#1526DD] hover:!bg-[#1526dd]/90"
+                            : " bg-[#FF3B30] hover:bg-[#ff3b30]/90")
+                        }
+                      >
+                       {r.custum_4 === "Active" ? "Suspend" : "Activate"}
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="px-4 py-10 text-center text-sm">
+                    {"No record found."}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

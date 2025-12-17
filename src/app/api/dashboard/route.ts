@@ -1,10 +1,24 @@
 import { NextResponse } from "next/server";
 import api from "@/app/lib/axiosInstance";
-import { isAxiosError } from "axios";
+import { AxiosResponse, isAxiosError } from "axios";
+import { cookies } from "next/headers";
 
 export async function GET(req: Request) {
   try {
-    const res = await api.get("Wallet/dashboard");
+    let res: AxiosResponse<any, any>;
+    const cookieStore = await cookies();
+    const role = cookieStore.get("role")?.value;
+    if (!role) {
+      return NextResponse.json(
+        { error: "Session expired, Please login" },
+        { status: 401 }
+      );
+    }
+    if (role == "Agent") {
+      res = await api.get("Agent/agent-dashboard");
+    } else {
+      res = await api.get("Wallet/dashboard");
+    }
 
     if (res.data) {
       let data = res.data;
