@@ -78,7 +78,7 @@ const AgentDashboard = () => {
             </h2>
             <div className="mt-3">
               <p className="font-bold text-2xl ">
-                ₦{data?.data.todaySales || 0}
+                ₦{data?.data.totalSales || 0}
               </p>
             </div>
           </div>

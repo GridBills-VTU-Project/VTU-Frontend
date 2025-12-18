@@ -1,6 +1,6 @@
 "use client";
 import { selectOption } from "@/app/util/functions";
-import { Mail, Phone, UserPen, X } from "lucide-react";
+import { Copy, Mail, Phone, UserPen, X } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuthUser } from "../customHooks/UseQueries";
@@ -83,6 +83,85 @@ const Profile = () => {
           {/* details */}
           <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
             <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
+              Agent Information
+            </h2>
+            <div className="flex gap-2 lg:gap-10 flex-col ">
+              <div className="w-full flex">
+                <div className="flex flex-col flex-1 mr-15">
+                  <p className="mb-2 text-darkbackground font-medium text-lg">
+                    User ID
+                  </p>
+                  <div className="flex items-center gap-5">
+                    <input
+                      disabled={true}
+                      name="first_name"
+                      value={user?.id}
+                      onChange={(e) => selectOption(e, setPasswordForm)}
+                      type="text"
+                      className={
+                        " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
+                      }
+                      placeholder="Enter first name"
+                    />
+                    <div className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
+                      <Copy size={20} />
+                      <p className="text-xs">Copy</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col flex-1">
+                  <p className="mb-2 text-darkbackground font-medium text-lg">
+                    Referral Code
+                  </p>
+                  <div className="flex items-center gap-5">
+                    <input
+                      disabled={true}
+                      name="first_name"
+                      value={user?.referralCode || undefined}
+                      onChange={(e) => selectOption(e, setPasswordForm)}
+                      type="text"
+                      className={
+                        " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
+                      }
+                      placeholder="Enter first name"
+                    />
+                    <div className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
+                      <Copy size={20} />
+                      <p className="text-xs">Copy</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full ">
+                <div className="flex flex-col mt-2">
+                  <p className="mb-2 text-darkbackground font-medium text-lg">
+                    Referral Link
+                  </p>
+                  <div className="flex items-center gap-5">
+                    <input
+                      disabled={true}
+                      name="first_name"
+                      value={user?.referralLink}
+                      onChange={(e) => selectOption(e, setPasswordForm)}
+                      type="text"
+                      className={
+                        " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl flex-2 " +
+                        (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
+                      }
+                      placeholder="Enter first name"
+                    />
+                    <div className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
+                      <Copy size={20} />
+                      <p className="text-xs">Copy</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* details */}
+          <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
+            <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
               Personal Information
             </h2>
             <div className="flex gap-2 lg:gap-10 max-lg:flex-col ">
@@ -160,22 +239,22 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* <div className="flex flex-col col-span-2">
-            <p className="mb-2 text-darkbackground font-medium text-lg">
-              Business Address
-            </p>
-            <input
-              name="address"
-              value={profileForm.title}
-              onChange={(e) => selectOption(e, setPasswordForm)}
-              type="text"
-              className={
-                " outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
-                (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
-              }
-              placeholder="Title"
-            />
-          </div> */}
+            {/* {user?.role == "Agent" && <div className="flex flex-col col-span-2">
+              <p className="mb-2 text-darkbackground font-medium text-lg">
+                Business Address
+              </p>
+              <input
+                name="address"
+                value={user.role}
+                onChange={(e) => selectOption(e, setPasswordForm)}
+                type="text"
+                className={
+                  " outline-darkbackground border-2 border-[#AAAAAA] p-4 rounded-2xl " +
+                  (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
+                }
+                placeholder="Title"
+              />
+            </div>} */}
             <button
               onClick={() => {
                 setIsDisabled(false);

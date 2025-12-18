@@ -6,6 +6,7 @@ export interface User {
   phoneNumber: string;
   referralCode: null;
   createdAt: Date;
+  referralLink:string;
 }
 
 export interface registerForm {
