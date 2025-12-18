@@ -1,5 +1,5 @@
 "use client";
-import { selectOption } from "@/app/util/functions";
+import { handleCopy, selectOption } from "@/app/util/functions";
 import { Copy, Mail, Phone, UserPen, X } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -80,8 +80,8 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* details */}
-          <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
+          {/* agent details */}
+          {user?.role == "Agent" && <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
             <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
               Agent Information
             </h2>
@@ -89,7 +89,7 @@ const Profile = () => {
               <div className="w-full flex">
                 <div className="flex flex-col flex-1 mr-15">
                   <p className="mb-2 text-darkbackground font-medium text-lg">
-                    User ID
+                    Agent ID
                   </p>
                   <div className="flex items-center gap-5">
                     <input
@@ -103,10 +103,10 @@ const Profile = () => {
                       }
                       placeholder="Enter first name"
                     />
-                    <div className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
+                    <button onClick={()=> handleCopy(user?.id||"")} className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
                       <Copy size={20} />
                       <p className="text-xs">Copy</p>
-                    </div>
+                    </button>
                   </div>
                 </div>
                 <div className="flex flex-col flex-1">
@@ -125,10 +125,10 @@ const Profile = () => {
                       }
                       placeholder="Enter first name"
                     />
-                    <div className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
+                    <button onClick={()=> handleCopy(user?.referralCode||"")} className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
                       <Copy size={20} />
                       <p className="text-xs">Copy</p>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -150,15 +150,15 @@ const Profile = () => {
                       }
                       placeholder="Enter first name"
                     />
-                    <div className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
+                    <button onClick={()=> handleCopy(user?.referralLink||"")} className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
                       <Copy size={20} />
                       <p className="text-xs">Copy</p>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </div>}
           {/* details */}
           <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
             <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
