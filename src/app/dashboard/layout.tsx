@@ -149,7 +149,14 @@ export const adminSidebarLinks = [
   },
   {
     name: "Commission",
-    tab: "adminCommission",
+    tab: "commission",
+    img: <User />,
+    href: "/support",
+    color: "bg-[#1631454D]",
+  },
+  {
+    name: "Settings",
+    tab: "AdminSettings",
     img: <User />,
     href: "/support",
     color: "bg-[#1631454D]",
@@ -191,7 +198,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
                   key={link.name}
                   className={
                     "text-center flex items-center capitalize gap-5 border-y-2 py-2 px-5 border-[#029993CC] " +
-                    (link.name === tab && " bg-[#26798C]")
+                    (link.tab === tab && " bg-[#26798C]")
                   }
                 >
                   <div>{link.img}</div>

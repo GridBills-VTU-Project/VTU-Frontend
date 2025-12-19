@@ -1,8 +1,6 @@
 "use client";
 import {
   RefreshCcw,
-  UsersRound,
-  Users,
   Search,
 } from "lucide-react";
 import React from "react";
@@ -29,79 +27,70 @@ export default function Agents() {
       <div className="flex w-full gap-4 mt-6 flex-wrap max-[1100px]:justify-center justify-between">
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#FFFFFF] h-[200px] p-5 w-full max-w-[400px] shadow-sm shadow-[#00000040] rounded-xl flex justify-between border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
           <div
             className={
-              "h-[60%] flex flex-col justify-between" +
-              (isLoading || isPending || isFetching ? " hidden" : " ")
+              "h-full flex flex-col justify-around flex-9 " +
+              (isLoading || isPending || isFetching ? " hidden" : " ")  
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
               Total Agents{" "}
-              {/* <span className="bg-[#989CF54D] p-2 rounded-lg">
-                {" "}
-                <UsersRound color="#141DF0" />
-              </span> */}
             </h2>
             <div>
-              <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+              <p className="font-bold text-2xl text-[#1DC81D]">
+                {data?.data?.walletBalance || "₦45,459.00"}
               </p>
+              {/* <p className="font-bold text-xs text-[#808080]">Across all users</p> */}
             </div>
           </div>
         </div>
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#FFFFFF] h-[200px] p-5 w-full max-w-[400px] shadow-sm shadow-[#00000040] rounded-xl flex justify-between border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
           <div
             className={
-              "h-[60%] flex flex-col justify-between" +
-              (isLoading || isPending || isFetching ? " hidden" : " ")
+              "h-full flex flex-col justify-around flex-9 " +
+              (isLoading || isPending || isFetching ? " hidden" : " ")  
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
               Pending Agent Approval{" "}
-              {/* <span className="bg-[#989CF54D] p-2 rounded-lg">
-                {" "}
-                <UsersRound color="#141DF0" />
-              </span> */}
             </h2>
             <div>
-              <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+              <p className="font-bold text-2xl text-[#1526DD]">
+                {data?.data?.walletBalance || "₦45,459.00"}
               </p>
+              {/* <p className="font-bold text-xs text-[#808080]">Current</p> */}
             </div>
           </div>
         </div>
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#FFFFFF] h-[200px] p-5 w-full max-w-[400px] shadow-sm shadow-[#00000040] rounded-xl flex justify-between border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
           <div
             className={
-              "h-[60%] flex flex-col justify-between" +
-              (isLoading || isPending || isFetching ? " hidden" : " ")
+              "h-full flex flex-col justify-around flex-9 " +
+              (isLoading || isPending || isFetching ? " hidden" : " ")  
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
               Pending Withdrawals{" "}
-              {/* <span className="bg-[#989CF54D] p-2 rounded-lg">
-                {" "}
-                <UsersRound color="#141DF0" />
-              </span> */}
             </h2>
             <div>
-              <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+              <p className="font-bold text-2xl text-[#FF3B30]">
+                {data?.data?.walletBalance || "₦45,459.00"}
               </p>
+              {/* <p className="font-bold text-xs text-[#808080]">Current</p> */}
             </div>
           </div>
         </div>
@@ -182,10 +171,10 @@ export default function Agents() {
                     <td className="px-4 py-4 text-lg truncate">
                       <p
                         className={
-                          " text-lg rounded-full max-w-40 text-center mx-auto py-2 text-white" +
+                          " text-lg rounded-full max-w-40 text-center mx-auto py-1 text-white" +
                           (r.custum_4 === "Active"
                             ? " bg-[#1526DD]"
-                            : " bg-[#FF3B30]")
+                            : " bg-[#1526DD33]")
                         }
                       >
                         {r.custum_4}
@@ -194,10 +183,10 @@ export default function Agents() {
                     <td className="">
                       <button
                         className={
-                          "px-4 py-4 font-semibold text-lg rounded-lg w-40 text-center mx-auto text-white " +
+                          "px-4 py-1 font-semibold text-lg rounded-lg w-40 text-center mx-auto text-white " +
                           (r.custum_4 != "Active"
                             ? " bg-[#1526DD] hover:!bg-[#1526dd]/90"
-                            : " bg-[#FF3B30] hover:bg-[#ff3b30]/90")
+                            : " bg-[#1526DD33] hover:bg-[#1526DD33]/90")
                         }
                       >
                        {r.custum_4 === "Active" ? "Suspend" : "Activate"}

@@ -1,13 +1,8 @@
 "use client";
-import { transactions } from "@/app/constants/sidebarConstants";
 import {
   RefreshCcw,
   Search,
-  TrendingDown,
-  TrendingUp,
-  Wallet,
 } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 import { useReward } from "../../customHooks/UseQueries";
 import { mockData } from "@/app/constants/constant";
@@ -95,7 +90,7 @@ const Users = () => {
                     <td className="px-4 py-4 text-lg">
                       <p
                         className={
-                          " text-lg rounded-full max-w-40 text-center mx-auto py-2 text-white" +
+                          " text-lg rounded-full max-w-40 text-center mx-auto py-1 text-white" +
                           (r.custum_4 === "Active"
                             ? " bg-[#1526DD]"
                             : " bg-[#FF3B30]")
@@ -109,7 +104,7 @@ const Users = () => {
                     <td className="">
                       <button
                         className={
-                          "px-4 py-4 font-semibold text-lg rounded-lg w-40 text-center mx-auto text-white " +
+                          "px-4 py-1 font-semibold text-lg rounded-lg w-40 text-center mx-auto text-white " +
                           (r.custum_4 != "Active"
                             ? " bg-[#1526DD] hover:!bg-[#1526dd]/90"
                             : " bg-[#FF3B30] hover:bg-[#ff3b30]/90")

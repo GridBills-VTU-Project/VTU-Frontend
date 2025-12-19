@@ -9,11 +9,14 @@ import Support from "./Support";
 import Profile from "./Profile";
 import Commission from "./agent/Commission";
 import Become_an_agent from "./Become_an_agent";
-import Admindasboard from "./admin/AdminDashBoard";
+// import Admindasboard from "./admin/AdminDashBoard";
+// import AgentDashboard from "./agent/AgentDashboard";
 import Users from "./admin/Users";
 import { useAuthUser } from "../customHooks/UseQueries";
-import AgentDashboard from "./agent/AgentDashboard";
 import Agents from "./admin/Agents";
+import AdminCommission from "./admin/AdminCommission";
+import VtuServices from "./admin/VtuServices";
+import AdminSettings from "./admin/AdminSettings";
 const Dashboard = ({}) => {
   const searchParams = useSearchParams();
     const { data: user, isLoading, isError, error } = useAuthUser();
@@ -28,7 +31,7 @@ const Dashboard = ({}) => {
       {(tab?.toLocaleLowerCase() === "dashboard" || !tab) && <Maindasboard />}
       {/* {((tab?.toLocaleLowerCase() === "agentdashboard" || !tab) && user?.role == "Agent") && <AgentDashboard />} */}
       {tab?.toLocaleLowerCase() === "wallet"&& <MainWallet />}
-      {tab?.toLocaleLowerCase() === "commission" && user?.role == "Agent" && <Commission />}
+      {tab?.toLocaleLowerCase() === "commission" && user?.role == "Agent" ? <Commission /> : tab?.toLocaleLowerCase() === "commission" && user?.role == "Admin" && <AdminCommission/>}
       {(tab?.toLocaleLowerCase() === "services" || tab?.toLocaleLowerCase() === "sale" && user?.role != "Admin") && <Services />}
       {tab?.toLocaleLowerCase() === "reward" && user?.role == "User"&& <Reward />}
       {tab?.toLocaleLowerCase() === "agent" && user?.role == "User"&& <Become_an_agent />}
@@ -37,6 +40,8 @@ const Dashboard = ({}) => {
       {/* {tab?.toLocaleLowerCase() === "admindashboard" && user?.role == "Admin" && <Admindasboard />} */}
       {tab?.toLocaleLowerCase() === "adminusers"&& user?.role == "Admin" && <Users />}
       {tab?.toLocaleLowerCase() === "adminagents"&& user?.role == "Admin" && <Agents />}
+      {tab?.toLocaleLowerCase() === "vtu_services"&& user?.role == "Admin" && <VtuServices />}
+      {tab?.toLocaleLowerCase() === "adminss"&& user?.role == "Admin" && <AdminSettings />}
     </div>
   );
 };

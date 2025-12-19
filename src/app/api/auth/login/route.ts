@@ -33,6 +33,9 @@ export async function POST(req: Request) {
           phoneNumber: data.data.user.phoneNumber,
           fullName: data.data.user.fullName,
           role: data.data.user.role,
+          address: data.data.user.address,
+          referralLink: data.data.user.referralLink,
+          referralCode: data.data.user.referralCode,
         },
       },
       { status: 200 }

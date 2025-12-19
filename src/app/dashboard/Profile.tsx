@@ -81,7 +81,8 @@ const Profile = () => {
           </div>
 
           {/* agent details */}
-          {user?.role == "Agent" && <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
+          {user?.role == "Agent" && 
+          <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
             <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
               Agent Information
             </h2>

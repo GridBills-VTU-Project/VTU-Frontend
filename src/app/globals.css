@@ -2,6 +2,9 @@
 @theme {
   --color-darkbackground: #163145;
   --color-lightbackground: #D4E9F9;
+  --color-textlight: #7D7979;
+  --color-blue: #1526DD;
+  --color-green: #34C759;
   --color-footer: #1C4E59;
   --breakpoint-mobile: 850px;
   --breakpoint-xs: 500px;

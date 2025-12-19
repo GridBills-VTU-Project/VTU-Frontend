@@ -1,20 +1,15 @@
 "use client";
-import {
-  RefreshCcw,
-  UsersRound,
-  Users,
-  Search,
-} from "lucide-react";
+import { RefreshCcw, Search } from "lucide-react";
 import React from "react";
-import { useAuthUser, useDashboard } from "../../customHooks/UseQueries";
+import { useDashboard } from "../../customHooks/UseQueries";
 import { mockData } from "@/app/constants/constant";
 
 export default function AdminWallet() {
   const { data, isLoading, isError, refetch, isFetching, isPending } =
     useDashboard();
-    
+
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#F2F2F7]">
       {/* header message */}
       <div className="w-full">
         <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl w-full">
@@ -24,141 +19,111 @@ export default function AdminWallet() {
           </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-bold mt-4">
-         Manage agents, commissions and performance
+          Manage agents, commissions and performance
         </p>
       </div>
       <div className="flex w-full gap-4 mt-6 flex-wrap max-[1100px]:justify-center justify-between">
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#FFFFFF] h-[200px] p-5 w-full max-w-[400px] shadow-sm shadow-[#00000040] rounded-xl flex justify-between border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
           <div
             className={
-              "h-[60%] flex flex-col justify-between" +
-              (isLoading || isPending || isFetching ? " hidden" : " ")
+              "h-full flex flex-col justify-around flex-9 " +
+              (isLoading || isPending || isFetching ? " hidden" : " ")  
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
-              Total Agents{" "}
-              {/* <span className="bg-[#989CF54D] p-2 rounded-lg">
-                {" "}
-                <UsersRound color="#141DF0" />
-              </span> */}
+              Total Wallet Balance{" "}
             </h2>
             <div>
-              <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+              <p className="font-bold text-2xl text-[#1DC81D]">
+                {data?.data?.walletBalance || "₦45,459.00"}
               </p>
+              <p className="font-bold text-xs text-[#808080]">Across all users</p>
             </div>
           </div>
         </div>
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#FFFFFF] h-[200px] p-5 w-full max-w-[400px] shadow-sm shadow-[#00000040] rounded-xl flex justify-between border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
           <div
             className={
-              "h-[60%] flex flex-col justify-between" +
-              (isLoading || isPending || isFetching ? " hidden" : " ")
+              "h-full flex flex-col justify-around flex-9 " +
+              (isLoading || isPending || isFetching ? " hidden" : " ")  
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
-              Pending Agent Approval{" "}
-              {/* <span className="bg-[#989CF54D] p-2 rounded-lg">
-                {" "}
-                <UsersRound color="#141DF0" />
-              </span> */}
+              Today's Funding{" "}
             </h2>
             <div>
-              <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+              <p className="font-bold text-2xl text-[#1526DD]">
+                {data?.data?.walletBalance || "₦45,459.00"}
               </p>
+              <p className="font-bold text-xs text-[#808080]">Current</p>
             </div>
           </div>
         </div>
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#FFFFFF] h-[200px] p-5 w-full max-w-[400px] shadow-sm shadow-[#00000040] rounded-xl flex justify-between border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
           <div
             className={
-              "h-[60%] flex flex-col justify-between" +
-              (isLoading || isPending || isFetching ? " hidden" : " ")
+              "h-full flex flex-col justify-around flex-9 " +
+              (isLoading || isPending || isFetching ? " hidden" : " ")  
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
-              Pending Withdrawals{" "}
-              {/* <span className="bg-[#989CF54D] p-2 rounded-lg">
-                {" "}
-                <UsersRound color="#141DF0" />
-              </span> */}
+              Borrowed Funds{" "}
             </h2>
             <div>
-              <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+              <p className="font-bold text-2xl text-[#FF3B30]">
+                {data?.data?.walletBalance || "₦45,459.00"}
               </p>
+              <p className="font-bold text-xs text-[#808080]">Current</p>
             </div>
           </div>
         </div>
       </div>
       <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl p-4 pb-10 h-[700px]">
         <h3 className="capitalize font-bold text-3xl  text-darkbackground ">
-          All Agents
+          Recent Transactions
         </h3>
         <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-medium ">
-          Search, filter and manage agent accounts
+          Latest wallet funding and debit activities
         </p>
-        <div className="flex my-5">
-          <input
-            name="batch number"
-            // onChange={(e) => setBatchSearch(e.target.value)}
-            type="search"
-            className="p-2 rounded-l-lg bg-[#EEEEEE] outline-[#646FC6] text-sm max-sm:text-[16px] w-full"
-            placeholder="Search by name or email"
-          />
-          <button
-            className={
-              "bg-[#646FC6] p-2 rounded-r-lg "
-              // +(batchSearch=="" && " bg-[#646fc6]/30 hover:!cursor-not-allowed")
-            }
-            // disabled={batchSearch == ""}
-            // onClick={() => handleSearch(batchSearch)}
-            // {}
-          >
-            <Search color="white" />
-          </button>
-        </div>
         <div className=" bg-[#FFFFFF] mt-10 border-2 border-[#AAAAAA] rounded-xl w-full overflow-auto max-h-[500px] min-h-[500px] h-[500px]">
           <table className=" min-w-[700px] w-full table-fixed border-collapse max-h-[200px] min-h-[200px] h-[200px]">
             <thead className=" text-start">
               <tr className="border-b border-zinc-200 text-center">
                 <th
                   scope="col"
-                  className="px-4 py-3 text-2xl font-medium text-start"
+                  className="px-4 py-3 text-xl font-medium"
                 >
-                  Agent
+                  User
                 </th>
-                <th scope="col" className="px-4 py-3 text-2xl font-medium">
-                 Commission Rate
+                <th scope="col" className="px-4 py-3 text-xl font-medium">
+                  Type
                 </th>
-                <th scope="col" className="px-4 py-3 text-2xl font-medium">
-                  Total Sales
+                <th scope="col" className="px-4 py-3 text-xl font-medium">
+                  Amount
                 </th>
-                <th scope="col" className="px-4 py-3 text-2xl font-medium">
-                  Pending Payout
+                <th scope="col" className="px-4 py-3 text-xl font-medium">
+                  Method
                 </th>
-                <th scope="col" className="px-4 py-3 text-2xl font-medium">
+                <th scope="col" className="px-4 py-3 text-xl font-medium">
                   Status
                 </th>
-                <th scope="col" className="px-4 py-3 text-2xl font-medium">
-                  
-                  Action
+                <th scope="col" className="px-4 py-3 text-xl font-medium">
+                  Date & Time
                 </th>
               </tr>
             </thead>
@@ -167,42 +132,29 @@ export default function AdminWallet() {
               {mockData && mockData.length > 0 ? (
                 mockData?.map((r, idx) => (
                   <tr key={idx} className=" divide-zinc-200">
-                    <td className="px-4 py-4 text-lg font-medium text-start capitalize text-[#163145] truncate">
+                    <td className="px-4 py-4 text-lg font-medium text-center   capitalize text-[#163145] truncate">
                       {r.user_Id}
-                      <p className="text-sm text-[#7D7979] lowercase">
+                      {/* <p className="text-sm text-[#7D7979] lowercase">
                         davidmuoegbunam@gmail.com
-                      </p>
+                      </p> */}
                     </td>
-                    <td className="">
-                      
-                       3.0%
-                      
-                    </td>
-                    <td className="px-4 py-4 text-lg truncate">{r.custum_3}</td>
-                    <td className="text-center truncate">{r.custum_3}</td>
+                    <td className={"Capitalize" + (true? " text-[#34C759]" : " text-[#FF3B30]")}>3.0%</td>
+                    <td className={"px-4 py-4 text-lg truncate" + (true? " text-[#34C759]" : " text-[#FF3B30]")}>{r.custum_3}</td>
+                    <td className="text-center truncate">Bank Transfer</td>
                     <td className="px-4 py-4 text-lg truncate">
                       <p
                         className={
-                          " text-lg rounded-full max-w-40 text-center mx-auto py-2 text-white" +
+                          " text-lg rounded-full max-w-40 text-center mx-auto py-1 text-white" +
                           (r.custum_4 === "Active"
                             ? " bg-[#1526DD]"
                             : " bg-[#FF3B30]")
                         }
                       >
-                        {r.custum_4}
+                        Completed
                       </p>
                     </td>
                     <td className="">
-                      <button
-                        className={
-                          "px-4 py-4 font-semibold text-lg rounded-lg w-40 text-center mx-auto text-white " +
-                          (r.custum_4 != "Active"
-                            ? " bg-[#1526DD] hover:!bg-[#1526dd]/90"
-                            : " bg-[#FF3B30] hover:bg-[#ff3b30]/90")
-                        }
-                      >
-                       {r.custum_4 === "Active" ? "Suspend" : "Activate"}
-                      </button>
+                      {new Date("2025-12-03T09:57:13.123Z").toDateString()}
                     </td>
                   </tr>
                 ))
@@ -219,6 +171,6 @@ export default function AdminWallet() {
       </div>
     </div>
   );
-};
+}
 
 // export default Admindasboard;
