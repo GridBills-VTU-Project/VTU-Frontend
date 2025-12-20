@@ -22,13 +22,13 @@ export default function AdminCommission() {
       {/* header message */}
       <div className="w-full">
         <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl w-full">
-          Agent Management
+          Commissions & Rewards
           <button className="ml-3" onClick={() => refetch()}>
             <RefreshCcw />
           </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-bold mt-4">
-          Manage agents, commissions and performance
+          Manage agent commissions and user reward programs
         </p>
       </div>
       <div className="flex w-full gap-4 mt-6 flex-wrap max-[1100px]:justify-center justify-between">

@@ -41,7 +41,7 @@ const Dashboard = ({}) => {
       {tab?.toLocaleLowerCase() === "adminusers"&& user?.role == "Admin" && <Users />}
       {tab?.toLocaleLowerCase() === "adminagents"&& user?.role == "Admin" && <Agents />}
       {tab?.toLocaleLowerCase() === "vtu_services"&& user?.role == "Admin" && <VtuServices />}
-      {tab?.toLocaleLowerCase() === "adminss"&& user?.role == "Admin" && <AdminSettings />}
+      {tab?.toLocaleLowerCase() === "adminsettings"&& user?.role == "Admin" && <AdminSettings />}
     </div>
   );
 };

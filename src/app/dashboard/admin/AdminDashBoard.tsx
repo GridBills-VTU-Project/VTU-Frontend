@@ -3,6 +3,7 @@ import {
   RefreshCcw,
   UsersRound,
   Users,
+  Clock3,
 } from "lucide-react";
 import React from "react";
 import { useDashboard } from "../../customHooks/UseQueries";
@@ -20,14 +21,14 @@ const Admindasboard = () => {
             <RefreshCcw />
           </button>
         </h1>
-        <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-bold mt-4">
-          Welcome back! Here is what is happening in your Account
+        <p className="text-[#7D7979] text-lg font-bold">
+          Monitor your VTU platform performance
         </p>
       </div>
       <div className="flex w-full gap-4 mt-6 flex-wrap max-[1100px]:justify-center justify-between">
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-around   border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
@@ -38,7 +39,7 @@ const Admindasboard = () => {
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
-              Wallet Balance{" "}
+              Total Users{" "}
               <span className="bg-[#989CF54D] p-2 rounded-lg">
                 {" "}
                 <UsersRound color="#141DF0" />
@@ -53,7 +54,7 @@ const Admindasboard = () => {
         </div>
         <div
           className={
-            " gap-9 bg-[#DCFADC] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#DCFADC] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-around   border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
@@ -79,7 +80,7 @@ const Admindasboard = () => {
         </div>
         <div
           className={
-            " gap-9 bg-[#DCFADC] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#DCFADC] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-around   border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
@@ -105,7 +106,7 @@ const Admindasboard = () => {
         </div>
         <div
           className={
-            " gap-9 bg-[#E0E1F31A] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-between border-2 border-[#AAAAAA33] " +
+            " gap-9 bg-[#FFF9EF] h-[200px] p-5 w-full max-w-[300px] inset-shadow-sm inset-shadow-[#00000040] rounded-xl flex flex-col justify-around border-2 border-[#AAAAAA33] " +
             (isLoading || isPending || isFetching ? " shimmer" : " ")
           }
         >
@@ -116,10 +117,10 @@ const Admindasboard = () => {
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
-              Wallet Balance{" "}
-              <span className="bg-[#989CF54D] p-2 rounded-lg">
+              Pending Withdrawals{" "}
+              <span className="bg-[#FDCC734D] p-2 rounded-lg">
                 {" "}
-                <UsersRound color="#141DF0" />
+                <Clock3 color="#FFA500" />
               </span>
             </h2>
             <div>

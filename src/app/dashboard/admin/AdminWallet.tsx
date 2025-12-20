@@ -13,13 +13,13 @@ export default function AdminWallet() {
       {/* header message */}
       <div className="w-full">
         <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl w-full">
-          Agent Management
+          Wallet Management
           <button className="ml-3" onClick={() => refetch()}>
             <RefreshCcw />
           </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-bold mt-4">
-          Manage agents, commissions and performance
+          Monitor and manage wallet transactions
         </p>
       </div>
       <div className="flex w-full gap-4 mt-6 flex-wrap max-[1100px]:justify-center justify-between">
@@ -102,7 +102,7 @@ export default function AdminWallet() {
         </p>
         <div className=" bg-[#FFFFFF] mt-10 border-2 border-[#AAAAAA] rounded-xl w-full overflow-auto max-h-[500px] min-h-[500px] h-[500px]">
           <table className=" min-w-[700px] w-full table-fixed border-collapse max-h-[200px] min-h-[200px] h-[200px]">
-            <thead className=" text-start">
+            <thead className=" text-start sticky top-0 bg-white z-10">
               <tr className="border-b border-zinc-200 text-center">
                 <th
                   scope="col"

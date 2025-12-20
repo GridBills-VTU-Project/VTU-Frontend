@@ -1,8 +1,5 @@
 "use client";
-import {
-  RefreshCcw,
-  Search,
-} from "lucide-react";
+import { RefreshCcw, Search } from "lucide-react";
 import React from "react";
 import { useDashboard } from "../../customHooks/UseQueries";
 import { mockData } from "@/app/constants/constant";
@@ -21,7 +18,7 @@ export default function Agents() {
           </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-bold mt-4">
-         Manage agents, commissions and performance
+          Manage agents, commissions and performance
         </p>
       </div>
       <div className="flex w-full gap-4 mt-6 flex-wrap max-[1100px]:justify-center justify-between">
@@ -34,7 +31,7 @@ export default function Agents() {
           <div
             className={
               "h-full flex flex-col justify-around flex-9 " +
-              (isLoading || isPending || isFetching ? " hidden" : " ")  
+              (isLoading || isPending || isFetching ? " hidden" : " ")
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
@@ -57,7 +54,7 @@ export default function Agents() {
           <div
             className={
               "h-full flex flex-col justify-around flex-9 " +
-              (isLoading || isPending || isFetching ? " hidden" : " ")  
+              (isLoading || isPending || isFetching ? " hidden" : " ")
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
@@ -80,7 +77,7 @@ export default function Agents() {
           <div
             className={
               "h-full flex flex-col justify-around flex-9 " +
-              (isLoading || isPending || isFetching ? " hidden" : " ")  
+              (isLoading || isPending || isFetching ? " hidden" : " ")
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
@@ -95,14 +92,14 @@ export default function Agents() {
           </div>
         </div>
       </div>
-      <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl p-4 pb-10 h-[700px]">
+      <div className="bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl p-4 pb-10 h-[800px]">
         <h3 className="capitalize font-bold text-3xl  text-darkbackground ">
           All Agents
         </h3>
-        <p className="text-[#7D7979] text-lg font-(family-name:--font-manrope) font-medium ">
+        <p className="text-[#7D7979] text-lg font-medium mb-10">
           Search, filter and manage agent accounts
         </p>
-        <div className="flex my-5">
+        {/* <div className="flex my-5">
           <input
             name="batch number"
             // onChange={(e) => setBatchSearch(e.target.value)}
@@ -121,10 +118,27 @@ export default function Agents() {
           >
             <Search color="white" />
           </button>
+        </div> */}
+        <div className="flex items-center gap-5">
+          <input
+            disabled={true}
+            name="first_name"
+            // value={user?.id}
+            // onChange={(e) => selectOption(e, setPasswordForm)}
+            type="text"
+            className={
+              " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
+            }
+            placeholder="Enter first name"
+          />
+          <button className="flex bg-[#8080801A] px-10 p-4 gap-1 border-2 border-[#7575754D] rounded-lg">
+            {/* <Copy size={20} /> */}
+            Filter
+          </button>
         </div>
         <div className=" bg-[#FFFFFF] mt-10 border-2 border-[#AAAAAA] rounded-xl w-full overflow-auto max-h-[500px] min-h-[500px] h-[500px]">
           <table className=" min-w-[700px] w-full table-fixed border-collapse max-h-[200px] min-h-[200px] h-[200px]">
-            <thead className=" text-start">
+            <thead className=" text-start sticky top-0 bg-white z-10">
               <tr className="border-b border-zinc-200 text-center">
                 <th
                   scope="col"
@@ -133,7 +147,7 @@ export default function Agents() {
                   Agent
                 </th>
                 <th scope="col" className="px-4 py-3 text-2xl font-medium">
-                 Commission Rate
+                  Commission Rate
                 </th>
                 <th scope="col" className="px-4 py-3 text-2xl font-medium">
                   Total Sales
@@ -145,7 +159,6 @@ export default function Agents() {
                   Status
                 </th>
                 <th scope="col" className="px-4 py-3 text-2xl font-medium">
-                  
                   Action
                 </th>
               </tr>
@@ -161,11 +174,7 @@ export default function Agents() {
                         davidmuoegbunam@gmail.com
                       </p>
                     </td>
-                    <td className="">
-                      
-                       3.0%
-                      
-                    </td>
+                    <td className="">3.0%</td>
                     <td className="px-4 py-4 text-lg truncate">{r.custum_3}</td>
                     <td className="text-center truncate">{r.custum_3}</td>
                     <td className="px-4 py-4 text-lg truncate">
@@ -189,7 +198,7 @@ export default function Agents() {
                             : " bg-[#1526DD33] hover:bg-[#1526DD33]/90")
                         }
                       >
-                       {r.custum_4 === "Active" ? "Suspend" : "Activate"}
+                        {r.custum_4 === "Active" ? "Suspend" : "Activate"}
                       </button>
                     </td>
                   </tr>
@@ -207,6 +216,6 @@ export default function Agents() {
       </div>
     </div>
   );
-};
+}
 
 // export default Admindasboard;

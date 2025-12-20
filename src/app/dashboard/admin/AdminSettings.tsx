@@ -1,4 +1,6 @@
 'use client'
+import AdminSettingsCard from "@/app/components/ui/AdminSettingsCard";
+
 const AdminSettings = () => {
   return (
     <div>
@@ -10,8 +12,11 @@ const AdminSettings = () => {
           Manage packages, prices, and synchronize data
         </p>
       </div>
-      <div className="mt-20 flex flex-wrap gap-10 max-[1150]:justify-center">
-        <AdminSettings />
+      <div className="mt-20 flex flex-wrap gap-30 max-[1150]:justify-center">
+        <AdminSettingsCard/>
+        <AdminSettingsCard/>
+        <AdminSettingsCard/>
+        <AdminSettingsCard/>
       </div>
     </div>
   );

@@ -6,21 +6,21 @@ import { mockData } from "@/app/constants/constant";
 import AdminVtuServicesCard from "@/app/components/ui/AdminVtuServicesCard";
 
 export default function VtuServices() {
-  const { data, isLoading, isError, refetch, isFetching, isPending } =
-    useDashboard();
+  // const { data, isLoading, isError, refetch, isFetching, isPending } =
+  //   useDashboard();
 
   return (
     <div className="w-full bg-[#F2F2F7]">
       {/* header message */}
       <div className="w-full">
         <h1 className="font-bold text-darkbackground text-3xl max-xs:text-2xl w-full">
-          Agent Management
-          <button className="ml-3" onClick={() => refetch()}>
+         VTU Services
+          <button className="ml-3" >
             <RefreshCcw />
           </button>
         </h1>
         <p className="text-[#7D7979] text-lg font-bold mt-4">
-          Manage agents, commissions and performance
+          Manage service integrations and profit margins
         </p>
       </div>
       <div className="mt-20 flex flex-wrap gap-10 max-[1150]:justify-center">
@@ -40,14 +40,14 @@ export default function VtuServices() {
         <div
           className={
             "h-[90%] mt-10 overflow-auto flex justify-center items-center w-full " +
-            (isLoading && " shimmer")
+            (false && " shimmer")
           }
         >
           {true && true ? (
             <ul
               className={
                 "h-full flex flex-col gap-10 w-full  " +
-                (isLoading && " hidden")
+                (false && " hidden")
               }
             >
               {mockData.map((trans: any, index: number) => (
@@ -86,7 +86,7 @@ export default function VtuServices() {
               ))}
             </ul>
           ) : (
-            <p className={" " + (isLoading && " hidden")}>
+            <p className={" " + (false && " hidden")}>
               {" "}
               No Recent transactions
             </p>
