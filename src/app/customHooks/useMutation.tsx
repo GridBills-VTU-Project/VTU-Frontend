@@ -189,3 +189,137 @@ export const useForgotpasswordOtpMutation = () => {
     },
   });
 };
+
+export const useApproveAgentMutation = () => {
+  const router = useRouter();
+  const api = useAxios();
+const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (form: { agentId: string }) => {
+      const res = await api.post("admin/agents",JSON.stringify(form));
+      return res.data;
+    },
+    onSuccess: async (data) => {
+      toast.success(data.msg);
+      queryClient.invalidateQueries({queryKey:["allAgents"]})
+      // router.refresh();
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error(error.message || "Agent approval failed");
+    },
+  });
+};
+
+export const useUpdateCommissionMutation = () => {
+  const api = useAxios();
+const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (commissionRate: string) => {
+      const res = await api.post("admin/commission",JSON.stringify({commissionRate}));
+      return res.data;
+    },
+    onSuccess: async (data) => {
+      toast.success(data.msg || "Commission updated successfully");
+      queryClient.refetchQueries({queryKey:["AdminCommission"]},{cancelRefetch:true});
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error(error.message || "Commission update failed");
+    },
+  });
+};
+
+export const useActivateOrSuspendUserMutation = () => {
+  const api = useAxios();
+const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({isApproving,userId}:{isApproving: "true"|"false",userId:string}) => {
+      const res = await api.post("admin/users",JSON.stringify({isApproving,userId}));
+      return res.data;
+    },
+    onSuccess: async (data) => {
+      toast.success(data.msg || "successful");
+      queryClient.refetchQueries({queryKey:["allUsers"]},{cancelRefetch:true});
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error(error.message || "Action failed");
+    },
+  });
+};
+
+export const useUpdateExamPackagePric = () => {
+  const api = useAxios();
+const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({examPackage,newPrice}:{examPackage: any,newPrice:string}) => {
+      const res = await api.post("admin/settings/exam",JSON.stringify({examPackage,newPrice}));
+      return res.data;
+    },
+    onSuccess: async (data) => {
+      toast.success(data.msg || "successful");
+      queryClient.refetchQueries({queryKey:["exam_settings"]},{cancelRefetch:true});
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error(error.message || "Action failed");
+    },
+  });
+};
+
+export const useUpdateTvPackagePrice = () => {
+  const api = useAxios();
+const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({tvPackage,newPrice}:{tvPackage: any,newPrice:string}) => {
+      const res = await api.post("admin/settings/tv",JSON.stringify({tvPackage,newPrice}));
+      return res.data;
+    },
+    onSuccess: async (data) => {
+      toast.success(data.msg || "successful");
+      queryClient.refetchQueries({queryKey:["tv_settings"]},{cancelRefetch:true});
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error(error.message || "Action failed");
+    },
+  });
+};
+
+export const useSyncDataPlans = () => {
+  const api = useAxios();
+// const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      const res = await api.post("admin/settings/data");
+      return res.data;
+    },
+    onSuccess: async (data) => {
+      toast.success(data.message || "successful");
+      // queryClient.refetchQueries({queryKey:["tv_settings"]},{cancelRefetch:true});
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        console.log(error);
+        return;
+      }
+      toast.error(error.message || "Action failed");
+    },
+  });
+};

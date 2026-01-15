@@ -46,7 +46,8 @@ const ElectricBillForm = () => {
         isChecked: false,
       });
       setValidateMterRes(null);
-      setCanCopy(res.data?.response?.description?.Token);
+      // setCanCopy(res.data?.response?.description?.Token);
+      setCanCopy(res.data?.token);
     } catch (error) {
       if (isAxiosError(error)) {
         console.error(error);

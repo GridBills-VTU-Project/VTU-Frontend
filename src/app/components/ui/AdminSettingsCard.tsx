@@ -1,24 +1,37 @@
-import { Smartphone } from "lucide-react";
+import { GraduationCap, Tv } from "lucide-react";
 import React from "react";
-import SelectPlan from "./SelectPlan";
-import { selectOption } from "@/app/util/functions";
 import Select from "./Select";
-import { meterTypes, networks } from "@/app/constants/constant";
+import { formatAmount } from "@/app/util/functions";
 
-const AdminSettingsCard = () => {
+const icons = [
+  <GraduationCap color="#646FC6"/>, <Tv color="#646FC6" />,
+]
+
+const AdminSettingsCard = ({title,paragraph,packages,amount}:{title:string,paragraph:string,packages:string[],amount:string}) => {
+  // Function to select icon based on title
+const getIcon = (title: string) => {
+  switch (title) {  // Using toLowerCase for case-insensitive matching
+    case 'Update Exam Package':
+      return icons[0];
+    case 'Update TV Package':
+      return icons[1];
+    default:
+      return icons[0];
+  }
+};
   const [form, setForm] = React.useState<any>({});
   return (
-    <div className="max-w-[550px] bg-[#FFFFFF] p-10 rounded-lg">
+    <div className="max-w-[550px] bg-[#FFFFFF] p-10 rounded-lg w-full">
       <div className="flex gap-5">
         <div className="bg-[#646FC64D] rounded-full w-fit h-fit p-3">
-          <Smartphone color="#646FC6" />
+          {getIcon(title)}
         </div>
         <div className="flex flex-col justify-between gap-1">
           <h1 className="font-bold text-darkbackground text-xl w-full">
-            Update Exam Package
+            {title}
           </h1>
           <p className="text-textlight font-medium">
-            Modify the selling price for exam scratch cards
+            {paragraph}
           </p>
         </div>
       </div>
@@ -26,7 +39,7 @@ const AdminSettingsCard = () => {
         <div className="flex flex-col gap-3">
           <p className="mt-10">Select Package</p>
           <Select
-            options={networks}
+            options={packages}
             selected={form}
             setSelected={setForm}
             placeholder="Choose Network"
@@ -36,7 +49,7 @@ const AdminSettingsCard = () => {
         </div>
         <div className="flex flex-col bg-[#EEEEEE] h-fit p-5 rounded-lg">
           <p className="">Current Price</p>
-          <p className="">₦8,500</p>
+          <p className="font-bold">₦{formatAmount(amount)}</p>
         </div>
         <div className="flex flex-col gap-3">
           <p className="">New Selling Price (₦)</p>

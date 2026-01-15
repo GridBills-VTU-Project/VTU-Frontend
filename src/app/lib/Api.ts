@@ -1,6 +1,6 @@
 // import { cookies } from "next/headers";
 import { AxiosInstance } from "axios";
-import { DataArray, examPackage, TvPackage, User } from "../util/types";
+import { AdminCommissionOverview, AdminDashboard, AdminServices, agentOverViewForAdmin, AllUsersResponse, DataArray, examPackage, Summary, TvPackage, User, UsersForAdmin, walletOverViewForAdmin } from "../util/types";
 
 // export async function getUserFromCookie() {
 //   const cookieStore = await cookies();
@@ -79,5 +79,45 @@ export const getExamPurchase = async (api: AxiosInstance): Promise<examPackage[]
 };
 export const getTvPurchase = async (api: AxiosInstance,tv:string): Promise<TvPackage[]> => {
   const res = await api.get("services/tv/"+tv.toLocaleLowerCase());
+  return res.data;
+};
+export const getAllUsers = async (api: AxiosInstance,params:{pageNumber:number,pageSize:number,search:string}): Promise<AllUsersResponse > => {
+  const res = await api.get("admin/users",{ params: { pageNumber: params.pageNumber, pageSize: params.pageSize,search: params.search } });
+  return res.data;
+};
+export const getAgentSummary = async (api: AxiosInstance): Promise<Summary> => {
+  const res = await api.get("admin/agents/agent-summary");
+  return res.data;
+};
+export const getAgentOverView = async (api: AxiosInstance,params:{pageNumber:number,pageSize:number,search:string}): Promise<agentOverViewForAdmin> => {
+  const res = await api.get("admin/agents",{ params: { pageNumber: params.pageNumber, pageSize: params.pageSize,search: params.search } });
+  return res.data;
+};
+export const getWalletOverView = async (api: AxiosInstance): Promise<walletOverViewForAdmin> => {
+  const res = await api.get("admin/wallet");
+  return res.data;
+};
+export const getAdminCommission = async (api: AxiosInstance): Promise<AdminCommissionOverview> => {
+  const res = await api.get("admin/commission");
+  return res.data;
+};
+export const getAdminDashboard = async (api: AxiosInstance): Promise<AdminDashboard> => {
+  const res = await api.get("admin/dashboard");
+  return res.data;
+};
+export const getAdminVtuServices = async (api: AxiosInstance): Promise<AdminServices> => {
+  const res = await api.get("admin/services");
+  return res.data;
+};
+export const getAdminExamPackages = async (api: AxiosInstance): Promise<examPackage[]> => {
+  const res = await api.get("admin/settings/exam");
+  return res.data;
+};
+export const getAdminTvPackages = async (api: AxiosInstance): Promise<examPackage[]> => {
+  const res = await api.get("admin/settings/tv");
+  return res.data;
+};
+export const getDataSync = async (api: AxiosInstance): Promise<any> => {
+  const res = await api.get("admin/settings/data");
   return res.data;
 };

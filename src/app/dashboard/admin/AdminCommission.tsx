@@ -1,21 +1,36 @@
 "use client";
-import {
-  RefreshCcw,
-  UsersRound,
-  Users,
-  Search,
-  Copy,
-  TrendingUp,
-  TrendingDown,
-} from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 import React from "react";
-import { useAuthUser, useDashboard } from "../../customHooks/UseQueries";
-import { mockData } from "@/app/constants/constant";
-import { handleCopy } from "@/app/util/functions";
+import { useGetAdminCommission } from "../../customHooks/UseQueries";
+import { mockData, numRegex, numRegexWithDecimal } from "@/app/constants/constant";
+import { formatAmount } from "@/app/util/functions";
+import UseAxios from "@/app/customHooks/UseAxios";
+import { toast } from "react-toastify";
+import { isAxiosError } from "axios";
+import { useUpdateCommissionMutation } from "@/app/customHooks/useMutation";
 
 export default function AdminCommission() {
+  const api = UseAxios();
   const { data, isLoading, isError, refetch, isFetching, isPending } =
-    useDashboard();
+    useGetAdminCommission();
+  const [commissionRate, setCommissionRate] = React.useState<string>("");
+  // const [loading, setLoading] = React.useState<boolean>(false);
+  const {mutateAsync, isPending:isUpdating} = useUpdateCommissionMutation();
+  const submit = async () => {
+    try {
+      if (!commissionRate || !numRegexWithDecimal.test(commissionRate)) {
+        return toast.info("Input a valid commission rate.");
+      }
+      await mutateAsync(commissionRate);
+      setCommissionRate("");
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.error(error);
+        return;
+      }
+      toast.error("something went wrong.");
+    }
+  };
 
   return (
     <div className="w-full bg-[#F2F2F7]">
@@ -49,7 +64,10 @@ export default function AdminCommission() {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#1DC81D]">
-                {data?.data?.walletBalance || "₦45,459.00"}
+                ₦
+                {data && data.totalCommissionPaid
+                  ? formatAmount(data.totalCommissionPaid)
+                  : "0.00"}
               </p>
               <p className="font-bold text-xs text-[#808080]">
                 Across all users
@@ -74,9 +92,11 @@ export default function AdminCommission() {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#1526DD]">
-                {data?.data?.walletBalance || "₦45,459.00"}
+                {data && data.totalRewardPoints
+                  ? formatAmount(data.totalRewardPoints)
+                  : "0.00"}
               </p>
-              <p className="font-bold text-xs text-[#808080]">Current</p>
+              <p className="font-bold text-xs text-[#808080]">User points</p>
             </div>
           </div>
         </div>
@@ -93,13 +113,18 @@ export default function AdminCommission() {
             }
           >
             <h2 className="flex justify-between text-lg font-medium leading-6 capitalize text-[#808080]">
-               Commission Rate{" "}
+              Commission Rate{" "}
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#FF3B30]">
-                {data?.data?.walletBalance || "₦45,459.00"}
+                {data && data.currentCommissionRate
+                  ? data.currentCommissionRate
+                  : "0"}
+                %
               </p>
-              <p className="font-bold text-xs text-[#808080]">Current</p>
+              <p className="font-bold text-xs text-[#808080]">
+                Across all agents
+              </p>
             </div>
           </div>
         </div>
@@ -119,25 +144,19 @@ export default function AdminCommission() {
               </p>
               <div className="flex items-center gap-5">
                 <input
-                  disabled={true}
-                  name="first_name"
-                  // value={user?.id}
-                  // onChange={(e) => selectOption(e, setPasswordForm)}
+                  disabled={isUpdating}
+                  name="commissionRate"
+                  value={commissionRate}
+                  onChange={(e) => setCommissionRate(e.target.value)}
                   type="text"
                   className={
                     " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
                   }
-                  placeholder="Enter first name"
+                  placeholder={(data?.currentCommissionRate.toString() || "0.00" ) + "%"}
                 />
                 <button
-                  onClick={() => handleCopy("")}
-                  className="flex bg-[#8080801A] p-5 gap-1 py-4 border-2 border-[#7575754D] rounded-lg"
-                >
-                  {/* <Copy size={20} /> */}
-                  <p className="text-sm">Edit</p>
-                </button>
-                <button
-                  onClick={() => handleCopy("")}
+                disabled={isUpdating}
+                  onClick={async () => await submit()}
                   className="flex bg-[#8080801A] p-5 gap-1 py-4 border-2 border-[#7575754D] rounded-lg"
                 >
                   {/* <Copy size={20} /> */}
@@ -161,14 +180,14 @@ export default function AdminCommission() {
             (isLoading && " shimmer")
           }
         >
-          {true && true ? (
+          {data && data.recentCommissionLogs.length>0 ? (
             <ul
               className={
                 "h-full flex flex-col gap-10 w-full  " +
                 (isLoading && " hidden")
               }
             >
-              {mockData.map((trans: any, index: number) => (
+              {data.recentCommissionLogs.map((trans: any, index: number) => (
                 <li
                   key={index}
                   className="bg-[#AAAAAA33] flex p-5 justify-between rounded-xl text-end items-center"
@@ -179,7 +198,7 @@ export default function AdminCommission() {
                         <TrendingUp color="#10AA3E" />
                       </div>
                     ) : ( */}
-                      {/* <div className="p-3 bg-[#FF00001A] rounded-full">
+                    {/* <div className="p-3 bg-[#FF00001A] rounded-full">
                         <TrendingDown color="#FF0000" />
                       </div> */}
                     {/* )} */}
@@ -194,7 +213,9 @@ export default function AdminCommission() {
                   </div>
                   <div>
                     <div>
-                      <h5 className="font-medium text-sm text-blue">₦{trans.user_Id}</h5>
+                      <h5 className="font-medium text-sm text-blue">
+                        ₦{trans.user_Id}
+                      </h5>
                       <p className="text-[#757575] text-sm">
                         {new Date(trans.createdAt).toDateString()}
                       </p>

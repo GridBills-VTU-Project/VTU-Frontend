@@ -8,7 +8,7 @@ import { isAxiosError } from "axios";
 import validator from "validator";
 
 const Become_an_agent = () => {
-  const [supportForm, setSupportForm] = useState({
+  const [becomeAgentForm, setBecomeAgentForm] = useState({
     email: "",
     name: "",
     address: "",
@@ -22,22 +22,21 @@ const Become_an_agent = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log(supportForm);
-      if (!supportForm.name.trim()) {
+      console.log(becomeAgentForm);
+      if (!becomeAgentForm.name.trim()) {
        return toast.info("Please enter full name.");
-      } else if (!validator.isEmail(supportForm.email)) {
+      } else if (!validator.isEmail(becomeAgentForm.email)) {
        return toast.info("Email must be a valid email.");
-      } else if (!supportForm.address.trim()) {
+      } else if (!becomeAgentForm.address.trim()) {
        return toast.info("Please enter Address.");
-      } else if (!supportForm.bank.trim()) {
+      } else if (!becomeAgentForm.bank.trim()) {
        return toast.info("Please enter Bank Number.");
-      } else if (!supportForm.account || !numRegex.test(supportForm.account) || supportForm.account.length < 10) {
+      } else if (!becomeAgentForm.account || !numRegex.test(becomeAgentForm.account) || becomeAgentForm.account.length < 10) {
        return toast.info("Please enter a valid account number.");
       }
-      // setSupportForm(prev => ({...prev,name:supportForm.name.replace(" ","_")}))
-      const res = await api.post("auth/user", JSON.stringify(supportForm));
+      const res = await api.post("auth/user", JSON.stringify(becomeAgentForm));
       toast.success(res.data.msg || "Success.");
-      setSupportForm({
+      setBecomeAgentForm({
         email: "",
         name: "",
         address: "",
@@ -73,8 +72,8 @@ const Become_an_agent = () => {
           <p className="mb-2">Email</p>
           <input
             name="email"
-            value={supportForm.email}
-            onChange={(e) => selectOption(e, setSupportForm)}
+            value={becomeAgentForm.email}
+            onChange={(e) => selectOption(e, setBecomeAgentForm)}
             type="text"
             className="border-2 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg bg-[#FFFFFF3B]/23"
             placeholder="you@gmail.com"
@@ -84,8 +83,8 @@ const Become_an_agent = () => {
           <p className="mb-2">Full Name</p>
           <input
             name="name"
-            value={supportForm.name}
-            onChange={(e) => selectOption(e, setSupportForm)}
+            value={becomeAgentForm.name}
+            onChange={(e) => selectOption(e, setBecomeAgentForm)}
             type="text"
             className="border-2 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg bg-[#FFFFFF3B]/23"
             placeholder="enter name"
@@ -95,8 +94,8 @@ const Become_an_agent = () => {
           <p className="mb-2">Address</p>
           <input
             name="address"
-            value={supportForm.address}
-            onChange={(e) => selectOption(e, setSupportForm)}
+            value={becomeAgentForm.address}
+            onChange={(e) => selectOption(e, setBecomeAgentForm)}
             type="text"
             className="border-2 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg bg-[#FFFFFF3B]/23"
             placeholder="enter address"
@@ -106,8 +105,8 @@ const Become_an_agent = () => {
           <p className="mb-2">Bank Name</p>
           <input
             name="bank"
-            value={supportForm.bank}
-            onChange={(e) => selectOption(e, setSupportForm)}
+            value={becomeAgentForm.bank}
+            onChange={(e) => selectOption(e, setBecomeAgentForm)}
             type="text"
             className="border-2 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg bg-[#FFFFFF3B]/23"
             placeholder="enter bank name"
@@ -117,8 +116,8 @@ const Become_an_agent = () => {
           <p className="mb-2">Account Number</p>
           <input
             name="account"
-            value={supportForm.account}
-            onChange={(e) => selectOption(e, setSupportForm)}
+            value={becomeAgentForm.account}
+            onChange={(e) => selectOption(e, setBecomeAgentForm)}
             type="text"
             className="border-2 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg bg-[#FFFFFF3B]/23"
             placeholder="enter account number"

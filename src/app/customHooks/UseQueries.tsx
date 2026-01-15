@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import UseAxios from "./UseAxios";
-import { getCommission, getCurrentUser, getDashboard, getDataPlans, getExamPurchase, getReward, getTvPurchase, getWallet } from "../lib/Api";
+import { getAdminCommission, getAdminDashboard, getAdminExamPackages, getAdminTvPackages, getAdminVtuServices, getAgentOverView, getAgentSummary, getAllUsers, getCommission, getCurrentUser, getDashboard, getDataPlans, getDataSync, getExamPurchase, getReward, getTvPurchase, getWallet, getWalletOverView } from "../lib/Api";
 import { DataArray, examPackage, TvPackage } from "../util/types";
 
 export const useDashboard = () => {
@@ -54,7 +54,6 @@ export const useAuthUser = () => {
     refetchOnWindowFocus:false,
   });
 };
-
 export function useGetDataPlans(network:string ) {
   const api = UseAxios();
   return useQuery<DataArray[], Error>({
@@ -85,3 +84,100 @@ export function useGetTvPackages(tv:string) {
     staleTime: 1000 * 24 * 60 * 60, // 1hr
   });
 }
+
+export const useGetAllUsers = (params:{pageNumber:number,pageSize:number,search:string}) => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["allUsers",params.pageNumber, params.pageSize, params.search ],
+    queryFn: () => getAllUsers(api,params),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+
+export const useGetAgentOverview = (params:{pageNumber:number,pageSize:number,search:string}) => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["allAgents",params.pageNumber, params.pageSize, params.search],
+    queryFn: () => getAgentOverView(api,params),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+
+export const useGetAgentSummary = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["allAgentsSummary"],
+    queryFn: () => getAgentSummary(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+
+export const useGetWalletOverview = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["AdminWallet"],
+    queryFn: () => getWalletOverView(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+
+export const useGetAdminCommission = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["AdminCommission"],
+    queryFn: () => getAdminCommission(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+
+export const useGetAdminDashboard = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["AdminDashboard"],
+    queryFn: () => getAdminDashboard(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+
+export const useGetAdminVtuServices = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["AdminVtuServices"],
+    queryFn: () => getAdminVtuServices(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+export const UseGetAdminExamPackages = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["exam_settings"],
+    queryFn: () => getAdminExamPackages(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+export const UseGetAdminTvackages = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["tv_settings"],
+    queryFn: () => getAdminTvPackages(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};
+export const UseGetDataSync = () => {
+  const api = UseAxios();
+  return useQuery({
+    queryKey: ["data_sync"],
+    queryFn: () => getDataSync(api),
+    staleTime: 1000 * 60 * 60, // 60 mins
+    retry: false, // don't retry if 401
+  });
+};

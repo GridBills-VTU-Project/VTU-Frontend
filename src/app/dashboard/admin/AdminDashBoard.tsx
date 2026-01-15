@@ -6,11 +6,12 @@ import {
   Clock3,
 } from "lucide-react";
 import React from "react";
-import { useDashboard } from "../../customHooks/UseQueries";
+import {  useGetAdminDashboard } from "../../customHooks/UseQueries";
+import { formatAmount } from "@/app/util/functions";
 
 const Admindasboard = () => {
   const { data, isLoading, isError, refetch, isFetching, isPending } =
-    useDashboard();
+    useGetAdminDashboard();
   return (
     <div className="w-full">
       {/* header message */}
@@ -47,7 +48,7 @@ const Admindasboard = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+                {data?.totalUsers || 0}
               </p>
             </div>
           </div>
@@ -73,7 +74,7 @@ const Admindasboard = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+                {data?.activeUsers || 0}
               </p>
             </div>
           </div>
@@ -99,7 +100,7 @@ const Admindasboard = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+                {data?.activeAgents || 0}
               </p>
             </div>
           </div>
@@ -125,7 +126,7 @@ const Admindasboard = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || 0}
+                {data && data.pendingWithdrawals ? formatAmount(data.pendingWithdrawals) : 0}
               </p>
             </div>
           </div>
@@ -149,21 +150,21 @@ const Admindasboard = () => {
             className=" w-[200px] h-[120px] rounded-xl flex flex-col items-start justify-start gap-1 text-start"
           >
             <h4 className="font-semibold text-[#7D7979] text-lg">Total Transactions</h4>
-            <p className="font-bold text-3xl text-[#163145]">18,547</p>
+            <p className="font-bold text-3xl text-[#163145]">{data && data.totalTransactionsThisMonth? formatAmount(data.totalTransactionsThisMonth) : 0}</p>
             <p className="font-bold text-xs text-[#34C759]" >Transactions</p>
           </div>
           <div
             className=" w-[200px] h-[120px] rounded-xl flex flex-col items-start justify-start gap-1 text-start"
           >
             <h4 className="font-semibold text-[#7D7979] text-lg">Monthly Revenue</h4>
-            <p className="font-bold text-3xl text-[#163145]">₦12.4M</p>
+            <p className="font-bold text-3xl text-[#163145]">₦{data && data.revenueMonth ? formatAmount(data.revenueMonth) : 0}</p>
             <p className="font-bold text-xs text-[#34C759]" >Revenue</p>
           </div>
           <div
             className=" w-[200px] h-[120px] rounded-xl flex flex-col items-start justify-start gap-1 text-start"
           >
             <h4 className="font-semibold text-[#7D7979] text-lg">Total commission paid</h4>
-            <p className="font-bold text-3xl text-[#163145]">₦845K</p>
+            <p className="font-bold text-3xl text-[#163145]">₦{data && data.totalCommissionThisMonth ? formatAmount(data.totalCommissionThisMonth) : 0}</p>
             <p className="font-bold text-xs text-[#34C759]" >Expense</p>
           </div>
         </div>

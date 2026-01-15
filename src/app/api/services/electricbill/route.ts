@@ -67,13 +67,13 @@ export async function POST(req: Request) {
     }
 
     const new_body = {
-      amount: body.amount.trim(),
+      amount: parseInt(body.amount.trim(),10),
       serviceId: body.servicID,
       meterNumber: body.meterNum,
       meterType: body.meterType,
-      phone: body.phone,
+      phone: body.phone.startsWith("0")? parseInt(body.phone.substring(1),10) : parseInt( body.phone,10),
       provider: "epins",
-      reference: "electricity purchase",
+      reference: "electricity purchase"+Date.now(),
       usePoints: body.isChecked,
     };
     console.log(new_body);
@@ -92,10 +92,10 @@ export async function POST(req: Request) {
       res = await api.post("Electricity/purchase", new_body);
     }
 
-    console.log("jiyy", res.data, res.status);
+    console.log("jiyy", res);
 
     return NextResponse.json(
-      { msg: res.data.ret_msg, response: res.data.response },
+      { msg: res.data.message, token: res.data.token },
       { status: 200 }
     );
   } catch (err) {
@@ -108,7 +108,7 @@ export async function POST(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
+        { error: err.response?.data.message || "Failed,Please try again later." },
         { status: 400 }
       );
     }

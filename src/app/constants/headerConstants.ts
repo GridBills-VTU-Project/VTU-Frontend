@@ -20,3 +20,12 @@ export const agentDashboardLinks = [
   { name: "support", href: "/dashboard?tab=support" },
   { name: "profile", href: "/dashboard?tab=profile" },
 ];
+export const adminSidebarLinks = [
+  { name: "dashboard", href: "/dashboard?tab=dashboard" },
+  { name: "users", href: "/dashboard?tab=adminUsers" },
+  { name: "agents", href: "/dashboard?tab=adminAgents" },
+  { name: "wallet", href: "/dashboard?tab=wallet" },
+  { name: "vtu_services", href: "/dashboard?tab=vtu_services" },
+  { name: "commission", href: "/dashboard?tab=commission" },
+  { name: "settings", href: "/dashboard?tab=adminSettings" },
+];

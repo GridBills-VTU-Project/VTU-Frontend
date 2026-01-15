@@ -6,7 +6,7 @@ export interface User {
   phoneNumber: string;
   referralCode: null;
   createdAt: Date;
-  referralLink:string;
+  referralLink: string;
 }
 
 export interface registerForm {
@@ -32,7 +32,7 @@ export interface ElectricityPurchaseForm {
   meterNum: string;
   servicID: string;
   amount: string;
-  phone:string;
+  phone: string;
   isChecked: boolean;
 }
 
@@ -42,11 +42,11 @@ export interface recentTransactions {
   type: string;
   createdAt: Date;
 }
-export interface baseInterface {
+export interface basePackageInterface {
   plan: string;
   planCode: string;
 }
-export interface examPackage extends baseInterface {
+export interface examPackage extends basePackageInterface {
   id: string;
   network: string;
   priceApi: number;
@@ -54,7 +54,7 @@ export interface examPackage extends baseInterface {
   isActive: boolean;
 }
 
-export interface TvPackage extends baseInterface {
+export interface TvPackage extends basePackageInterface {
   amount: string;
 }
 
@@ -71,16 +71,102 @@ export interface CardPin {
 }
 
 export interface ValidateMeterRes {
-  code: number
-  customer_Name: any
-  address: string
-  meterNumber: string
+  code: number;
+  customer_Name: any;
+  address: string;
+  meterNumber: string;
+}
+export interface AllUsersResponse {
+  pageNumber: number;
+  pageSize: number;
+  totalRecords: number;
+  data: UsersForAdmin[];
 }
 
-export interface UserDetails{
-  full_name:string;
-  status:string;
-  wallet_balance:string;
-  total_transactions:string;
-  actions:string;
+export interface UsersForAdmin {
+  userId: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  isActive: boolean;
+  roles: string[];
+  walletBalance: number;
+  totalTransactionValue: number;
 }
+
+export interface agentOverViewForAdmin {
+  // summary: Summary;
+  pageNumber: number;
+  pageSize: number;
+  totalRecords: number;
+  data: Agent[];
+}
+
+export interface Summary {
+  totalAgents: number;
+  approvedAgents: number;
+  pendingWithdrawals: number;
+}
+
+export interface Agent {
+  agentId: string;
+  fullName: string;
+  email: string;
+  commissionRate: number;
+  totalSales: number;
+  bankName: string;
+  accountNumber: string;
+  pendingPayout: number;
+  paymentStatus: string;
+  isAgentApproved: boolean;
+  isCommissionApproved: boolean;
+}
+
+export interface walletOverViewForAdmin {
+  totalWalletBalance: number;
+  todaysFunding: number;
+  totalBorrowedFunds: number;
+  recentTransactions: walletOverviewRecentTransaction[];
+}
+
+export interface walletOverviewRecentTransaction {
+  userName: string;
+  method: string;
+  type: string;
+  status: string;
+  amount: number;
+  date: string;
+}
+
+export interface AdminCommissionOverview {
+  totalCommissionPaid: number;
+  totalRewardPoints: number;
+  currentCommissionRate: number;
+  recentCommissionLogs: any[];
+}
+
+export interface AdminDashboard {
+  totalUsers: number;
+  activeUsers: number;
+  totalAgents: number;
+  activeAgents: number;
+  revenueToday: number;
+  revenueWeek: number;
+  revenueMonth: number;
+  pendingWithdrawals: number;
+  totalCommissionThisMonth: number;
+  totalTransactionsThisMonth: number;
+}
+
+export interface ServiceOverview {
+  serviceType: string;
+  totalTransactions: number;
+  totalRevenue: number;
+  averageProfitPercentage: string;
+}
+
+export interface AdminServices {
+  result: ServiceOverview[];
+}
+
+// export interface SettingsExamPackage

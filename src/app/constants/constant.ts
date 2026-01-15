@@ -15,6 +15,7 @@ export const tvSubs = [
     "DSTV","GoTV","StarTimes"
 ]
 export const numRegex = /^\d+$/
+export const numRegexWithDecimal = /^\d+(\.\d+)?$/
 
 export const CardPinTransactions:CardPin[] = [
     {

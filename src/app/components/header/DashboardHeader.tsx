@@ -5,15 +5,18 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
+  adminSidebarLinks,
   agentDashboardLinks,
   dashboardLinks,
 } from "@/app/constants/headerConstants";
 import { UserPen } from "lucide-react";
 import UseRole from "@/app/customHooks/UseRole";
+// import { adminSidebarLinks } from "@/app/dashboard/layout";
 
 const DashboardHeader = () => {
   const pathname = usePathname();
-  const canView = UseRole(["Agent"]);
+  const isAgent = UseRole(["Agent"]);
+  const isAdmin = UseRole(["Admin"]);
   const [menuOpen, setMenuOpen] = useState(false);
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<string | null>(null);
@@ -108,7 +111,7 @@ const DashboardHeader = () => {
         aria-hidden={!menuOpen}
       >
         <ul className="flex flex-col items-center text-[18px] font-medium leading-[22px] gap-5 capitalize w-full h-[50%]">
-          {(canView ? agentDashboardLinks : dashboardLinks).map((link) => (
+          {(isAgent ? agentDashboardLinks : isAdmin? adminSidebarLinks : dashboardLinks).map((link) => (
             <li
               key={link.name}
               className={

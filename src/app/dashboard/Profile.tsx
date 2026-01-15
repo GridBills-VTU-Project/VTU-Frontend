@@ -81,85 +81,97 @@ const Profile = () => {
           </div>
 
           {/* agent details */}
-          {user?.role == "Agent" && 
-          <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
-            <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
-              Agent Information
-            </h2>
-            <div className="flex gap-2 lg:gap-10 flex-col ">
-              <div className="w-full flex">
-                <div className="flex flex-col flex-1 mr-15">
-                  <p className="mb-2 text-darkbackground font-medium text-lg">
-                    Agent ID
-                  </p>
-                  <div className="flex items-center gap-5">
-                    <input
-                      disabled={true}
-                      name="first_name"
-                      value={user?.id}
-                      onChange={(e) => selectOption(e, setPasswordForm)}
-                      type="text"
-                      className={
-                        " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
-                      }
-                      placeholder="Enter first name"
-                    />
-                    <button onClick={()=> handleCopy(user?.id||"")} className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
-                      <Copy size={20} />
-                      <p className="text-xs">Copy</p>
-                    </button>
+          {user?.role == "Agent" && (
+            <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
+              <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
+                Agent Information
+              </h2>
+              <div className="flex gap-2 lg:gap-10 flex-col ">
+                <div className="w-full flex flex-wrap">
+                  <div className="flex flex-col flex-1 mr-15">
+                    <p className="mb-2 text-darkbackground font-medium text-lg">
+                      Agent ID
+                    </p>
+                    <div className="flex items-center gap-5 flex-wrap">
+                      <input
+                        disabled={true}
+                        name="first_name"
+                        value={user?.id}
+                        onChange={(e) => selectOption(e, setPasswordForm)}
+                        type="text"
+                        className={
+                          " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
+                        }
+                        placeholder="Enter first name"
+                      />
+                      <button
+                        onClick={() => handleCopy(user?.id || "")}
+                        className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg"
+                      >
+                        <Copy size={20} />
+                        <p className="text-xs">Copy</p>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex flex-col flex-1">
+                    <p className="mb-2 text-darkbackground font-medium text-lg">
+                      Referral Code
+                    </p>
+                    <div className="flex items-center gap-5 flex-wrap">
+                      <input
+                        disabled={true}
+                        name="first_name"
+                        value={user?.referralCode || undefined}
+                        onChange={(e) => selectOption(e, setPasswordForm)}
+                        type="text"
+                        className={
+                          " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
+                        }
+                        placeholder="Enter first name"
+                      />
+                      <button
+                        onClick={() => handleCopy(user?.referralCode || "")}
+                        className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg"
+                      >
+                        <Copy size={20} />
+                        <p className="text-xs">Copy</p>
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-col flex-1">
-                  <p className="mb-2 text-darkbackground font-medium text-lg">
-                    Referral Code
-                  </p>
-                  <div className="flex items-center gap-5">
-                    <input
-                      disabled={true}
-                      name="first_name"
-                      value={user?.referralCode || undefined}
-                      onChange={(e) => selectOption(e, setPasswordForm)}
-                      type="text"
-                      className={
-                        " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl bg-[#8080801A] flex-2"
-                      }
-                      placeholder="Enter first name"
-                    />
-                    <button onClick={()=> handleCopy(user?.referralCode||"")} className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
-                      <Copy size={20} />
-                      <p className="text-xs">Copy</p>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full ">
-                <div className="flex flex-col mt-2">
-                  <p className="mb-2 text-darkbackground font-medium text-lg">
-                    Referral Link
-                  </p>
-                  <div className="flex items-center gap-5">
-                    <input
-                      disabled={true}
-                      name="first_name"
-                      value={user?.referralLink}
-                      onChange={(e) => selectOption(e, setPasswordForm)}
-                      type="text"
-                      className={
-                        " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl flex-2 " +
-                        (isDisabled ? " bg-[#8080801A]" : " bg-[#FFFFFF3B]/23")
-                      }
-                      placeholder="Enter first name"
-                    />
-                    <button onClick={()=> handleCopy(user?.referralLink||"")} className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg">
-                      <Copy size={20} />
-                      <p className="text-xs">Copy</p>
-                    </button>
+                <div className="w-full ">
+                  <div className="flex flex-col mt-2">
+                    <p className="mb-2 text-darkbackground font-medium text-lg">
+                      Referral Link
+                    </p>
+                    <div className="flex items-center gap-5 flex-wrap">
+                      <input
+                        disabled={true}
+                        name="first_name"
+                        value={user?.referralLink}
+                        onChange={(e) => selectOption(e, setPasswordForm)}
+                        type="text"
+                        className={
+                          " outline-darkbackground border-2 border-[#7575754D] p-4 rounded-2xl flex-2 " +
+                          (isDisabled
+                            ? " bg-[#8080801A]"
+                            : " bg-[#FFFFFF3B]/23")
+                        }
+                        placeholder="Enter first name"
+                      />
+                      <button
+                        onClick={() => handleCopy(user?.referralLink || "")}
+                        className="flex bg-[#8080801A] p-2 gap-1 py-3 border-2 border-[#7575754D] rounded-lg"
+                      >
+                        <Copy size={20} />
+                        <p className="text-xs">Copy</p>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>}
+          )}
           {/* details */}
           <div className="flex flex-col gap-2 py-7 px-5 bg-[#FFFFFF] rounded-lg border-2 border-[#AAAAAACC]">
             <h2 className=" max-xs:text-2xl text-3xl font-black not-xl:text-2xl leading-6 mb-3 text-darkbackground">
@@ -362,23 +374,17 @@ const Profile = () => {
         </div>
       </div>
       {canDelete && (
-        <div
-          className={
-            canDelete
-              ? " bottom-0 flex justify-center items-center w-full absolute opacity-[100%] z-100 mx-auto "
-              : " hidden"
-          }
-        >
-          <div className="flex flex-col w-fit py-5 px-10 justify-center items-center bg-neutral-100  rounded-lg shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+          <div className="flex flex-col w-fit py-5 px-10 justify-center items-center bg-neutral-100 rounded-lg shadow-2xl relative">
             <button
               onClick={() => setCanDelete(false)}
-              className="ml-auto bg-darkbackground p-1 rounded-sm text-white flex justify-center items-center mb-5"
+              className="absolute top-2 right-2 bg-darkbackground p-1 rounded-sm text-white"
             >
               <X width={20} height={20} />
             </button>
             <div className="flex flex-col gap-2 mb-2">
               <h3 className="text-xl font-semibold  tracking-[-0.5px] text-main-heading">
-                Delete Artist
+                Delete Account
               </h3>
               <p className="">
                 Type <strong>Delete</strong> to Continue
@@ -396,18 +402,14 @@ const Profile = () => {
                 }}
               />
             </div>
-            <div>
-              <button
-                aria-label="confirm delete artist"
-                disabled={canDelete}
-                onClick={() => {
-                  // handleSubmit(formData);
-                }}
-                className="flex justify-center items-center gap-2 bg-[#FF3B30] w-fit text-[#ffff] py-2 px-4 rounded-xl hover:cursor-pointer hover:bg-[#FF3B30]/90 "
-              >
-                Delete
-              </button>
-            </div>
+
+            <button
+              onClick={() => setCanDelete(false)}
+              disabled={!canDelete}
+              className="bg-[#FF3B30] text-white py-2 px-4 rounded-xl"
+            >
+              Delete
+            </button>
           </div>
         </div>
       )}

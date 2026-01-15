@@ -23,3 +23,7 @@ export function formatTime(seconds: number) {
     await navigator.clipboard.writeText(text)
     toast.info("copied");
   }
+
+  export const formatAmount = (amount:string|number)=>{
+    return Number(amount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  }
