@@ -47,12 +47,11 @@ const page = () => {
           <div className="flex flex-col">
             <p className="mb-2">Message</p>
             <textarea
-            value={""}
-              className="border-3 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg min-h-[200px]"
-              placeholder="Please enter your name"
-            >
-              {" "}
-            </textarea>
+            defaultValue={""}
+            name="message"
+            className="border-2 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-3 rounded-lg min-h-[150px]"
+            placeholder="Your message"
+          />
           </div>
           <button className="bg-[#646FC6] w-[30%] text-[#ffff] mt-15 p-5 inset-shadow-sm inset-shadow-[#00000040] rounded-lg hover:cursor-pointer ">
             Send Message
