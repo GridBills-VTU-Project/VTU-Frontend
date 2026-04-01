@@ -27,7 +27,7 @@ const AirtimeForm = () => {
         return toast.info("Amount must be a valid number.");
       }
       const res = await api.patch("services/data", JSON.stringify(form));
-      toast.success(res.data.msg || "Success.");
+      toast.success(res.data.ret_msg || "Success.");
       setForm({
         network: "",
         phone: user?.phoneNumber || "",

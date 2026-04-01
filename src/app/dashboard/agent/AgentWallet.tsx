@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { usewallet } from "../../customHooks/UseQueries";
-import { selectOption } from "../../util/functions";
+import { formatAmount, selectOption } from "../../util/functions";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useWalletMutation } from "../../customHooks/useMutation";
@@ -74,18 +74,24 @@ const AgentWallet = () => {
           <p className=" w-fit">Withdraw Commission</p>
           <div className="">
             <h2 className="flex justify-between font-bold text-3xl leading-6 capitalize truncate">
-              ₦{isError ? 0 : data?.walletBalance}
+              ₦{isError ? 0 : formatAmount(data?.walletBalance)}
             </h2>
             <p className="font-medium text-sm mt-3">Available Balance</p>
           </div>
           <div className=" flex w-full font-semibold text-sm gap-5 max-xs:flex-col max-w-[700px]">
-            <button className="bg-[#FFFFFF] text-[#000000] rounded-lg flex-1 p-2 flex justify-center items-center gap-2 capitalize ">
+            <button
+              onClick={() => setFund(true)}
+              className="bg-[#FFFFFF] text-[#000000] rounded-lg flex-1 p-2 flex justify-center items-center gap-2 capitalize "
+            >
               <span>
                 <Wallet size={12} />
               </span>
               To wallet
             </button>
-            <button className="bg-[#FFFFFF] rounded-lg flex-1 p-2 text-[#000000] flex justify-center items-center gap-2 capitalize ">
+            <button
+              onClick={() => setFund(false)}
+              className="bg-[#FFFFFF] rounded-lg flex-1 p-2 text-[#000000] flex justify-center items-center gap-2 capitalize "
+            >
               <span>
                 <TrendingDown size={12} />
               </span>
@@ -113,9 +119,9 @@ const AgentWallet = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || "₦45,459.00"}
+                ₦{isError ? 0 : formatAmount(data?.walletBalance)}
               </p>
-              <p className="font-bold text-xs text-[#27C840]">This month</p>
+              {/* <p className="font-bold text-xs text-[#27C840]">This month</p> */}
             </div>
           </div>
           <span
@@ -145,9 +151,9 @@ const AgentWallet = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || "₦45,459.00"}
+                ₦{isError ? 0 : formatAmount(data?.totalDebited)}
               </p>
-              <p className="font-bold text-xs text-[#808080]">This month</p>
+              {/* <p className="font-bold text-xs text-[#808080]">This month</p> */}
             </div>
           </div>
           <span
@@ -177,9 +183,9 @@ const AgentWallet = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl text-[#000000]">
-                {data?.data?.walletBalance || "₦45,459.00"}
+                ₦{isError ? 0 : formatAmount(data?.netBalance)}
               </p>
-              <p className="font-bold text-xs text-[#808080]">Current</p>
+              {/* <p className="font-bold text-xs text-[#808080]">Current</p> */}
             </div>
           </div>
           <span
@@ -232,8 +238,13 @@ const AgentWallet = () => {
       ) : (
         <form
           onSubmit={submit}
-          className="flex flex-col bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-10 w-full"
+          className="flex flex-col bg-[#FFFFFF] mt-20 border-2 border-[#AAAAAA] rounded-xl px-5 py-5 w-full"
         >
+          <ul className="list-disc font-semibold mb-5 ml-5 text-caption-one flex flex-col gap-1 marker:text-red-500">
+            <li>Make 5 successful fundings.</li>
+            <li>Zero outstanding borrowed balance.</li>
+            <li>Automatic repayment on next funding.</li>
+          </ul>
           <h3 className="capitalize font-bold text-3xl  text-[#163145] ">
             Borrow Fund
           </h3>
@@ -241,7 +252,7 @@ const AgentWallet = () => {
             <div className="flex flex-col gap-3">
               <p className="mt-10">Amount (₦)</p>
               <input
-                value={form.amount}
+                value={1000}
                 name="amount"
                 required={true}
                 onChange={(e) => {

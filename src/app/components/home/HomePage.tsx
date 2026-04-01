@@ -5,9 +5,10 @@ import Hero from "./homeSections/hero/Hero";
 import Download from "./homeSections/download/Download";
 import Partners from "./homeSections/partners_and_services/Partners";
 import AgentSection from "./homeSections/becomeAnAgent/AgentSection";
+import Link from "next/link";
 
 const HomePage = () => {
-  return ( 
+  return (
     <section className="flex max-mobile:block">
       <div className="flex justify-center w-full max-w-[150px] min-h-full bg-darkbackground">
         <div
@@ -17,7 +18,8 @@ const HomePage = () => {
         >
           <ul className="text-white font-medium text-xs leading-[22px] mt-10 flex flex-col gap-15">
             {sidebarLinks.map((link) => (
-              <li
+              <Link
+                href={link.href}
                 key={link.name}
                 className="text-center flex flex-col items-center"
               >
@@ -29,7 +31,7 @@ const HomePage = () => {
                   alt={`${link.name} icon`}
                 />
                 {link.name}
-              </li>
+              </Link>
             ))}
           </ul>
         </div>

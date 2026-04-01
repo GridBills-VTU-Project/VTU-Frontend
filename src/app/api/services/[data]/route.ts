@@ -171,7 +171,7 @@ export async function PATCH(req: Request) {
     }
     console.log(data.data, data.status);
 
-    return NextResponse.json({ ...data.data.data }, { status: 200 });
+    return NextResponse.json({ ...data.data }, { status: 200 });
   } catch (err) {
     if (isAxiosError(err)) {
       console.error(err.response);

@@ -12,6 +12,7 @@ import Link from "next/link";
 import React from "react";
 import { useDashboard } from "../../customHooks/UseQueries";
 import { recentTransactions } from "../../util/types";
+import { formatAmount } from "@/app/util/functions";
 
 const AgentDashboard = () => {
   const { data, isLoading, isError, refetch, isFetching, isPending } =
@@ -52,7 +53,7 @@ const AgentDashboard = () => {
             </h2>
             <div>
               <p className="font-bold text-2xl">
-                ₦{data?.data.agentBalance || 0}
+                ₦{formatAmount(data?.data.agentBalance) || 0}
               </p>
             </div>
           </div>
@@ -78,7 +79,7 @@ const AgentDashboard = () => {
             </h2>
             <div className="mt-3">
               <p className="font-bold text-2xl ">
-                ₦{data?.data.totalSales || 0}
+                ₦{formatAmount(data?.data.totalSales) || 0}
               </p>
             </div>
           </div>

@@ -47,6 +47,7 @@ const page = () => {
           <div className="flex flex-col">
             <p className="mb-2">Message</p>
             <textarea
+            value={""}
               className="border-3 border-[#AAAAAA] inset-shadow-sm inset-shadow-[#00000040] p-5 rounded-lg min-h-[200px]"
               placeholder="Please enter your name"
             >

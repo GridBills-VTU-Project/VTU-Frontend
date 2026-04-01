@@ -6,11 +6,11 @@ import card from '../../../public/ion_card-sharp.png'
 // import  from '../../../../public/fluent_phone-24-regular.png'
 
 export const sidebarLinks = [
-  { name: "Buy Phone Airtime", img: ph, href: "/buy-airtime",color:"bg-[#1601FF4D]" },
-  { name: "Buy Internet Data", img: wifi, href: "/buy-wifi",color:"bg-[#2EAF074D]" },
-  { name: "Pay Electricity Bill", img: electric, href: "/buy-airtime",color:"bg-[#F761164D]" },
-  { name: "Pay TV Subscription", img: tv, href: "/buy-airtime",color:"bg-[#1631454D]" },
-  { name: "Exam Scratch card", img: card, href: "/buy-airtime",color:"bg-[#1631454D]" }
+  { name: "Buy Phone Airtime", img: ph, href: "/dashboard?tab=services&section=airtime",color:"bg-[#1601FF4D]" },
+  { name: "Buy Internet Data", img: wifi, href: "/dashboard?tab=services&section=data",color:"bg-[#2EAF074D]" },
+  { name: "Pay Electricity Bill", img: electric, href: "/dashboard?tab=services&section=bill",color:"bg-[#F761164D]" },
+  { name: "Pay TV Subscription", img: tv, href: "/dashboard?tab=services&section=subscription",color:"bg-[#1631454D]" },
+  { name: "Exam Scratch card", img: card, href: "/dashboard?tab=services&section=card",color:"bg-[#1631454D]" }
 ]
 export const quickActions = [
   { query: "airtime",name: "Buy Airtime", img: ph, href: "/buy-airtime"},

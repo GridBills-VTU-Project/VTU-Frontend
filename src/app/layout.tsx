@@ -15,10 +15,35 @@ const inter = Inter({
 });
 export const metadata: Metadata = {
   title: "My VTU Website",
-  description: "Buy airtime, data, pay bills and more",
+  description:
+    "Buy cheap airtime, data bundles, electricity tokens, WAEC & JAMB pins online in Nigeria. Instant delivery, 24/7 service. The fastest VTU platform in Nigeria.",
   icons: {
     icon: "/logo.png",
   },
+  keywords: [
+    "buy airtime online",
+    "buy MTN airtime online",
+    "buy Glo airtime online",
+    "buy Airtel airtime online",
+    "buy 9mobile airtime online",
+    "buy cheap data online",
+    "buy MTN data bundle online",
+    "buy Glo data bundle",
+    "cheapest data plans in Nigeria",
+    "pay electricity bill online Nigeria",
+    "buy DSTV subscription online",
+    "buy WAEC scratch card online",
+    "buy NECO pin online",
+    "buy JAMB pin online",
+    "buy exam pins online Nigeria",
+    "recharge card pins online",
+    "virtual top up Nigeria",
+    "VTU platform Nigeria",
+  ],
+  // keywords: ['Buy airtime', "airtime", "Buy data", "data", , 'keywords', 'here'],
+  authors: [{ name: "Your Name", url: "https://yoursite.com" }],
+  metadataBase: new URL("https://yoursite.com"), // REQUIRED for absolute OG URLs
+  creator: "Your Name",
 };
 
 export default function RootLayout({

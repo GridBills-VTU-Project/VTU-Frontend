@@ -20,17 +20,17 @@ export async function GET(req: Request) {
       if (err.response?.status == 401) {
         return NextResponse.json(
           { error: "Session expired, Please login" },
-          { status: 401 }
+          { status: 401 },
         );
       }
       return NextResponse.json(
         { error: err.response?.data?.ret_msg },
-        { status: 400 }
+        { status: 400 },
       );
     }
     return NextResponse.json(
       { error: "An unexpected error occurred" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -44,20 +44,21 @@ export async function PATCH(req: Request) {
         {
           error: "please select a valid exam type",
         },
-        { status: 400 }
+        { status: 400 },
       );
     } else if (typeof body.isChecked != "boolean") {
       return NextResponse.json(
         {
           error: "please select whether or not to use points",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const new_body = {
       service: body.examType?.planCode,
       usePoints: body.isChecked,
+      quantity: 1,
     };
     console.log(new_body);
     let res: AxiosResponse<any, any>;
@@ -66,7 +67,7 @@ export async function PATCH(req: Request) {
     if (!role) {
       return NextResponse.json(
         { error: "Session expired, Please login" },
-        { status: 401 }
+        { status: 401 },
       );
     }
     if (role == "Agent") {
@@ -75,26 +76,50 @@ export async function PATCH(req: Request) {
       res = await api.post("ExamPin/buy-exam-pin", new_body);
     }
 
-    console.log(res.data, res.status);
+    // console.log(res.data, res.status);
+    //     const data = {
+    //   "code": 200,
+    //   "description": {
+    //     "ret_msg": "Exam Pin purchased successfully",
+    //     "token": "PIN:904014975838",
+    //     "Serial":"NER100039846",
+    //     "ref": "9a273de3cfa4",
+    //     "amount": 1000,
+    //     "amount_Paid": 0,
+    //     "transaction_Date": "February 28, 2026  13:02:08:18pm"
+    //   }
+    // };
+    const data = res.data;
+console.log(res.data,res.status);
 
-    return NextResponse.json({ ...res.data.data }, { status: 200 });
+    return NextResponse.json(
+      {
+        msg: data.description.ret_msg || "Exam pin purchased successfully",
+        token: data.description.token,
+      },
+      { status: 200 },
+    );
   } catch (err) {
+    console.log(err);
+
     if (isAxiosError(err)) {
       console.error(err.response);
       if (err.response?.status == 401) {
         return NextResponse.json(
           { error: "Session expired, Please login" },
-          { status: 401 }
+          { status: 401 },
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
-        { status: 400 }
+        {
+          error: err.response?.data.message || "Failed,Please try again later.",
+        },
+        { status: 400 },
       );
     }
     return NextResponse.json(
       { error: "An unexpected error occurred" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -4,6 +4,7 @@ import UseRole from "../../customHooks/UseRole";
 import { useCommission } from "../../customHooks/UseQueries";
 import { RefreshCcw, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { formatAmount } from "@/app/util/functions";
 
 const Commission = () => {
   const canView = UseRole(["Agent"]);
@@ -51,7 +52,7 @@ const Commission = () => {
                 </h2>
                 <div>
                   <p className="font-bold text-2xl">
-                    ₦{!isError && data?.availableBalance}
+                    ₦{!isError && formatAmount(data?.availableBalance)}
                   </p>
                 </div>
               </div>
@@ -77,7 +78,7 @@ const Commission = () => {
                 </h2>
                 <div className="mt-3">
                   <p className="font-bold text-2xl ">
-                    ₦{!isError && data?.availableBalance}
+                    ₦{!isError &&formatAmount(data?.availableBalance)}
                   </p>
                 </div>
               </div>
@@ -127,7 +128,7 @@ const Commission = () => {
               <p className=" w-fit">Withdraw Commission</p>
               <div className="">
                 <h2 className="flex justify-between font-bold text-3xl leading-6 capitalize truncate">
-                  ₦{isError ? 0 : data?.availableBalance}
+                  ₦{isError ? 0 : formatAmount(data?.availableBalance)}
                 </h2>
                 <p className="font-medium text-sm mt-3">Available Balance</p>
               </div>
