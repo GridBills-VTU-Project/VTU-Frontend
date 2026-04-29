@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css"
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
@@ -14,7 +14,7 @@ const inter = Inter({
   display: "swap",
 });
 export const metadata: Metadata = {
-  title: "My VTU Website",
+  title: "GridBills VTU",
   description:
     "Buy cheap airtime, data bundles, electricity tokens, WAEC & JAMB pins online in Nigeria. Instant delivery, 24/7 service. The fastest VTU platform in Nigeria.",
   icons: {
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
     "VTU platform Nigeria",
   ],
   // keywords: ['Buy airtime', "airtime", "Buy data", "data", , 'keywords', 'here'],
-  authors: [{ name: "Your Name", url: "https://yoursite.com" }],
-  metadataBase: new URL("https://yoursite.com"), // REQUIRED for absolute OG URLs
+  authors: [{ name: "Your Name", url: "https://gridbills.com/" }],
+  metadataBase: new URL("https://gridbills.com/"), // REQUIRED for absolute OG URLs
   creator: "Your Name",
 };
 
