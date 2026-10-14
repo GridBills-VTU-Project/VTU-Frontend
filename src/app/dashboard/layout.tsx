@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLogOutMutation } from "../customHooks/useMutation";
 import UseRole from "../customHooks/UseRole";
-export const dashboardSidebarLinks = [
+const dashboardSidebarLinks = [
   {
     name: "dashboard",
     tab: "dashboard",
@@ -66,7 +66,7 @@ export const dashboardSidebarLinks = [
   },
   // { name: "Exam Scratch card", img: card, href: "/buy-airtime",color:"bg-[#1631454D]" }
 ];
-export const agentDashboardSidebarLinks = [
+const agentDashboardSidebarLinks = [
   {
     name: "dashboard",
     tab: "dashboard",
@@ -111,7 +111,7 @@ export const agentDashboardSidebarLinks = [
   },
   // { name: "Exam Scratch card", img: card, href: "/buy-airtime",color:"bg-[#1631454D]" }
 ];
-export const adminSidebarLinks = [
+const adminSidebarLinks = [
   {
     name: "dashboard",
     tab: "dashboard",
