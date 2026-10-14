@@ -75,6 +75,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ...data.data.data }, { status: 200 });
   } catch (err) {
+    console.error(err);
     if (isAxiosError(err)) {
       console.error(err.response);
       if (err.response?.status == 401) {
@@ -122,6 +123,7 @@ export async function PATCH(req: Request) {
 
     return NextResponse.json({ ...data.data.data }, { status: 200 });
   } catch (err) {
+    console.error(err);
     if (isAxiosError(err)) {
       console.error(err.response);
       if (err.response?.status == 401) {
