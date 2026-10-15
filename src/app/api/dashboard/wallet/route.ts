@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     } else {
       data = await api.post("Wallet/fund", new_body);
     }
-    console.log(data, data.status);
+    console.log("wallet fund status:", data.status);
 
     return NextResponse.json({ ...data.data.data }, { status: 200 });
   } catch (err) {
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
+        { error: err.response?.data?.ret_msg || "Failed,Please try again later." },
         { status: 400 }
       );
     }
@@ -120,13 +120,13 @@ export async function PATCH(req: Request) {
     let data: AxiosResponse<any, any>;
     data = await api.post("Wallet/borrow", new_body);
 
-    console.log(data.data, data.status);
+    console.log("wallet borrow status:", data.status);
 
     return NextResponse.json({ ...data.data.data }, { status: 200 });
   } catch (err) {
-    console.error(err);
+    console.error("wallet route failed:", JSON.stringify(describeError(err)));
     if (isAxiosError(err)) {
-      console.error(err.response);
+      // console.error(err.response);
       if (err.response?.status == 401) {
         return NextResponse.json(
           { error: "Session expired, Please login" },
@@ -134,7 +134,7 @@ export async function PATCH(req: Request) {
         );
       }
       return NextResponse.json(
-        { error: err.response?.data.ret_msg || "Failed,Please try again later." },
+        { error: err.response?.data?.ret_msg || "Failed,Please try again later." },
         { status: 400 }
       );
     }
