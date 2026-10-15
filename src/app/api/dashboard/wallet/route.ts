@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import api from "@/app/lib/axiosInstance";
 import { AxiosResponse, isAxiosError } from "axios";
 import { cookies } from "next/headers";
+import { describeError } from "@/app/util/functions";
 
 export async function GET(req: Request) {
   try {
@@ -75,9 +76,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ...data.data.data }, { status: 200 });
   } catch (err) {
-    console.error(err);
+    console.error("wallet route failed:", JSON.stringify(describeError(err)));
     if (isAxiosError(err)) {
-      console.error(err.response);
+      // console.error(err.response);
       if (err.response?.status == 401) {
         return NextResponse.json(
           { error: "Session expired, Please login" },

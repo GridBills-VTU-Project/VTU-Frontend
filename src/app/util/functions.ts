@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 
@@ -27,3 +28,21 @@ export function formatTime(seconds: number) {
   export const formatAmount = (amount:string|number)=>{
     return Number(amount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
   }
+
+  export function describeError(error: unknown) {
+  if (axios.isAxiosError(error)) {
+    return {
+      type: "AxiosError",
+      message: error.message,
+      code: error.code,
+      url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      data: error.response?.data,
+    };
+  }
+  if (error instanceof Error) {
+    return { type: error.name, message: error.message, stack: error.stack };
+  }
+  return { type: "Unknown", value: String(error) };
+}
